@@ -8,6 +8,9 @@ namespace Casino
     {
         static void Main(string[] args)
         {
+            Maso maso = new Maso();
+            maso.CrearCartas();
+
             Console.WriteLine("Bienvenido al juego de casino");
             string nombreUsuario = "";
             List<Jugador> jugadores = new List<Jugador>();
@@ -24,6 +27,8 @@ namespace Casino
             }
 
             Console.WriteLine(string.Format("Bienvenidos: {0}.", string.Join(", ", jugadores.Select(j => j.Nombre))));
+
+            
         }
     }
 }

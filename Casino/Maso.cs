@@ -8,15 +8,26 @@ namespace Casino
     {
         public List<Carta> Cartas { get; set; }
 
-        public List<Carta> CrearCartas()
+        public void CrearCartas()
         {
             Carta carta = new Carta();
 
             var valoresCartas = Enum.GetValues(typeof(ValorCartas));
-            foreach (ValorCartas item in valoresCartas)
+            var valoresTipoCartas = Enum.GetValues(typeof(TipoCartas));
+
+            Cartas = new List<Carta>();
+
+            foreach (TipoCartas tipoCartas in valoresTipoCartas)
             {
-                carta.Valor = item;
-            }
+                carta.Tipo = tipoCartas;
+
+                foreach (ValorCartas valorCartas in valoresCartas)
+                {
+                    carta.Valor = valorCartas;
+
+                    Cartas.Add(carta);
+                }
+            }            
         }
     }
 }
