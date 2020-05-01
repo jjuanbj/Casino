@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Casino
@@ -9,9 +10,7 @@ namespace Casino
         public List<Carta> Cartas { get; set; }
 
         public void CrearCartas()
-        {
-            Carta carta = new Carta();
-
+        {            
             var valoresCartas = Enum.GetValues(typeof(ValorCartas));
             var valoresTipoCartas = Enum.GetValues(typeof(TipoCartas));
 
@@ -19,13 +18,9 @@ namespace Casino
 
             foreach (TipoCartas tipoCartas in valoresTipoCartas)
             {
-                carta.Tipo = tipoCartas;
-
                 foreach (ValorCartas valorCartas in valoresCartas)
                 {
-                    carta.Valor = valorCartas;
-
-                    Cartas.Add(carta);
+                    Cartas.Add(new Carta(tipoCartas, valorCartas));
                 }
             }            
         }
