@@ -7,22 +7,52 @@ namespace Casino
 {
     class Maso
     {
-        public List<Carta> Cartas { get; set; }
+        private List<Carta> MasoCartas { get; set; }
 
         public void CrearCartas()
         {            
             var valoresCartas = Enum.GetValues(typeof(ValorCartas));
             var valoresTipoCartas = Enum.GetValues(typeof(TipoCartas));
 
-            Cartas = new List<Carta>();
+            MasoCartas = new List<Carta>();
 
             foreach (TipoCartas tipoCartas in valoresTipoCartas)
             {
                 foreach (ValorCartas valorCartas in valoresCartas)
                 {
-                    Cartas.Add(new Carta(tipoCartas, valorCartas));
+                    MasoCartas.Add(new Carta(tipoCartas, valorCartas));
                 }
             }            
+        }
+
+        public void BarajarCartas()
+        {
+            var cartasBarajadas = new List<Carta>();
+            
+            for (int i = 0; i < (int)General.TotalCartas; i++)
+            {
+                Random random = new Random();
+                int index = random.Next(MasoCartas.Count);
+                cartasBarajadas.Add(MasoCartas[index]);
+                MasoCartas.RemoveAt(index);
+            }
+
+            MasoCartas = cartasBarajadas;           
+        }
+
+        public void RepartirCartasJugadores(List<Jugador> Jugadores)
+        {
+            foreach (var jugador in Jugadores)
+            {                
+                jugador.Cartas = MasoCartas.Take((int)General.CantidadCartasARepartir).ToList();
+                MasoCartas.RemoveRange((int)General.Cero, (int)General.CantidadCartasARepartir);
+            }
+        }
+
+        public void RepartirCartasMesa(Mesa mesa)
+        {
+            mesa.Cartas = MasoCartas.Take((int)General.CantidadCartasARepartir).ToList();
+            MasoCartas.RemoveRange((int)General.Cero, (int)General.CantidadCartasARepartir);
         }
     }
 }

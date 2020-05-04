@@ -10,6 +10,7 @@ namespace Casino
         {
             Maso maso = new Maso();
             maso.CrearCartas();
+            maso.BarajarCartas();
 
             Console.WriteLine("Bienvenido al juego de casino");
             string nombreUsuario = "";
@@ -28,7 +29,10 @@ namespace Casino
 
             Console.WriteLine(string.Format("Bienvenidos: {0}.", string.Join(", ", jugadores.Select(j => j.Nombre))));
 
-            
+            var mesa = new Mesa();
+
+            maso.RepartirCartasMesa(mesa);
+            maso.RepartirCartasJugadores(jugadores);
         }
     }
 }

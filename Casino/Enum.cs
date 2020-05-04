@@ -13,4 +13,11 @@ namespace Casino
     {
         A = 1, Dos, Tres, Cuatro, Cinco, Seis, Siete, Ocho, Nueve, Diez, J, Q, K
     }
+
+    enum General
+    {
+        TotalCartas = 52,
+        CantidadCartasARepartir = 4,
+        Cero = 0
+    }
 }
