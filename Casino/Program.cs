@@ -8,31 +8,31 @@ namespace Casino
     {
         static void Main(string[] args)
         {
-            Maso maso = new Maso();
-            maso.CrearCartas();
-            maso.BarajarCartas();
+            Deck deck = new Deck();
+            deck.CreateCards();
+            deck.ShuffleCards();
 
-            Console.WriteLine("Bienvenido al juego de casino");
-            string nombreUsuario = "";
-            List<Jugador> jugadores = new List<Jugador>();
+            Console.WriteLine(English.WelcomeToCasinoGame);
+            string username = "";
+            List<Player> players = new List<Player>();
 
-            while (nombreUsuario != "F" && nombreUsuario != "f")
+            while (username != Keyboard.F && username != Keyboard.f)
             {
-                Console.WriteLine("Por favor, escriba nombre de jugadores, presione F cuando haya finalizado");
-                nombreUsuario = Console.ReadLine();
+                Console.WriteLine(English.PleaseWritePlayerNamesPressFWhenFinished);
+                username = Console.ReadLine();
 
-                if (nombreUsuario != "F" && nombreUsuario != "f")
+                if (username != Keyboard.F && username != Keyboard.f)
                 {
-                    jugadores.Add(new Jugador(nombreUsuario));
+                    players.Add(new Player(username));
                 }
             }
 
-            Console.WriteLine(string.Format("Bienvenidos: {0}.", string.Join(", ", jugadores.Select(j => j.Nombre))));
+            Console.WriteLine(string.Format(English.Welcome + ": {0}.", string.Join(", ", players.Select(j => j.Name))));
 
-            var mesa = new Mesa();
+            var table = new Table();
 
-            maso.RepartirCartasMesa(mesa);
-            maso.RepartirCartasJugadores(jugadores);
+            deck.DealCardsTable(table);
+            deck.DealCardsPlayer(players);
         }
     }
 }

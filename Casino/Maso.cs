@@ -5,54 +5,54 @@ using System.Text;
 
 namespace Casino
 {
-    class Maso
+    class Deck
     {
-        private List<Carta> MasoCartas { get; set; }
+        private List<Card> DeckCards { get; set; }
 
-        public void CrearCartas()
+        public void CreateCards()
         {            
-            var valoresCartas = Enum.GetValues(typeof(ValorCartas));
-            var valoresTipoCartas = Enum.GetValues(typeof(TipoCartas));
+            var rankValue = Enum.GetValues(typeof(Rank));
+            var suitValue = Enum.GetValues(typeof(Suit));
 
-            MasoCartas = new List<Carta>();
+            DeckCards = new List<Card>();
 
-            foreach (TipoCartas tipoCartas in valoresTipoCartas)
+            foreach (Suit suit in suitValue)
             {
-                foreach (ValorCartas valorCartas in valoresCartas)
+                foreach (Rank rank in rankValue)
                 {
-                    MasoCartas.Add(new Carta(tipoCartas, valorCartas));
+                    DeckCards.Add(new Card(suit, rank));
                 }
             }            
         }
 
-        public void BarajarCartas()
+        public void ShuffleCards()
         {
-            var cartasBarajadas = new List<Carta>();
+            var shuffledCards = new List<Card>();
             
-            for (int i = 0; i < (int)General.TotalCartas; i++)
+            for (int i = 0; i < (int)General.TotalCards; i++)
             {
                 Random random = new Random();
-                int index = random.Next(MasoCartas.Count);
-                cartasBarajadas.Add(MasoCartas[index]);
-                MasoCartas.RemoveAt(index);
+                int index = random.Next(DeckCards.Count);
+                shuffledCards.Add(DeckCards[index]);
+                DeckCards.RemoveAt(index);
             }
 
-            MasoCartas = cartasBarajadas;           
+            DeckCards = shuffledCards;           
         }
 
-        public void RepartirCartasJugadores(List<Jugador> Jugadores)
+        public void DealCardsPlayer(List<Player> Players)
         {
-            foreach (var jugador in Jugadores)
+            foreach (var player in Players)
             {                
-                jugador.Cartas = MasoCartas.Take((int)General.CantidadCartasARepartir).ToList();
-                MasoCartas.RemoveRange((int)General.Cero, (int)General.CantidadCartasARepartir);
+                player.Card = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
+                DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
             }
         }
 
-        public void RepartirCartasMesa(Mesa mesa)
+        public void DealCardsTable(Table table)
         {
-            mesa.Cartas = MasoCartas.Take((int)General.CantidadCartasARepartir).ToList();
-            MasoCartas.RemoveRange((int)General.Cero, (int)General.CantidadCartasARepartir);
+            table.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
+            DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
         }
     }
 }

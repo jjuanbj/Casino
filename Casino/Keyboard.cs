@@ -4,8 +4,10 @@ using System.Text;
 
 namespace Casino
 {
-    class Mesa
+    static class Keyboard
     {
-        public List<Carta> Cartas { get; set; }
+        public static string F = "F";
+
+        public static string f = "f";
     }
 }
