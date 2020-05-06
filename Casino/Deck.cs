@@ -44,7 +44,7 @@ namespace Casino
         {
             foreach (var player in Players)
             {                
-                player.Card = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
+                player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
             }
         }

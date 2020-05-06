@@ -11,5 +11,11 @@ namespace Casino
         public static string PleaseWritePlayerNamesPressFWhenFinished = "Please write player names, press F when finished";
 
         public static string Welcome = "Welcome";
+
+        public static string Computer = "Computer";
+
+        public static string ThisNameIsNotAllowed = "This name is not allowed.";
+
+        public static string OnTable = "On table";
     }
 }
