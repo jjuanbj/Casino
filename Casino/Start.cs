@@ -7,20 +7,14 @@ using System.Text;
 namespace Casino
 {
     class Start
-    {
-        private Deck deck;
-        private List<Player> players;
-        private Table table;
-
-        public void StartGame()
-        {
-            deck = new Deck();
+    {                
+        public void StartGame(Deck deck, List<Player> players, Table table)
+        {            
             deck.CreateCards();
             deck.ShuffleCards();
 
             Console.WriteLine(English.WelcomeToCasinoGame);
-            string username = "";
-            players = new List<Player>();
+            string username = "";            
 
             while (username != Keyboard.F && username != Keyboard.f)
             {
@@ -45,19 +39,17 @@ namespace Casino
             Console.WriteLine(string.Format(English.Welcome + ": {0}."
                 , string.Join(", ", players.Select(j => j.Name))));
 
-            table = new Table();
-
             deck.DealCardsTable(table);
             deck.DealCardsPlayer(players);
         }
 
-        public void ShowTableCards()
+        public void ShowTableCards(Table table)
         {
             Console.WriteLine(string.Format(English.OnTable + ": {0}."
                 , string.Join(", ", table.Cards.Select(c => new { c.Rank, c.Suit }))));
         }
 
-        public void ShowPlayersCards()
+        public void ShowPlayersCards(List<Player> players)
         {
             foreach (var player in players.Where(p => p.Name != English.Computer))
             {
