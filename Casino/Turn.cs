@@ -23,10 +23,8 @@ namespace Casino
 
         private void SelectYourCard(Player player)
         {
-            int count = 0;
-
-            Console.WriteLine(string.Format(player.Name + " select one card:" + count++ + "{0}."
-                , string.Join(", ", player.Cards.Select(c => new { c.Rank, c.Suit}))));
+            Console.WriteLine(string.Format(player.Name + " select one card by index number: " + "{0}."
+                , string.Join(", ", player.Cards.Select((c, count) => new { Index = count, c.Rank, c.Suit}))));
         }
     }
 }
