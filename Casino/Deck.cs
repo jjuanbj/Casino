@@ -20,7 +20,7 @@ namespace Casino
             {
                 foreach (Rank rank in rankValue)
                 {
-                    DeckCards.Add(new Card(suit, rank));
+                    DeckCards.Add(new Card(rank, suit));
                 }
             }            
         }

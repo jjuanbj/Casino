@@ -22,14 +22,14 @@ namespace Casino
                 username = Console.ReadLine().Trim();
 
                 if (username != Keyboard.F && username != Keyboard.f)
-                {
-                    if (username != English.Computer)
-                    {
-                        players.Add(new Player(username));
-                    }
-                    else if (username == English.Computer)
+                {                    
+                    if (username == English.Computer || String.IsNullOrEmpty(username))
                     {
                         Console.WriteLine(English.ThisNameIsNotAllowed);
+                    }
+                    else
+                    {
+                        players.Add(new Player(username));
                     }
                 }
             }
@@ -46,7 +46,7 @@ namespace Casino
         public void ShowTableCards(Table table)
         {
             Console.WriteLine(string.Format(English.OnTable + ": {0}."
-                , string.Join(", ", table.Cards.Select(c => new { c.Rank, c.Suit }))));
+                , string.Join(", ", table.Cards.Select(c => c.CardName))));
         }
 
         public void ShowPlayersCards(List<Player> players)
@@ -54,7 +54,7 @@ namespace Casino
             foreach (var player in players.Where(p => p.Name != English.Computer))
             {
                 Console.WriteLine(string.Format(player.Name + ": {0}."
-                    , string.Join(", ", player.Cards.Select(c => new { c.Rank, c.Suit }))));
+                    , string.Join(", ", player.Cards.Select(c => c.CardName))));
             }            
         }
     }

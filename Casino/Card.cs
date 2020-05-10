@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Casino
 {
     class Card
     {
-        public Suit Suit { get; set; }
+        [Display(Name = "Card Name")]
+        public string CardName { get; set; }        
         public Rank Rank { get; set; }
+        public Suit Suit { get; set; }
 
-        public Card(Suit suit, Rank rank)
+        public Card(Rank rank, Suit suit)
         {
-            Suit = suit;
+            CardName = rank.ToString() + " of " + suit.ToString();            
 
             Rank = rank;
+
+            Suit = suit;
         }
     }
 }
