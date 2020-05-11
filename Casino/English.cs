@@ -19,5 +19,11 @@ namespace Casino
         public static string OnTable = "On table";
 
         public static string ItsYourTurn = " it's your turn!";
+
+        public static string SelectOneCardByIndexNumber = " select one card by index number: ";
+
+        public static string YouSelected = "You selected: ";
+
+        public static string TypeValidCardNumber = "Type a valid card number.";
     }
 }

@@ -22,22 +22,28 @@ namespace Casino
             }
         }
 
-        private void SelectYourCard(Player player)
+        private Card SelectYourCard(Player player)
         {
-            Console.WriteLine(string.Format(player.Name + " select one card by index number: " + "{0}.", string.Join(", ", player.Cards.Select((c, count) => new { Index = count, c.CardName}))));
+            Console.WriteLine(string.Format(player.Name + English.SelectOneCardByIndexNumber + "{0}.", string.Join(", ", player.Cards.Select((c, count) => new { Index = count, c.CardName}))));
 
             string cardNumber = Console.ReadLine().Trim();
+            Card card = null;
 
-            if (!String.IsNullOrEmpty(cardNumber) 
-                && cardNumber.All(char.IsDigit) 
+            while (card == null)
+            {
+                if (!String.IsNullOrEmpty(cardNumber)
+                && cardNumber.All(char.IsDigit)
                 && Enumerable.Range((int)General.Zero, player.Cards.Count).Contains(Int32.Parse(cardNumber)))
-            {
-                Console.WriteLine("You selected: " + player.Cards.ElementAt(Int32.Parse(cardNumber)).CardName);                
+                {
+                    Console.WriteLine(English.YouSelected + player.Cards.ElementAt(Int32.Parse(cardNumber)).CardName);
+                    card = new Card(player.Cards.ElementAt(Int32.Parse(cardNumber)).CardName);
+                }
+                else
+                {
+                    Console.WriteLine(English.TypeValidCardNumber);
+                }
             }
-            else
-            {
-                Console.WriteLine("False");
-            }                       
+            return card;
         }
     }
 }

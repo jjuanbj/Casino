@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
 
 namespace Casino
@@ -20,6 +21,15 @@ namespace Casino
             Rank = rank;
 
             Suit = suit;
+        }
+
+        public Card(string cardName)
+        {
+            CardName = cardName;
+
+            Rank = (Rank)Enum.Parse(typeof(Rank), cardName.Substring((int)General.Zero, cardName.IndexOf(" ")), true);
+            
+            Suit = (Suit)Enum.Parse(typeof(Suit), cardName.Split(' ').Last(), true);
         }
     }
 }
