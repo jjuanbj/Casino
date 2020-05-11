@@ -18,7 +18,7 @@ namespace Casino
             start.ShowPlayersCards(players);
 
             Turn turn = new Turn();
-            turn.TurnToPlay(players);
+            turn.TurnToPlay(players, table);
         }
     }
 }

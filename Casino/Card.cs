@@ -27,8 +27,8 @@ namespace Casino
         {
             CardName = cardName;
 
-            Rank = (Rank)Enum.Parse(typeof(Rank), cardName.Substring((int)General.Zero, cardName.IndexOf(" ")), true);
-            
+            Rank = (Rank)Enum.Parse(typeof(Rank), cardName.Split(' ').First(), true);
+
             Suit = (Suit)Enum.Parse(typeof(Suit), cardName.Split(' ').Last(), true);
         }
     }
