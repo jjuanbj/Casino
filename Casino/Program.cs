@@ -14,9 +14,7 @@ namespace Casino
 
             Start start = new Start();
             start.StartGame(deck, players, table);
-            start.ShowTableCards(table);
-            start.ShowPlayersCards(players);
-
+            
             Turn turn = new Turn();
             turn.TurnToPlay(players, table);
         }
