@@ -17,7 +17,7 @@ namespace Casino
 
                 if (player.Name != English.Computer)
                 {
-                    player.Play(table);                    
+                    player.Play(table, player);                    
                 }
             }
         }        

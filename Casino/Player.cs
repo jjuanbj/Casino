@@ -14,10 +14,10 @@ namespace Casino
             Name = name;
         }
 
-        public void Play(Table table)
+        public void Play(Table table, Player player)
         {
             Card card = SelectYourCard();
-            Action(card, table);
+            Action(card, table, player);
         }
 
         private Card SelectYourCard()
@@ -47,21 +47,23 @@ namespace Casino
             return card;
         }
 
-        private void Action(Card card, Table table)
+        private void Action(Card card, Table table, Player player)
         {
-            Console.WriteLine("Choose one action: 1- Throw the card to the table, 2-Take a card from the table");
+            ConsoleOutput consoleOutput = new ConsoleOutput();
+
+            consoleOutput.ChooseOneAction();
 
             string userinput = Console.ReadLine();
 
             switch (userinput)
             {
-                case "1":
-                    ThrowTheCardToTheTable(card, table);
+                case Keyboard.one:
+                    ThrowTheCardToTheTable(card, table, player);
                     break;
             }
         }
 
-        private void ThrowTheCardToTheTable(Card card, Table table)
+        private void ThrowTheCardToTheTable(Card card, Table table, Player player)
         {
             table.Cards.Add(card);
             Cards.RemoveAll(c => c.CardName == card.CardName);
@@ -70,7 +72,7 @@ namespace Casino
 
             consoleOutput.ShowTableCards(table);
 
-            //consoleOutput.ShowPlayersCards();
+            consoleOutput.ShowPlayerCards(player);
             
         }
     }

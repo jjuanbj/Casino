@@ -6,8 +6,12 @@ namespace Casino
 {
     static class Keyboard
     {
-        public static string F = "F";
+        public const string F = "F";
 
-        public static string f = "f";
+        public const string f = "f";
+
+        public const string one = "1";
+
+        public const string two = "2";
     }
 }
