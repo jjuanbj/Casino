@@ -5,27 +5,27 @@ using System.Text;
 namespace Casino
 {
     class English : Language
-    {
+    {        
         public new const string WelcomeToCasinoGame = "Welcome to casino game!";
 
-        public new const string PleaseWritePlayerNamesPressFWhenFinished = "Please write player names, press F when finished";
+        public const string PleaseWritePlayerNamesPressFWhenFinished = "Please write player names, press F when finished";
 
-        public new const string Welcome = "Welcome";
+        public const string Welcome = "Welcome";
 
-        public new const string Computer = "Computer";
+        public const string Computer = "Computer";
 
-        public new const string ThisNameIsNotAllowed = "This name is not allowed.";
+        public const string ThisNameIsNotAllowed = "This name is not allowed.";
 
-        public new const string OnTable = "On table";
+        public const string OnTable = "On table";
 
-        public new const string ItsYourTurn = " it's your turn!";
+        public const string ItsYourTurn = " it's your turn!";
 
-        public new const string SelectOneCardByIndexNumber = " select one card by index number: ";
+        public const string SelectOneCardByIndexNumber = " select one card by index number: ";
 
-        public new const string YouSelected = "You selected: ";
+        public const string YouSelected = "You selected: ";
 
-        public new const string TypeValidCardNumber = "Type a valid card number.";
+        public const string TypeValidCardNumber = "Type a valid card number.";
 
-        public new const string ChooseOneAction = "Choose one action: 1- Throw the card to the table, 2-Take a card from the table";
+        public const string ChooseOneAction = "Choose one action: 1- Throw the card to the table, 2-Take a card from the table";        
     }
 }

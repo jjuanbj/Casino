@@ -17,6 +17,10 @@ namespace Casino
 
             consoleOutput.WelcomeToCasinoGame();
 
+            Languages languages = new Languages();
+
+            languages.ChooseLanguage();
+
             string username = "";            
 
             while (username != Keyboard.F && username != Keyboard.f)
