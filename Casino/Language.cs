@@ -6,6 +6,6 @@ namespace Casino
 {
     class Language
     {        
-        public string WelcomeToCasinoGame { get; set; }
+        //public string WelcomeToCasinoGame { get; set; }
     }
 }

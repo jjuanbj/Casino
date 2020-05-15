@@ -9,11 +9,27 @@ namespace Casino
 {
     class Languages
     {
-        
-        public string WelcomeToCasinoGame;
+        public string WelcomeToCasinoGame { get; set; }
 
-        Language language = new Language();
+        public string PleaseWritePlayerNamesPressFWhenFinished { get; set; }
 
+        public string Welcome { get; set; }
+
+        /*public string Computer;
+
+        public string ThisNameIsNotAllowed;
+
+        public string OnTable;
+
+        public string ItsYourTurn;
+
+        public string SelectOneCardByIndexNumber;
+
+        public string YouSelected;
+
+        public string TypeValidCardNumber;
+
+        public string ChooseOneAction;*/
 
         public void ChooseLanguage()
         {
@@ -26,9 +42,9 @@ namespace Casino
             switch (userinput)
             {
                 case Keyboard.one:
-                    
-                    Language language = new Language();
-                    ChoosenLanguage(language);
+                    Spanish spanish = new Spanish();
+                    //Copy(spanish);
+                    this.CopyPropertiesFrom(spanish);
                     break;
                 //case Keyboard.two:
                 //    Language spanish = new Spanish();
@@ -36,11 +52,24 @@ namespace Casino
                 //    break;
 
             }
-        }
-        // reflection to copy properties
-        private void ChoosenLanguage(Language language)
+        }        
+
+        public void Copy(Spanish parent)
         {
-            this.WelcomeToCasinoGame = language.WelcomeToCasinoGame;
-        }       
+            var parentProperties = parent.GetType().GetProperties();
+            var childProperties = this.GetType().GetProperties();
+
+            foreach (var parentProperty in parentProperties)
+            {
+                foreach (var childProperty in childProperties)
+                {
+                    if (parentProperty.Name == childProperty.Name && parentProperty.PropertyType == childProperty.PropertyType)
+                    {
+                        childProperty.SetValue(this, parentProperty.GetValue(parent));
+                        break;
+                    }
+                }
+            }
+        }
     }
 }

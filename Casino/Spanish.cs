@@ -6,7 +6,7 @@ namespace Casino
 {
     class Spanish
     {
-        public const string WelcomeToCasinoGame = "¡Bienvenido al juego de casino!";
+        /*public const string WelcomeToCasinoGame = "¡Bienvenido al juego de casino!";
 
         public const string PleaseWritePlayerNamesPressFWhenFinished = "Por favor, escribe el nombre de los jugadores, presiona F cuando termines";
 
@@ -26,6 +26,19 @@ namespace Casino
 
         public const string TypeValidCardNumber = "Escribe un número de carta válido.";
 
-        public const string ChooseOneAction = "Elige una acción: 1- Lanza la carta sobre la mesa, 2-Toma una carta de la mesa";
+        public const string ChooseOneAction = "Elige una acción: 1- Lanza la carta sobre la mesa, 2-Toma una carta de la mesa";*/
+
+        public string WelcomeToCasinoGame { get; set; }
+
+        public string PleaseWritePlayerNamesPressFWhenFinished { get; set; }
+
+        public string Welcome { get; set; }
+        
+        public Spanish()
+        {
+            WelcomeToCasinoGame = "Welcome to casino game!";
+            PleaseWritePlayerNamesPressFWhenFinished = "Please write player names, press F when finished";
+            Welcome = "Welcome";
+        }
     }
 }

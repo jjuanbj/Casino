@@ -6,12 +6,12 @@ namespace Casino
 {
     class English : Language
     {        
-        public new const string WelcomeToCasinoGame = "Welcome to casino game!";
+        public const string WelcomeToCasinoGame = "Welcome to casino game!";
 
         public const string PleaseWritePlayerNamesPressFWhenFinished = "Please write player names, press F when finished";
 
         public const string Welcome = "Welcome";
-
+        
         public const string Computer = "Computer";
 
         public const string ThisNameIsNotAllowed = "This name is not allowed.";
