@@ -17,9 +17,10 @@ namespace Casino
 
             consoleOutput.WelcomeToCasinoGame();
 
-            Languages languages = new Languages();
+            // Debo usar Computer en un enum para no instanciar speak aquí
+            Speak speak = new Speak();
 
-            languages.ChooseLanguage();
+            speak.ChooseLanguage();
 
             string username = "";            
 
@@ -31,7 +32,7 @@ namespace Casino
 
                 if (username != Keyboard.F && username != Keyboard.f)
                 {                    
-                    if (username == English.Computer || String.IsNullOrEmpty(username))
+                    if (username == speak.Computer || String.IsNullOrEmpty(username))
                     {
                         consoleOutput.ThisNameIsNotAllowed();
                     }
@@ -42,7 +43,7 @@ namespace Casino
                 }
             }
 
-            players.Add(new Player(English.Computer));
+            players.Add(new Player(speak.Computer));
 
             consoleOutput.WelcomePlayers(players);            
 

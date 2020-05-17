@@ -4,28 +4,46 @@ using System.Text;
 
 namespace Casino
 {
-    class English : Language
-    {        
-        public const string WelcomeToCasinoGame = "Welcome to casino game!";
+    class English
+    {   
+        public string WelcomeToCasinoGame { get; private set; }
 
-        public const string PleaseWritePlayerNamesPressFWhenFinished = "Please write player names, press F when finished";
+        public string PleaseWritePlayerNamesPressFWhenFinished { get; private set; }
 
-        public const string Welcome = "Welcome";
-        
-        public const string Computer = "Computer";
+        public string Welcome { get; private set; }
 
-        public const string ThisNameIsNotAllowed = "This name is not allowed.";
+        public string Computer { get; private set; }
 
-        public const string OnTable = "On table";
+        public string ThisNameIsNotAllowed { get; private set; }
 
-        public const string ItsYourTurn = " it's your turn!";
+        public string OnTable { get; private set; }
 
-        public const string SelectOneCardByIndexNumber = " select one card by index number: ";
+        public string ItsYourTurn { get; private set; }
 
-        public const string YouSelected = "You selected: ";
+        public string SelectOneCardByIndexNumber { get; private set; }
 
-        public const string TypeValidCardNumber = "Type a valid card number.";
+        public string YouSelected { get; private set; }
 
-        public const string ChooseOneAction = "Choose one action: 1- Throw the card to the table, 2-Take a card from the table";        
+        public string TypeValidCardNumber { get; private set; }
+
+        public string ChooseOneAction { get; private set; }
+
+        public string ChooseYourLanguage { get; private set; }
+
+        public English()
+        {
+            WelcomeToCasinoGame = "Welcome to casino game!";
+            PleaseWritePlayerNamesPressFWhenFinished = "Please write player names, press F when finished";
+            Welcome = "Welcome";
+            Computer = "Computer";
+            ThisNameIsNotAllowed = "This name is not allowed.";
+            OnTable = "On table";
+            ItsYourTurn = " it's your turn!";
+            SelectOneCardByIndexNumber = " select one card by index number: ";
+            YouSelected = "You selected: ";
+            TypeValidCardNumber = "Type a valid card number.";
+            ChooseOneAction = "Choose one action: 1- Throw the card to the table, 2-Take a card from the table";
+            ChooseYourLanguage = "Choose your language: 1- English, 2- Español";
+        }
     }
 }

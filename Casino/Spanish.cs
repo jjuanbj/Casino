@@ -6,39 +6,44 @@ namespace Casino
 {
     class Spanish
     {
-        /*public const string WelcomeToCasinoGame = "¡Bienvenido al juego de casino!";
+        public string WelcomeToCasinoGame { get; private set; }
 
-        public const string PleaseWritePlayerNamesPressFWhenFinished = "Por favor, escribe el nombre de los jugadores, presiona F cuando termines";
+        public string PleaseWritePlayerNamesPressFWhenFinished { get; private set; }
 
-        public const string Welcome = "Bienvenido";
+        public string Welcome { get; private set; }
 
-        public const string Computer = "Computer";
+        public string Computer { get; private set; }
 
-        public const string ThisNameIsNotAllowed = "Este nombre no está permitido.";
+        public string ThisNameIsNotAllowed { get; private set; }
 
-        public const string OnTable = "En la mesa";
+        public string OnTable { get; private set; }
 
-        public const string ItsYourTurn = " es tu turno!";
+        public string ItsYourTurn { get; private set; }
 
-        public const string SelectOneCardByIndexNumber = " selecciona una carta por su número de orden: ";
+        public string SelectOneCardByIndexNumber { get; private set; }
 
-        public const string YouSelected = "Has seleccionado: ";
+        public string YouSelected { get; private set; }
 
-        public const string TypeValidCardNumber = "Escribe un número de carta válido.";
+        public string TypeValidCardNumber { get; private set; }
 
-        public const string ChooseOneAction = "Elige una acción: 1- Lanza la carta sobre la mesa, 2-Toma una carta de la mesa";*/
+        public string ChooseOneAction { get; private set; }
 
-        public string WelcomeToCasinoGame { get; set; }
+        public string ChooseYourLanguage { get; private set; }
 
-        public string PleaseWritePlayerNamesPressFWhenFinished { get; set; }
-
-        public string Welcome { get; set; }
-        
         public Spanish()
         {
-            WelcomeToCasinoGame = "Welcome to casino game!";
-            PleaseWritePlayerNamesPressFWhenFinished = "Please write player names, press F when finished";
-            Welcome = "Welcome";
+            WelcomeToCasinoGame = "¡Bienvenido al juego de casino!";
+            PleaseWritePlayerNamesPressFWhenFinished = "Por favor escribe el nombre de los jugadores, presiona F cuando termines";
+            Welcome = "Bienvenido";
+            Computer = "Computer";
+            ThisNameIsNotAllowed = "Este nombre no está permitido.";
+            OnTable = "En la mesa";
+            ItsYourTurn = " es tu turno!";
+            SelectOneCardByIndexNumber = " selecciona una carta por su número de orden: ";
+            YouSelected = "Has seleccionado: ";
+            TypeValidCardNumber = "Escribe un número de carta válido.";
+            ChooseOneAction = "Elige una acción: 1- Lanza la carta sobre la mesa, 2-Toma una carta de la mesa";
+            ChooseYourLanguage = "Elige tu idioma: 1- English, 2- Español";
         }
     }
 }

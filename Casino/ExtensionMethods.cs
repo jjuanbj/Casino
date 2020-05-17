@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Casino
 {
-    public static class ObjectExtensionMethods
+    public static class ExtensionMethods
     {
-        public static void CopyPropertiesFrom(this object self, object parent)
+        public static void CopyPropertiesFromObjectToAnother(this object self, object parent)
         {
             var fromProperties = parent.GetType().GetProperties();
             var toProperties = self.GetType().GetProperties();
