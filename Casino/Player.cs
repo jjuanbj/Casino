@@ -9,9 +9,11 @@ namespace Casino
     {
         public string Name { get; set; }
         public List<Card> Cards { get; set; }
+        public ConsoleOutput ConsoleOutput { get; set; }
 
-        public Player(string name) {
+        public Player(string name, ConsoleOutput consoleOutput) {
             Name = name;
+            ConsoleOutput = consoleOutput;
         }
 
         public void Play(Table table, Player player)
@@ -21,10 +23,9 @@ namespace Casino
         }
 
         private Card SelectYourCard()
-        {
-            ConsoleOutput consoleOutput = new ConsoleOutput();
-
-            consoleOutput.SelectOneCardByIndexNumber(this);            
+        {            
+            
+            ConsoleOutput.SelectOneCardByIndexNumber(this);            
 
             string cardNumber = Console.ReadLine().Trim();
             Card card = null;
@@ -35,13 +36,13 @@ namespace Casino
                 && cardNumber.All(char.IsDigit)
                 && Enumerable.Range((int)General.Zero, Cards.Count).Contains(Int32.Parse(cardNumber)))
                 {
-                    consoleOutput.YouSelected(this.Cards, cardNumber);
+                    ConsoleOutput.YouSelected(this.Cards, cardNumber);
 
                     card = new Card(Cards.ElementAt(Int32.Parse(cardNumber)).CardName);
                 }
                 else
                 {
-                    consoleOutput.TypeValidCardNumber();
+                    ConsoleOutput.TypeValidCardNumber();
                 }
             }
             return card;
@@ -49,9 +50,7 @@ namespace Casino
 
         private void Action(Card card, Table table, Player player)
         {
-            ConsoleOutput consoleOutput = new ConsoleOutput();
-
-            consoleOutput.ChooseOneAction();
+            ConsoleOutput.ChooseOneAction();
 
             string userinput = Console.ReadLine();
 
@@ -68,11 +67,9 @@ namespace Casino
             table.Cards.Add(card);
             Cards.RemoveAll(c => c.CardName == card.CardName);
 
-            ConsoleOutput consoleOutput = new ConsoleOutput();
+            ConsoleOutput.ShowTableCards(table);
 
-            consoleOutput.ShowTableCards(table);
-
-            consoleOutput.ShowPlayerCards(player);
+            ConsoleOutput.ShowPlayerCards(player);
             
         }
     }

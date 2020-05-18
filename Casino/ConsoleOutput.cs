@@ -8,38 +8,44 @@ namespace Casino
 {
     class ConsoleOutput
     {
-        private Speak speak = new Speak();
+        public Speak GetSpeak { get; set; }
+
+        public ConsoleOutput(Speak speak)
+        {
+            GetSpeak = speak;
+        }
+        
 
         public void WelcomeToCasinoGame()
         {
-            Console.WriteLine(speak.WelcomeToCasinoGame);
+            Console.WriteLine(GetSpeak.WelcomeToCasinoGame);
         }
 
         public void PleaseWritePlayerNamesPressFWhenFinished()
         {
-            Console.WriteLine(speak.PleaseWritePlayerNamesPressFWhenFinished);
+            Console.WriteLine(GetSpeak.PleaseWritePlayerNamesPressFWhenFinished);
         }
 
         public void ThisNameIsNotAllowed()
         {
-            Console.WriteLine(speak.ThisNameIsNotAllowed);
+            Console.WriteLine(GetSpeak.ThisNameIsNotAllowed);
         }
 
         public void WelcomePlayers(List<Player> players)
         {
-            Console.WriteLine(string.Format(speak.Welcome + ": {0}."
+            Console.WriteLine(string.Format(GetSpeak.Welcome + ": {0}."
                 , string.Join(", ", players.Select(j => j.Name))));
         }
 
         public void ShowTableCards(Table table)
         {
-            Console.WriteLine(string.Format(speak.OnTable + ": {0}."
+            Console.WriteLine(string.Format(GetSpeak.OnTable + ": {0}."
                 , string.Join(", ", table.Cards.Select(c => c.CardName))));
         }
 
         public void ShowPlayersCards(List<Player> players)
         {
-            foreach (var player in players.Where(p => p.Name != speak.Computer))
+            foreach (var player in players.Where(p => p.Name != Constants.Computer))
             {
                 Console.WriteLine(string.Format(player.Name + ": {0}."
                     , string.Join(", ", player.Cards.Select(c => c.CardName))));
@@ -48,39 +54,33 @@ namespace Casino
 
         public void ShowPlayerCards(Player player)
         {
-            Console.WriteLine(string.Format(speak.OnTable + ": {0}."
+            Console.WriteLine(string.Format(GetSpeak.OnTable + ": {0}."
                 , string.Join(", ", player.Cards.Select(c => c.CardName))));
         }
 
         public void SelectOneCardByIndexNumber(Player player)
         {
-            Console.WriteLine(string.Format(player.Name + speak.SelectOneCardByIndexNumber + "{0}.", string.Join(", ", player.Cards.Select((c, count) => new { Index = count, c.CardName }))));
+            Console.WriteLine(string.Format(player.Name + GetSpeak.SelectOneCardByIndexNumber + "{0}.", string.Join(", ", player.Cards.Select((c, count) => new { Index = count, c.CardName }))));
         }
 
         public void YouSelected(List<Card> cards, string cardNumber)
         {
-            Console.WriteLine(speak.YouSelected + cards.ElementAt(Int32.Parse(cardNumber)).CardName);            
+            Console.WriteLine(GetSpeak.YouSelected + cards.ElementAt(Int32.Parse(cardNumber)).CardName);            
         }
 
         public void TypeValidCardNumber()
         {
-            Console.WriteLine(speak.TypeValidCardNumber);
+            Console.WriteLine(GetSpeak.TypeValidCardNumber);
         }
 
         public void ChooseOneAction()
         {
-            Console.WriteLine(speak.ChooseOneAction);
-        }
-
-        public void ChooseLanguage()
-        {
-            //Console.WriteLine(speak.ChooseYourLanguage);
-            Console.WriteLine("Choose your language: 1- English, 2- Español");
+            Console.WriteLine(GetSpeak.ChooseOneAction);
         }
 
         public void ItsYourTurn(Player player)
         {
-            Console.WriteLine(player.Name + speak.ItsYourTurn);
+            Console.WriteLine(player.Name + GetSpeak.ItsYourTurn);
         }
     }
 }

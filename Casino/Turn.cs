@@ -9,18 +9,13 @@ namespace Casino
 {
     class Turn
     {
-        public void TurnToPlay(List<Player> players, Table table)
-        {
-            ConsoleOutput consoleOutput = new ConsoleOutput();
-
-            // Debo usar Computer en un enum para no instanciar speak aquí
-            Speak speak = new Speak();
-
+        public void TurnToPlay(List<Player> players, Table table, ConsoleOutput consoleOutput)
+        {                        
             foreach (var player in players)
             {
                 consoleOutput.ItsYourTurn(player);
                 
-                if (player.Name != speak.Computer)
+                if (player.Name != Constants.Computer)
                 {
                     player.Play(table, player);                    
                 }
