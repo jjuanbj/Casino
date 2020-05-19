@@ -15,16 +15,16 @@ namespace Casino
         {
             Speak = GetSpeak;
         }
-        public void StartGame(Deck deck, List<Player> players, Table table, ConsoleOutput consoleOutput)
+        public void StartGame(Game game)
         {            
-            deck.CreateCards();
-            deck.ShuffleCards();                        
+            game.Deck.CreateCards();
+            game.Deck.ShuffleCards();                        
 
             string username = "";            
 
             while (username != Keyboard.F && username != Keyboard.f)
             {
-                consoleOutput.PleaseWritePlayerNamesPressFWhenFinished();
+                game.ConsoleOutput.PleaseWritePlayerNamesPressFWhenFinished();
 
                 username = Console.ReadLine().Trim();
 
@@ -32,24 +32,24 @@ namespace Casino
                 {                    
                     if (username == Constants.Computer || String.IsNullOrEmpty(username))
                     {
-                        consoleOutput.ThisNameIsNotAllowed();
+                        game.ConsoleOutput.ThisNameIsNotAllowed();
                     }
                     else
                     {
-                        players.Add(new Player(username, consoleOutput));
+                        game.Players.Add(new Player(username, game.ConsoleOutput));
                     }
                 }
             }
 
-            players.Add(new Player(Constants.Computer, consoleOutput));
+            game.Players.Add(new Player(Constants.Computer, game.ConsoleOutput));
 
-            consoleOutput.WelcomePlayers(players);            
+            game.ConsoleOutput.WelcomePlayers(game.Players);            
 
-            deck.DealCardsTable(table);
-            deck.DealCardsPlayer(players);
+            game.Deck.DealCardsTable(game.Table);
+            game.Deck.DealCardsPlayer(game.Players);
 
-            consoleOutput.ShowTableCards(table);
-            consoleOutput.ShowPlayersCards(players);
+            game.ConsoleOutput.ShowTableCards(game.Table);
+            game.ConsoleOutput.ShowPlayersCards(game.Players);
         }
 
         public void ChooseLanguage()

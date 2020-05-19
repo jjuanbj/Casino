@@ -9,15 +9,15 @@ namespace Casino
 {
     class Turn
     {
-        public void TurnToPlay(List<Player> players, Table table, ConsoleOutput consoleOutput)
+        public void TurnToPlay(Game game)
         {                        
-            foreach (var player in players)
+            foreach (var player in game.Players)
             {
-                consoleOutput.ItsYourTurn(player);
+                game.ConsoleOutput.ItsYourTurn(player);
                 
                 if (player.Name != Constants.Computer)
                 {
-                    player.Play(table, player);                    
+                    player.Play(game.Table, player);                    
                 }
             }
         }        

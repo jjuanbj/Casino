@@ -10,16 +10,15 @@ namespace Casino
         {            
             Start start = new Start();
             start.ChooseLanguage();
-            ConsoleOutput consoleOutput = new ConsoleOutput(start.Speak);
-
-            Deck deck = new Deck();
-            List<Player> players = new List<Player>();
-            Table table = new Table();
-            
-            start.StartGame(deck, players, table, consoleOutput);            
+            Game game = new Game
+            {
+                ConsoleOutput = new ConsoleOutput(start.Speak)
+            };            
+                        
+            start.StartGame(game);            
             
             Turn turn = new Turn();
-            turn.TurnToPlay(players, table, consoleOutput);
+            turn.TurnToPlay(game);
         }
     }
 }
