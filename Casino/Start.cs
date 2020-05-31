@@ -61,11 +61,11 @@ namespace Casino
 
             switch (userinput)
             {
-                case Keyboard.one:
+                case Keyboard.One:
                     English english = new English();
                     GetSpeak.CopyPropertiesFromObjectToAnother(english);
                     break;
-                case Keyboard.two:
+                case Keyboard.Two:
                     Spanish spanish = new Spanish();
                     GetSpeak.CopyPropertiesFromObjectToAnother(spanish);
                     break;

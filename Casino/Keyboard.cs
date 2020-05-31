@@ -10,8 +10,8 @@ namespace Casino
 
         public const string f = "f";
 
-        public const string one = "1";
+        public const string One = "1";
 
-        public const string two = "2";
+        public const string Two = "2";
     }
 }

@@ -30,6 +30,12 @@ namespace Casino
 
         public string ChooseYourLanguage { get; private set; }
 
+        public string WhichCardWouldYouLikeToTakeFromTheTable { get; set; }
+
+        public string CapturedCards { get; set; }
+
+        public string YourCards { get; set; }
+
         public English()
         {
             WelcomeToCasinoGame = "Welcome to casino game!";
@@ -44,6 +50,9 @@ namespace Casino
             TypeValidCardNumber = "Type a valid card number.";
             ChooseOneAction = "Choose one action: 1- Throw the card to the table, 2-Take a card from the table";
             ChooseYourLanguage = "Choose your language: 1- English, 2- Español";
+            WhichCardWouldYouLikeToTakeFromTheTable = "Which card would you like to take from the table?";
+            CapturedCards = "Captured cards: ";
+            YourCards = "Your cards: ";
         }
     }
 }

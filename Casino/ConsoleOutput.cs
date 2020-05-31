@@ -54,7 +54,7 @@ namespace Casino
 
         public void ShowPlayerCards(Player player)
         {
-            Console.WriteLine(string.Format(GetSpeak.OnTable + ": {0}."
+            Console.WriteLine(string.Format(GetSpeak.YourCards + ": {0}."
                 , string.Join(", ", player.Cards.Select(c => c.CardName))));
         }
 
@@ -78,9 +78,21 @@ namespace Casino
             Console.WriteLine(GetSpeak.ChooseOneAction);
         }
 
+        public void WhichCardWouldYouLikeToTakeFromTheTable(Table table)
+        {
+            Console.WriteLine(string.Format(GetSpeak.WhichCardWouldYouLikeToTakeFromTheTable 
+                + "{0}.", string.Join(", ", table.Cards.Select((c, count) => new { Index = count, c.CardName }))));
+        }
+
         public void ItsYourTurn(Player player)
         {
             Console.WriteLine(player.Name + GetSpeak.ItsYourTurn);
+        }
+
+        public void ShowCapturedCards(Player player)
+        {
+            Console.WriteLine(string.Format(GetSpeak.CapturedCards + ": {0}."
+                , string.Join(", ", player.CapturedCards.Select(c => c.CardName))));
         }
     }
 }

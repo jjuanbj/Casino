@@ -30,5 +30,11 @@ namespace Casino
         public string ChooseOneAction { get; private set; }
       
         public string ChooseYourLanguage { get; set; }
+
+        public string WhichCardWouldYouLikeToTakeFromTheTable { get; set; }
+
+        public string CapturedCards { get; set; }
+
+        public string YourCards { get; set; }
     }
 }
