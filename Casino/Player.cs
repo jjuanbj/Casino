@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualBasic;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +20,8 @@ namespace Casino
         }
 
         public void Play(Table table, Player player)
-        {
-            Card card = SelectYourCard();
-            Action(card, table, player);
+        {            
+            Action(table, player);
         }
 
         private Card SelectYourCard()
@@ -51,11 +50,13 @@ namespace Casino
             return card;
         }
 
-        private void Action(Card card, Table table, Player player)
+        private void Action(Table table, Player player)
         {
             ConsoleOutput.ChooseOneAction();
-
+            
             string userinput = Console.ReadLine();
+
+            Card card = SelectYourCard();
 
             switch (userinput)
             {
@@ -65,7 +66,6 @@ namespace Casino
                 case Keyboard.Two:
                     TakeCardFromTheTable(table, card);
                     break;
-
             }
         }
 
@@ -102,12 +102,15 @@ namespace Casino
                 }
             }
 
-            table.Cards.RemoveAll(c => c.Rank == card.Rank);
-            CapturedCards.Add(card);
-            CapturedCards.Add(cardSelected);
+            if(cardSelected.Rank == card.Rank)
+            {
+                table.Cards.RemoveAll(c => c.Rank == card.Rank);
+                CapturedCards.Add(card);
+                CapturedCards.Add(cardSelected);
 
-            ConsoleOutput.ShowTableCards(table);
-            ConsoleOutput.ShowCapturedCards(this);
+                ConsoleOutput.ShowTableCards(table);
+                ConsoleOutput.ShowCapturedCards(this);
+            }            
         }
     }
 }
