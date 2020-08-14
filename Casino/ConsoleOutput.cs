@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+//using Console = Colorful.Console;
 
 namespace Casino
 {
@@ -11,88 +12,163 @@ namespace Casino
         public Speak GetSpeak { get; set; }
 
         public ConsoleOutput(Speak speak)
-        {
-            GetSpeak = speak;
+        {            
+            GetSpeak = speak;            
         }
         
 
         public void WelcomeToCasinoGame()
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine(GetSpeak.WelcomeToCasinoGame);
+            
+            Console.ResetColor();
         }
 
         public void PleaseWritePlayerNamesPressFWhenFinished()
         {
-            Console.WriteLine(GetSpeak.PleaseWritePlayerNamesPressFWhenFinished);
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(GetSpeak.PleaseWritePlayerNamesPress);
+            
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(GetSpeak.F);
+            
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine(GetSpeak.WhenFinished);
+
+            Console.ResetColor();
         }
 
         public void ThisNameIsNotAllowed()
         {
+            Console.ForegroundColor = ConsoleColor.Red;            
             Console.WriteLine(GetSpeak.ThisNameIsNotAllowed);
+
+            Console.ResetColor();
         }
 
         public void WelcomePlayers(List<Player> players)
         {
-            Console.WriteLine(string.Format(GetSpeak.Welcome + ": {0}."
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(GetSpeak.Welcome);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(string.Format(": {0}."
                 , string.Join(", ", players.Select(j => j.Name))));
+            
+            Console.ResetColor();
         }
 
         public void ShowTableCards(Table table)
         {
-            Console.WriteLine(string.Format(GetSpeak.OnTable + ": {0}."
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(GetSpeak.OnTable);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(string.Format(": {0}."
                 , string.Join(", ", table.Cards.Select(c => c.CardName))));
+
+            Console.ResetColor();
         }
 
         public void ShowPlayersCards(List<Player> players)
-        {
+        {            
             foreach (var player in players.Where(p => p.Name != Constants.Computer))
             {
-                Console.WriteLine(string.Format(player.Name + ": {0}."
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write(player.Name);
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(string.Format(": {0}."
                     , string.Join(", ", player.Cards.Select(c => c.CardName))));
             }
+
+            Console.ResetColor();
         }
 
         public void ShowPlayerCards(Player player)
         {
-            Console.WriteLine(string.Format(GetSpeak.YourCards + ": {0}."
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(GetSpeak.YourCards);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(string.Format(": {0}."
                 , string.Join(", ", player.Cards.Select(c => c.CardName))));
+            
+            Console.ResetColor();
         }
 
         public void SelectOneCardByIndexNumber(Player player)
         {
-            Console.WriteLine(string.Format(player.Name + GetSpeak.SelectOneCardByIndexNumber + "{0}.", string.Join(", ", player.Cards.Select((c, count) => new { Index = count, c.CardName }))));
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(player.Name + GetSpeak.SelectOneCardByIndexNumber);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(string.Format("{0}."
+            , string.Join(", ", player.Cards.Select((c, count) => new { Index = count, c.CardName }))));
+            
+            Console.ResetColor();
         }
 
         public void YouSelected(List<Card> cards, string cardNumber)
         {
-            Console.WriteLine(GetSpeak.YouSelected + cards.ElementAt(Int32.Parse(cardNumber)).CardName);            
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(GetSpeak.YouSelected);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(cards.ElementAt(Int32.Parse(cardNumber)).CardName);
+            
+            Console.ResetColor();            
         }
 
         public void TypeValidCardNumber()
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine(GetSpeak.TypeValidCardNumber);
+            
+            Console.ResetColor();
         }
 
         public void ChooseOneAction()
         {
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine(GetSpeak.ChooseOneAction);
+            
+            Console.ResetColor();
         }
 
         public void WhichCardWouldYouLikeToTakeFromTheTable(Table table)
         {
-            Console.WriteLine(string.Format(GetSpeak.WhichCardWouldYouLikeToTakeFromTheTable 
-                + "{0}.", string.Join(", ", table.Cards.Select((c, count) => new { Index = count, c.CardName }))));
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(GetSpeak.WhichCardWouldYouLikeToTakeFromTheTable);
+            
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(string.Format("{0}."
+            , string.Join(", ", table.Cards.Select((c, count) => new { Index = count, c.CardName }))));
+            
+            Console.ResetColor();
         }
 
         public void ItsYourTurn(Player player)
         {
-            Console.WriteLine(player.Name + GetSpeak.ItsYourTurn);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(player.Name);
+
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine(GetSpeak.ItsYourTurn);
+
+            Console.ResetColor();
         }
 
         public void ShowCapturedCards(Player player)
         {
-            Console.WriteLine(string.Format(GetSpeak.CapturedCards + ": {0}."
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(GetSpeak.CapturedCards);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(string.Format(": {0}."
                 , string.Join(", ", player.CapturedCards.Select(c => c.CardName))));
+            Console.ResetColor();
         }
     }
 }

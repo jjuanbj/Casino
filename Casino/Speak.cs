@@ -11,7 +11,11 @@ namespace Casino
     {
         public string WelcomeToCasinoGame { get; private set; }
 
-        public string PleaseWritePlayerNamesPressFWhenFinished { get; private set; }
+        public string PleaseWritePlayerNamesPress { get; private set; }
+
+        public string F { get; private set; }
+
+        public string WhenFinished { get; private set; }
 
         public string Welcome { get; private set; }
                 

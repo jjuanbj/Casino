@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace Casino
 {
@@ -53,9 +54,20 @@ namespace Casino
         }
 
         public void ChooseLanguage()
-        {            
-            Console.WriteLine(Constants.WelcomeToCasinoGame);
-            Console.WriteLine(Constants.ChooseYourLanguageEnglishEspañol);
+        {           
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            const string WELCOME_TO_CASINO_GAME = "Welcome to Casino Game!";
+            Console.WriteLine(WELCOME_TO_CASINO_GAME);
+
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            const string CHOOSE_YOUR_LANGUAGE = "Choose your language: ";
+            Console.Write(CHOOSE_YOUR_LANGUAGE);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            const string ENGLISH_ESPANOL = "1- English, 2- Español";
+            Console.WriteLine(ENGLISH_ESPANOL);
+            
+            Console.ResetColor();
 
             string userinput = Console.ReadLine();
 

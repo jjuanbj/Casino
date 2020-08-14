@@ -8,7 +8,11 @@ namespace Casino
     {   
         public string WelcomeToCasinoGame { get; private set; }
 
-        public string PleaseWritePlayerNamesPressFWhenFinished { get; private set; }
+        public string PleaseWritePlayerNamesPress { get; private set; }
+
+        public string F { get; private set; }
+
+        public string WhenFinished { get; private set; }
 
         public string Welcome { get; private set; }
 
@@ -39,7 +43,9 @@ namespace Casino
         public English()
         {
             WelcomeToCasinoGame = "Welcome to casino game!";
-            PleaseWritePlayerNamesPressFWhenFinished = "Please write player names, press F when finished";
+            PleaseWritePlayerNamesPress = "Please write player names, press ";
+            F = "F";
+            WhenFinished = " when finished";
             Welcome = "Welcome";
             Computer = "Computer";
             ThisNameIsNotAllowed = "This name is not allowed.";
@@ -50,7 +56,7 @@ namespace Casino
             TypeValidCardNumber = "Type a valid card number.";
             ChooseOneAction = "Choose one action: 1- Throw the card to the table, 2-Take a card from the table";
             ChooseYourLanguage = "Choose your language: 1- English, 2- Español";
-            WhichCardWouldYouLikeToTakeFromTheTable = "Which card would you like to take from the table?";
+            WhichCardWouldYouLikeToTakeFromTheTable = "Which card would you like to take from the table? ";
             CapturedCards = "Captured cards: ";
             YourCards = "Your cards: ";
         }
