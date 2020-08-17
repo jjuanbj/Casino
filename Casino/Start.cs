@@ -23,13 +23,13 @@ namespace Casino
 
             string username = "";            
 
-            while (username != Keyboard.F && username != Keyboard.f)
+            while (username != Keyboard.UPPERCASE_F && username != Keyboard.LOWERCASE_F)
             {
                 game.ConsoleOutput.PleaseWritePlayerNamesPressFWhenFinished();
 
                 username = Console.ReadLine().Trim();
 
-                if (username != Keyboard.F && username != Keyboard.f)
+                if (username != Keyboard.UPPERCASE_F && username != Keyboard.LOWERCASE_F)
                 {                    
                     if (username == Constants.Computer || String.IsNullOrEmpty(username))
                     {
@@ -69,19 +69,24 @@ namespace Casino
             
             Console.ResetColor();
 
-            string userinput = Console.ReadLine();
+            string userinput = "";
 
-            switch (userinput)
-            {
-                case Keyboard.One:
-                    English english = new English();
-                    GetSpeak.CopyPropertiesFromObjectToAnother(english);
-                    break;
-                case Keyboard.Two:
-                    Spanish spanish = new Spanish();
-                    GetSpeak.CopyPropertiesFromObjectToAnother(spanish);
-                    break;
-            }
+            while (userinput != Keyboard.ONE && userinput != Keyboard.TWO){
+                
+                userinput = Console.ReadLine().Trim();
+
+                switch (userinput)
+                {
+                    case Keyboard.ONE:
+                        English english = new English();
+                        GetSpeak.CopyPropertiesFromObjectToAnother(english);
+                        break;
+                    case Keyboard.TWO:
+                        Spanish spanish = new Spanish();
+                        GetSpeak.CopyPropertiesFromObjectToAnother(spanish);
+                        break;                                        
+                }
+            }            
         }
     }
 }

@@ -21,6 +21,8 @@ namespace Casino
                 
         public string ThisNameIsNotAllowed { get; private set; }
 
+        public string ThisIsNotAnAllowedAction { get; private set; }
+
         public string OnTable { get; private set; }
 
         public string ItsYourTurn { get; private set; }

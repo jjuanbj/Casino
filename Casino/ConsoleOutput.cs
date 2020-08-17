@@ -47,6 +47,14 @@ namespace Casino
             Console.ResetColor();
         }
 
+        public void ThisIsNotAnAllowedAction()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;            
+            Console.WriteLine(GetSpeak.ThisIsNotAnAllowedAction);
+
+            Console.ResetColor();
+        }
+
         public void WelcomePlayers(List<Player> players)
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
@@ -123,7 +131,7 @@ namespace Casino
 
         public void TypeValidCardNumber()
         {
-            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(GetSpeak.TypeValidCardNumber);
             
             Console.ResetColor();

@@ -6,12 +6,12 @@ namespace Casino
 {
     static class Keyboard
     {
-        public const string F = "F";
+        public const string UPPERCASE_F = "F";
 
-        public const string f = "f";
+        public const string LOWERCASE_F = "f";
 
-        public const string One = "1";
+        public const string ONE = "1";
 
-        public const string Two = "2";
+        public const string TWO = "2";
     }
 }

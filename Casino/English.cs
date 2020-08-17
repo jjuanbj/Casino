@@ -20,6 +20,8 @@ namespace Casino
 
         public string ThisNameIsNotAllowed { get; private set; }
 
+        public string ThisIsNotAnAllowedAction { get; private set; }
+
         public string OnTable { get; private set; }
 
         public string ItsYourTurn { get; private set; }
@@ -49,6 +51,7 @@ namespace Casino
             Welcome = "Welcome";
             Computer = "Computer";
             ThisNameIsNotAllowed = "This name is not allowed.";
+            ThisIsNotAnAllowedAction = "This is not an allowed action";
             OnTable = "On table";
             ItsYourTurn = " it's your turn!";
             SelectOneCardByIndexNumber = " select one card by index number: ";

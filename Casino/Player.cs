@@ -24,16 +24,19 @@ namespace Casino
             Action(table, player);
         }
 
+        // TODO Check this method when user throw bad arguments
         private Card SelectYourCard()
         {            
             
             ConsoleOutput.SelectOneCardByIndexNumber(this);            
 
-            string cardNumber = Console.ReadLine().Trim();
+            string cardNumber = "";
             Card card = null;
 
-            while (card == null)
+            while (String.IsNullOrEmpty(cardNumber))
             {
+                cardNumber = Console.ReadLine().Trim();
+
                 if (!String.IsNullOrEmpty(cardNumber)
                 && cardNumber.All(char.IsDigit)
                 && Enumerable.Range((int)General.Zero, Cards.Count).Contains(Int32.Parse(cardNumber)))
@@ -45,6 +48,7 @@ namespace Casino
                 else
                 {
                     ConsoleOutput.TypeValidCardNumber();
+                    continue;                    
                 }
             }
             return card;
@@ -54,19 +58,29 @@ namespace Casino
         {
             ConsoleOutput.ChooseOneAction();
             
-            string userinput = Console.ReadLine();
+            string userinput = "";
+
+            while (userinput != Keyboard.ONE && userinput != Keyboard.TWO){
+                
+                userinput = Console.ReadLine().Trim();
+
+                if (userinput != Keyboard.ONE && userinput != Keyboard.TWO){
+                    ConsoleOutput.ThisIsNotAnAllowedAction();
+                    ConsoleOutput.ChooseOneAction();
+                }
+            }
 
             Card card = SelectYourCard();
 
             switch (userinput)
             {
-                case Keyboard.One:
+                case Keyboard.ONE:
                     ThrowTheCardToTheTable(card, table, player);
                     break;
-                case Keyboard.Two:
+                case Keyboard.TWO:
                     TakeCardFromTheTable(table, card);
                     break;
-            }
+            }            
         }
 
         private void ThrowTheCardToTheTable(Card card, Table table, Player player)
@@ -83,11 +97,16 @@ namespace Casino
         {
             ConsoleOutput.WhichCardWouldYouLikeToTakeFromTheTable(table);
 
-            string cardNumber = Console.ReadLine().Trim();
+            string cardNumber = "";
+            
             Card card = null;
 
-            while (card == null)
+            while (!String.IsNullOrEmpty(cardNumber)
+                && cardNumber.All(char.IsDigit)
+                && Enumerable.Range((int)General.Zero, table.Cards.Count).Contains(Int32.Parse(cardNumber)))
             {
+                cardNumber = Console.ReadLine().Trim();
+
                 if (!String.IsNullOrEmpty(cardNumber)
                 && cardNumber.All(char.IsDigit)
                 && Enumerable.Range((int)General.Zero, table.Cards.Count).Contains(Int32.Parse(cardNumber)))
@@ -99,6 +118,10 @@ namespace Casino
                 else
                 {
                     ConsoleOutput.TypeValidCardNumber();
+                    ConsoleOutput.WhichCardWouldYouLikeToTakeFromTheTable(table);
+                    
+                    cardNumber = Console.ReadLine().Trim();
+
                 }
             }
 
