@@ -42,6 +42,12 @@ namespace Casino
 
         public string YourCards { get; set; }
 
+        public string Press { get; set; }
+
+        public string A { get; set; }
+
+        public string IfYouWantToSelectAnotherAction { get; set; }
+
         public English()
         {
             WelcomeToCasinoGame = "Welcome to casino game!";
@@ -62,6 +68,9 @@ namespace Casino
             WhichCardWouldYouLikeToTakeFromTheTable = "Which card would you like to take from the table? ";
             CapturedCards = "Captured cards: ";
             YourCards = "Your cards: ";
+            Press = "Press ";
+            A = "A";
+            IfYouWantToSelectAnotherAction = " if you want to select another action.";                        
         }
     }
 }

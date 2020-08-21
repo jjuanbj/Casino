@@ -21,14 +21,14 @@ namespace Casino
 
         public void Play(Table table, Player player)
         {            
-            Action(table, player);
+            Actuate(table, player);
         }
-
-        // TODO Check this method when user throw bad arguments
+ 
         private Card SelectYourCard()
         {            
             
             ConsoleOutput.SelectOneCardByIndexNumber(this);            
+            ConsoleOutput.PressAIfYouWantToSelectAnotherAction();
 
             string cardNumber = "";
             Card card = null;
@@ -36,6 +36,10 @@ namespace Casino
             while (String.IsNullOrEmpty(cardNumber))
             {
                 cardNumber = Console.ReadLine().Trim();
+
+                if (cardNumber == "A"){
+                    //TODO It need to let the user to select another action if press A    
+                }
 
                 if (!String.IsNullOrEmpty(cardNumber)
                 && cardNumber.All(char.IsDigit)
@@ -48,13 +52,14 @@ namespace Casino
                 else
                 {
                     ConsoleOutput.TypeValidCardNumber();
+                    cardNumber = "";
                     continue;                    
                 }
             }
             return card;
         }
 
-        private void Action(Table table, Player player)
+        private void Actuate(Table table, Player player)
         {
             ConsoleOutput.ChooseOneAction();
             
@@ -101,9 +106,7 @@ namespace Casino
             
             Card card = null;
 
-            while (!String.IsNullOrEmpty(cardNumber)
-                && cardNumber.All(char.IsDigit)
-                && Enumerable.Range((int)General.Zero, table.Cards.Count).Contains(Int32.Parse(cardNumber)))
+            while (String.IsNullOrEmpty(cardNumber))
             {
                 cardNumber = Console.ReadLine().Trim();
 
@@ -118,22 +121,25 @@ namespace Casino
                 else
                 {
                     ConsoleOutput.TypeValidCardNumber();
-                    ConsoleOutput.WhichCardWouldYouLikeToTakeFromTheTable(table);
-                    
-                    cardNumber = Console.ReadLine().Trim();
-
+                    cardNumber = "";
+                    continue;
                 }
-            }
 
-            if(cardSelected.Rank == card.Rank)
-            {
-                table.Cards.RemoveAll(c => c.Rank == card.Rank);
-                CapturedCards.Add(card);
-                CapturedCards.Add(cardSelected);
+                if (cardSelected.Rank == card.Rank)
+                {
+                    table.Cards.RemoveAll(c => c.Rank == card.Rank);
+                    CapturedCards.Add(card);
+                    CapturedCards.Add(cardSelected);
 
-                ConsoleOutput.ShowTableCards(table);
-                ConsoleOutput.ShowCapturedCards(this);
-            }            
+                    ConsoleOutput.ShowTableCards(table);
+                    ConsoleOutput.ShowCapturedCards(this);
+                } else
+                {
+                    ConsoleOutput.TypeValidCardNumber();
+                    cardNumber = "";
+                    continue;
+                }
+            }                        
         }
     }
 }

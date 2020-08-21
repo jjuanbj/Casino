@@ -178,5 +178,19 @@ namespace Casino
                 , string.Join(", ", player.CapturedCards.Select(c => c.CardName))));
             Console.ResetColor();
         }
+
+        public void PressAIfYouWantToSelectAnotherAction()
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(GetSpeak.Press);
+            
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(GetSpeak.A);
+            
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine(GetSpeak.IfYouWantToSelectAnotherAction);
+
+            Console.ResetColor();
+        }
     }
 }

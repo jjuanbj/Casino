@@ -42,5 +42,11 @@ namespace Casino
         public string CapturedCards { get; set; }
 
         public string YourCards { get; set; }
+        
+        public string Press { get; set; }
+
+        public string A { get; set; }
+
+        public string IfYouWantToSelectAnotherAction { get; set; }
     }
 }
