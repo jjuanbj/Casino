@@ -22,7 +22,7 @@ namespace Casino
             game.Deck.ShuffleCards();                        
 
             string username = "";            
-
+            
             while (username != Keyboard.UPPERCASE_F && username != Keyboard.LOWERCASE_F)
             {
                 game.ConsoleOutput.PleaseWritePlayerNamesPressFWhenFinished();
@@ -37,9 +37,11 @@ namespace Casino
                     }
                     else
                     {
-                        game.Players.Add(new Player(username, game.ConsoleOutput));
-                    }
-                }
+                        game.Players.Add(new Player(username, game.ConsoleOutput));                        
+                    }                    
+                } else if (!game.Players.Any()) {
+                    username = "";
+                }                
             }
 
             game.Players.Add(new Player(Constants.Computer, game.ConsoleOutput));
