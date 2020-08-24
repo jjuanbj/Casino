@@ -19,16 +19,38 @@ namespace Casino
             CapturedCards = new List<Card>();
         }
 
-        public void Play(Table table, Player player)
-        {            
-            Actuate(table, player);
-        }
- 
-        private Card SelectYourCard()
-        {            
+        public void Play(Table table)
+        {
+            Card card = SelectYourCard();
+
+            ConsoleOutput.ChooseOneAction();
             
+            string userinput = "";
+
+            while (userinput != Keyboard.ONE && userinput != Keyboard.TWO){
+                
+                userinput = Console.ReadLine().Trim();
+
+                if (userinput != Keyboard.ONE && userinput != Keyboard.TWO){
+                    ConsoleOutput.ThisIsNotAnAllowedAction();
+                    ConsoleOutput.ChooseOneAction();
+                }
+            }            
+
+            switch (userinput)
+            {
+                case Keyboard.ONE:
+                    ThrowTheCardToTheTable(card, table);
+                    break;
+                case Keyboard.TWO:
+                    TakeCardFromTheTable(card, table);
+                    break;
+            }            
+        }
+
+        private Card SelectYourCard()
+        {                   
             ConsoleOutput.SelectOneCardByIndexNumber(this);            
-            ConsoleOutput.PressAIfYouWantToSelectAnotherAction();
 
             string cardNumber = "";
             Card card = null;
@@ -36,10 +58,6 @@ namespace Casino
             while (String.IsNullOrEmpty(cardNumber))
             {
                 cardNumber = Console.ReadLine().Trim();
-
-                if (cardNumber == "A"){
-                    //TODO It need to let the user to select another action if press A    
-                }
 
                 if (!String.IsNullOrEmpty(cardNumber)
                 && cardNumber.All(char.IsDigit)
@@ -59,46 +77,17 @@ namespace Casino
             return card;
         }
 
-        private void Actuate(Table table, Player player)
-        {
-            ConsoleOutput.ChooseOneAction();
-            
-            string userinput = "";
-
-            while (userinput != Keyboard.ONE && userinput != Keyboard.TWO){
-                
-                userinput = Console.ReadLine().Trim();
-
-                if (userinput != Keyboard.ONE && userinput != Keyboard.TWO){
-                    ConsoleOutput.ThisIsNotAnAllowedAction();
-                    ConsoleOutput.ChooseOneAction();
-                }
-            }
-
-            Card card = SelectYourCard();
-
-            switch (userinput)
-            {
-                case Keyboard.ONE:
-                    ThrowTheCardToTheTable(card, table, player);
-                    break;
-                case Keyboard.TWO:
-                    TakeCardFromTheTable(table, card);
-                    break;
-            }            
-        }
-
-        private void ThrowTheCardToTheTable(Card card, Table table, Player player)
+        private void ThrowTheCardToTheTable(Card card, Table table)
         {
             table.Cards.Add(card);
             Cards.RemoveAll(c => c.CardName == card.CardName);
 
             ConsoleOutput.ShowTableCards(table);
 
-            ConsoleOutput.ShowPlayerCards(player);            
+            ConsoleOutput.ShowPlayerCards(this);            
         }
 
-        private void TakeCardFromTheTable(Table table, Card cardSelected)
+        private void TakeCardFromTheTable(Card cardSelected, Table table)
         {
             ConsoleOutput.WhichCardWouldYouLikeToTakeFromTheTable(table);
 
@@ -135,9 +124,9 @@ namespace Casino
                     ConsoleOutput.ShowCapturedCards(this);
                 } else
                 {
-                    ConsoleOutput.TypeValidCardNumber();
-                    cardNumber = "";
-                    continue;
+                    ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
+                    ThrowTheCardToTheTable(cardSelected, table);
+                    break;
                 }
             }                        
         }

@@ -48,6 +48,8 @@ namespace Casino
 
         public string IfYouWantToSelectAnotherAction { get; set; }
 
+        public string YouJustLostYourCardBecauseItIsInvalid { get; set; }
+
         public English()
         {
             WelcomeToCasinoGame = "Welcome to casino game!";
@@ -71,6 +73,7 @@ namespace Casino
             Press = "Press ";
             A = "A";
             IfYouWantToSelectAnotherAction = " if you want to select another action.";                        
+            YouJustLostYourCardBecauseItIsInvalid = "You just lost your card because it is invalid";
         }
     }
 }

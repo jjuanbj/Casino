@@ -137,6 +137,14 @@ namespace Casino
             Console.ResetColor();
         }
 
+        public void YouJustLostYourCardBecauseItIsInvalid()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(GetSpeak.YouJustLostYourCardBecauseItIsInvalid);
+            
+            Console.ResetColor();
+        }
+
         public void ChooseOneAction()
         {
             Console.ForegroundColor = ConsoleColor.Magenta;

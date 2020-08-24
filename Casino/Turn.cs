@@ -17,7 +17,7 @@ namespace Casino
                 
                 if (player.Name != Constants.Computer)
                 {
-                    player.Play(game.Table, player);                    
+                    player.Play(game.Table);                    
                 }
             }
         }        

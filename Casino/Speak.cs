@@ -48,5 +48,7 @@ namespace Casino
         public string A { get; set; }
 
         public string IfYouWantToSelectAnotherAction { get; set; }
+
+        public string YouJustLostYourCardBecauseItIsInvalid { get; set; }
     }
 }
