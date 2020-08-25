@@ -37,6 +37,7 @@ namespace Casino
                 }
             }            
 
+            // Create action: 3-Gather two cards from the table, 4-Match your card with other cards on the table
             switch (userinput)
             {
                 case Keyboard.ONE:
@@ -87,48 +88,55 @@ namespace Casino
             ConsoleOutput.ShowPlayerCards(this);            
         }
 
-        private void TakeCardFromTheTable(Card cardSelected, Table table)
+        private void TakeCardFromTheTable(Card selectedCard, Table table)
         {
             ConsoleOutput.WhichCardWouldYouLikeToTakeFromTheTable(table);
 
-            string cardNumber = "";
+            string cardRank = "";
             
-            Card card = null;
+            List<Card> tableCards = new List<Card>();
 
-            while (String.IsNullOrEmpty(cardNumber))
+            while (cardRank != Keyboard.UPPERCASE_F && cardRank != Keyboard.LOWERCASE_F)
             {
-                cardNumber = Console.ReadLine().Trim();
+                cardRank = Console.ReadLine().Trim();
+                
+                // Fix DRY
+                if(String.IsNullOrEmpty(cardRank)){
+                    ConsoleOutput.TypeValidCardNumber();
+                    cardRank = "";
+                    continue;
+                } else if (cardRank != Keyboard.UPPERCASE_F 
+                        && cardRank != Keyboard.LOWERCASE_F
+                        && cardRank.All(char.IsDigit)
+                        && Enumerable.Range((int)General.Zero, table.Cards.Count).Contains(Int32.Parse(cardRank)))
+                        {
+                    ConsoleOutput.YouSelected(table.Cards, cardRank);
 
-                if (!String.IsNullOrEmpty(cardNumber)
-                && cardNumber.All(char.IsDigit)
-                && Enumerable.Range((int)General.Zero, table.Cards.Count).Contains(Int32.Parse(cardNumber)))
-                {
-                    ConsoleOutput.YouSelected(table.Cards, cardNumber);
-
-                    card = new Card(table.Cards.ElementAt(Int32.Parse(cardNumber)).CardName);
+                    tableCards.Add(table.Cards.ElementAt(Int32.Parse(cardRank)));                    
+                }  else if ((cardRank == Keyboard.UPPERCASE_F || cardRank == Keyboard.LOWERCASE_F) && tableCards.Any()){
+                    break;
                 }
                 else
                 {
                     ConsoleOutput.TypeValidCardNumber();
-                    cardNumber = "";
+                    cardRank = "";
                     continue;
-                }
+                }                
+            }   
 
-                if (cardSelected.Rank == card.Rank)
-                {
-                    table.Cards.RemoveAll(c => c.Rank == card.Rank);
-                    CapturedCards.Add(card);
-                    CapturedCards.Add(cardSelected);
+            if (tableCards.Sum(c => Convert.ToInt32(c.Rank)) % Convert.ToInt32(selectedCard.Rank) == 0)
+            {
+                table.Cards.RemoveAll(c => tableCards.Contains(c));
+                CapturedCards.AddRange(tableCards);
+                CapturedCards.Add(selectedCard);
 
-                    ConsoleOutput.ShowTableCards(table);
-                    ConsoleOutput.ShowCapturedCards(this);
-                } else
-                {
-                    ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
-                    ThrowTheCardToTheTable(cardSelected, table);
-                    break;
-                }
-            }                        
+                ConsoleOutput.ShowTableCards(table);
+                ConsoleOutput.ShowCapturedCards(this);
+            } else
+            {
+                ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
+                ThrowTheCardToTheTable(selectedCard, table);                    
+            }                     
         }
     }
 }
