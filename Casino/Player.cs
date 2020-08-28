@@ -37,7 +37,6 @@ namespace Casino
                 }
             }            
 
-            // Create action: 3-Gather two cards from the table, 4-Match your card with other cards on the table
             switch (userinput)
             {
                 case Keyboard.ONE:
@@ -91,7 +90,8 @@ namespace Casino
         private void TakeCardFromTheTable(Card selectedCard, Table table)
         {
             ConsoleOutput.WhichCardWouldYouLikeToTakeFromTheTable(table);
-
+            ConsoleOutput.PressFWhenFinished();
+            
             string cardRank = "";
             
             List<Card> tableCards = new List<Card>();
@@ -100,10 +100,8 @@ namespace Casino
             {
                 cardRank = Console.ReadLine().Trim();
                 
-                // Fix DRY
                 if(String.IsNullOrEmpty(cardRank)){
-                    ConsoleOutput.TypeValidCardNumber();
-                    cardRank = "";
+                    ConsoleOutput.TypeValidCardNumber();                    
                     continue;
                 } else if (cardRank != Keyboard.UPPERCASE_F 
                         && cardRank != Keyboard.LOWERCASE_F
@@ -111,10 +109,10 @@ namespace Casino
                         && Enumerable.Range((int)General.Zero, table.Cards.Count).Contains(Int32.Parse(cardRank)))
                         {
                     ConsoleOutput.YouSelected(table.Cards, cardRank);
-
+                                
                     tableCards.Add(table.Cards.ElementAt(Int32.Parse(cardRank)));                    
-                }  else if ((cardRank == Keyboard.UPPERCASE_F || cardRank == Keyboard.LOWERCASE_F) && tableCards.Any()){
-                    break;
+                }  else if (cardRank == Keyboard.UPPERCASE_F || cardRank == Keyboard.LOWERCASE_F){
+                    break;                
                 }
                 else
                 {
@@ -124,7 +122,24 @@ namespace Casino
                 }                
             }   
 
-            if (tableCards.Sum(c => Convert.ToInt32(c.Rank)) % Convert.ToInt32(selectedCard.Rank) == 0)
+            if(selectedCard.Rank == Rank.Ace){
+                if (tableCards.Sum(c => Convert.ToInt32(c.Rank)) % 14 == 0 
+                 || tableCards.Sum(c => Convert.ToInt32(c.Rank) == 1 ? 14 : Convert.ToInt32(c.Rank)) % 14 == 0)
+                {
+                    table.Cards.RemoveAll(c => tableCards.Contains(c));
+                    CapturedCards.AddRange(tableCards);
+                    CapturedCards.Add(selectedCard);
+
+                    ConsoleOutput.ShowTableCards(table);
+                    ConsoleOutput.ShowCapturedCards(this);    
+                }
+            }
+
+            /*if (!tableCards.Any() || tableCards.Sum(c => Convert.ToInt32(c.Rank)) % Convert.ToInt32(selectedCard.Rank) != 0)
+            {
+                ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
+                ThrowTheCardToTheTable(selectedCard, table);
+            } else if (tableCards.Sum(c => Convert.ToInt32(c.Rank)) % Convert.ToInt32(selectedCard.Rank) == 0)
             {
                 table.Cards.RemoveAll(c => tableCards.Contains(c));
                 CapturedCards.AddRange(tableCards);
@@ -132,11 +147,7 @@ namespace Casino
 
                 ConsoleOutput.ShowTableCards(table);
                 ConsoleOutput.ShowCapturedCards(this);
-            } else
-            {
-                ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
-                ThrowTheCardToTheTable(selectedCard, table);                    
-            }                     
+            }*/
         }
     }
 }

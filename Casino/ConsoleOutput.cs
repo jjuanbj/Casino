@@ -39,6 +39,20 @@ namespace Casino
             Console.ResetColor();
         }
 
+        public void PressFWhenFinished()
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(GetSpeak.Press);
+            
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(GetSpeak.F);
+            
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine(GetSpeak.WhenFinished);
+
+            Console.ResetColor();
+        }
+
         public void ThisNameIsNotAllowed()
         {
             Console.ForegroundColor = ConsoleColor.Red;            

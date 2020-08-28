@@ -40,12 +40,30 @@ namespace Casino
             DeckCards = shuffledCards;           
         }
 
-        public void DealCardsPlayer(List<Player> Players)
+        // Dealing with Ace cards value
+        
+        /*public void DealCardsPlayer(List<Player> Players)
         {
             foreach (var player in Players)
             {                
                 player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
+            }
+        }*/
+
+        public void DealCardsPlayer(List<Player> Players)
+        {
+            List<Card> card = new List<Card>();
+
+            foreach (var item in Players)
+            {
+                if (item.Name == "Juan")
+                {
+                    item.Cards.Add(card.Where(c => c.CardName == "Ace of Diamond").FirstOrDefault());
+                    item.Cards.Add(card.Where(c => c.CardName == "Four of Club").FirstOrDefault());
+                    item.Cards.Add(card.Where(c => c.CardName == "Five of Club").FirstOrDefault());
+                    item.Cards.Add(card.Where(c => c.CardName == "Seven of Club").FirstOrDefault());
+                }
             }
         }
 
