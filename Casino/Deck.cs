@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -61,9 +61,9 @@ namespace Casino
                 {
                     Console.WriteLine("Hola");
                     Console.WriteLine("Prueba: " + DeckCards.ElementAt(1).CardName);
-                    Console.WriteLine("Prueba 2: " + DeckCards.Where(c => c.CardName == "Ace of Diamond").FirstOrDefault().CardName);
+                    Console.WriteLine("Prueba 2: " + DeckCards.Where(c => c.CardName == "Four of Club").FirstOrDefault().CardName);
                     
-                    Card card1 = DeckCards.Where(c => c.CardName == "Ace of Diamond").FirstOrDefault();
+                    Card card1 = DeckCards.Where(c => c.CardName == "Four of Club").FirstOrDefault();
                     Console.WriteLine("Prueba 3: " + card1.CardName);
 
                     var rankValue = Enum.GetValues(typeof(Rank));
@@ -75,8 +75,8 @@ namespace Casino
                     DeckCards2.Add(new Card(Rank.Ace, Suit.Diamond));
                     
                     item.Cards = DeckCards2;
-                    /*item.Cards.Add(DeckCards.Where(c => c.CardName == "Club of Four").FirstOrDefault());
-                    item.Cards.Add(DeckCards.Where(c => c.CardName == "Club of Five").FirstOrDefault());
+                    item.Cards.Add(DeckCards.Where(c => c.CardName == "Four of Club").FirstOrDefault());
+                    /*item.Cards.Add(DeckCards.Where(c => c.CardName == "Club of Five").FirstOrDefault());
                     item.Cards.Add(DeckCards.Where(c => c.CardName == "Club of Seven").FirstOrDefault());*/
                 }
             }
