@@ -122,24 +122,16 @@ namespace Casino
                 }                
             }   
 
-            if(selectedCard.Rank == Rank.Ace){
-                if (tableCards.Sum(c => Convert.ToInt32(c.Rank)) % 14 == 0 
-                 || tableCards.Sum(c => Convert.ToInt32(c.Rank) == 1 ? 14 : Convert.ToInt32(c.Rank)) % 14 == 0)
-                {
-                    table.Cards.RemoveAll(c => tableCards.Contains(c));
-                    CapturedCards.AddRange(tableCards);
-                    CapturedCards.Add(selectedCard);
+            const int ACE_MAX_VALUE = 14;
+            const int ACE_MIN_VALUE = 1;
+            const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
 
-                    ConsoleOutput.ShowTableCards(table);
-                    ConsoleOutput.ShowCapturedCards(this);    
-                }
-            }
-
-            /*if (!tableCards.Any() || tableCards.Sum(c => Convert.ToInt32(c.Rank)) % Convert.ToInt32(selectedCard.Rank) != 0)
+            if (!tableCards.Any() || tableCards.Sum(c => Convert.ToInt32(c.Rank)) % Convert.ToInt32(selectedCard.Rank) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
             {
                 ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
                 ThrowTheCardToTheTable(selectedCard, table);
-            } else if (tableCards.Sum(c => Convert.ToInt32(c.Rank)) % Convert.ToInt32(selectedCard.Rank) == 0)
+            } else if (tableCards.Sum(c => Convert.ToInt32(c.Rank)) % ACE_MAX_VALUE == THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER 
+                    || tableCards.Sum(c => Convert.ToInt32(c.Rank) == ACE_MIN_VALUE ? ACE_MAX_VALUE : Convert.ToInt32(c.Rank)) % ACE_MAX_VALUE == THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
             {
                 table.Cards.RemoveAll(c => tableCards.Contains(c));
                 CapturedCards.AddRange(tableCards);
@@ -147,7 +139,7 @@ namespace Casino
 
                 ConsoleOutput.ShowTableCards(table);
                 ConsoleOutput.ShowCapturedCards(this);
-            }*/
+            }
         }
     }
 }

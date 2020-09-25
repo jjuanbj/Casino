@@ -46,12 +46,6 @@ namespace Casino
             {                
                 player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
-
-                // Dealing with Ace cards rank
-                if (player.Name == "Juan")
-                {
-                    player.Cards.Add(new Card(Rank.Ace, Suit.Diamond));
-                }
             }            
         }
         
@@ -59,9 +53,6 @@ namespace Casino
         {
             table.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
             DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
-
-            // Dealing with Ace cards value
-            table.Cards.Add(new Card(Rank.Ace, Suit.Club));
         }
     }
 }
