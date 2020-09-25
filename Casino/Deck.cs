@@ -53,6 +53,9 @@ namespace Casino
         {
             table.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
             DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
+
+            // Dealing with Ace cards value
+            table.Cards.Add(new Card(Rank.Ace, Suit.Club));
         }
     }
 }
