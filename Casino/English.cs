@@ -50,6 +50,8 @@ namespace Casino
 
         public string YouJustLostYourCardBecauseItIsInvalid { get; set; }
 
+        public string SelectYourBuildingRank { get; set; }
+
         public English()
         {
             WelcomeToCasinoGame = "Welcome to casino game!";
@@ -65,7 +67,7 @@ namespace Casino
             SelectOneCardByIndexNumber = " select one card by index number: ";
             YouSelected = "You selected: ";
             TypeValidCardNumber = "Type a valid card number.";
-            ChooseOneAction = "Choose one action: 1- Throw the card to the table, 2-Take a card from the table";
+            ChooseOneAction = "Choose one action: 1- Throw the card to the table, 2-Take a card from the table, 3-Build Cards";
             ChooseYourLanguage = "Choose your language: 1- English, 2- Español";
             WhichCardWouldYouLikeToTakeFromTheTable = "Which card would you like to take from the table? ";
             CapturedCards = "Captured cards: ";
@@ -74,6 +76,7 @@ namespace Casino
             A = "A";
             IfYouWantToSelectAnotherAction = " if you want to select another action.";                        
             YouJustLostYourCardBecauseItIsInvalid = "You just lost your card because it is invalid";
+            SelectYourBuildingRank = " select your building rank: ";
         }
     }
 }

@@ -27,11 +27,11 @@ namespace Casino
             
             string userinput = "";
 
-            while (userinput != Keyboard.ONE && userinput != Keyboard.TWO){
+            while (userinput != Keyboard.ONE && userinput != Keyboard.TWO && userinput != Keyboard.THREE){
                 
                 userinput = Console.ReadLine().Trim();
 
-                if (userinput != Keyboard.ONE && userinput != Keyboard.TWO){
+                if (userinput != Keyboard.ONE && userinput != Keyboard.TWO && userinput != Keyboard.THREE){
                     ConsoleOutput.ThisIsNotAnAllowedAction();
                     ConsoleOutput.ChooseOneAction();
                 }
@@ -44,6 +44,9 @@ namespace Casino
                     break;
                 case Keyboard.TWO:
                     TakeCardFromTheTable(card, table);
+                    break;
+                case Keyboard.THREE:
+                    BuildCards(this, card);
                     break;
             }            
         }
@@ -140,6 +143,10 @@ namespace Casino
                 ConsoleOutput.ShowTableCards(table);
                 ConsoleOutput.ShowCapturedCards(this);
             }
+        }
+
+        private void BuildCards(Player player, Card selectCard){
+            ConsoleOutput.SelectYourBuildingRank(player, selectCard);            
         }
     }
 }

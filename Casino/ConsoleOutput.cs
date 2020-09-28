@@ -214,5 +214,18 @@ namespace Casino
 
             Console.ResetColor();
         }
+
+        public void SelectYourBuildingRank(Player player, Card selectCard)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(player.Name + GetSpeak.SelectYourBuildingRank);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(string.Format("{0}."
+            , string.Join(", ", player.Cards.Where(c => c.CardName != selectCard.CardName)
+                                    .Select((c, count) => new { Index = count, c.CardName }))));
+            
+            Console.ResetColor();
+        }
     }
 }

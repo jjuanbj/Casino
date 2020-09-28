@@ -13,5 +13,7 @@ namespace Casino
         public const string ONE = "1";
 
         public const string TWO = "2";
+
+        public const string THREE = "3";
     }
 }
