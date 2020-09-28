@@ -141,5 +141,9 @@ namespace Casino
                 ConsoleOutput.ShowCapturedCards(this);
             }
         }
+
+        private void BuildCards(Card selectedCard, Table table){
+                                    
+        }
     }
 }
