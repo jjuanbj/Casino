@@ -46,7 +46,7 @@ namespace Casino
                     TakeCardFromTheTable(card, table);
                     break;
                 case Keyboard.THREE:
-                    BuildCards(this, card);
+                    BuildCards(card);
                     break;
             }            
         }
@@ -145,8 +145,38 @@ namespace Casino
             }
         }
 
-        private void BuildCards(Player player, Card selectCard){
-            ConsoleOutput.SelectYourBuildingRank(player, selectCard);            
+        private void BuildCards(Card selectedCard){
+            
+            ConsoleOutput.SelectYourBuildingRank(this, selectedCard);            
+
+            string cardNumber = "";
+            Card buildingRankCard = null;
+
+            while (String.IsNullOrEmpty(cardNumber))
+            {
+                cardNumber = Console.ReadLine().Trim();
+
+                if (!String.IsNullOrEmpty(cardNumber)
+                && cardNumber.All(char.IsDigit)
+                && Enumerable.Range((int)General.Zero, Cards.Count).Contains(Int32.Parse(cardNumber)))
+                {
+                    List<Card> playerCardsWithoutSelectedCard = new List<Card>(Cards.Where(c => c.CardName != selectedCard.CardName));
+
+                    buildingRankCard = new Card(playerCardsWithoutSelectedCard.ElementAt(Int32.Parse(cardNumber)).CardName);
+
+                    if (Cards.Any(c => c.CardName == buildingRankCard.CardName))
+                    {
+                        Console.WriteLine(buildingRankCard.CardName);
+                        ConsoleOutput.YouSelected(playerCardsWithoutSelectedCard.ToList(), cardNumber);    
+                    }
+                }
+                else
+                {
+                    ConsoleOutput.TypeValidCardNumber();
+                    cardNumber = "";
+                    continue;                    
+                }
+            }
         }
     }
 }
