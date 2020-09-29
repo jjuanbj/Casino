@@ -46,7 +46,7 @@ namespace Casino
                     TakeCardFromTheTable(card, table);
                     break;
                 case Keyboard.THREE:
-                    BuildCards(card);
+                    BuildCards(card, table);
                     break;
             }            
         }
@@ -90,14 +90,14 @@ namespace Casino
             ConsoleOutput.ShowPlayerCards(this);            
         }
 
-        private void TakeCardFromTheTable(Card selectedCard, Table table)
+        private List<Card> SelectCardsFromTheTable(Table table)
         {
             ConsoleOutput.WhichCardWouldYouLikeToTakeFromTheTable(table);
             ConsoleOutput.PressFWhenFinished();
             
             string cardRank = "";
             
-            List<Card> tableCards = new List<Card>();
+            List<Card> cardsSelectedFromTheTable = new List<Card>();
 
             while (cardRank != Keyboard.UPPERCASE_F && cardRank != Keyboard.LOWERCASE_F)
             {
@@ -113,7 +113,7 @@ namespace Casino
                         {
                     ConsoleOutput.YouSelected(table.Cards, cardRank);
                                 
-                    tableCards.Add(table.Cards.ElementAt(Int32.Parse(cardRank)));                    
+                    cardsSelectedFromTheTable.Add(table.Cards.ElementAt(Int32.Parse(cardRank)));                    
                 }  else if (cardRank == Keyboard.UPPERCASE_F || cardRank == Keyboard.LOWERCASE_F){
                     break;                
                 }
@@ -123,21 +123,28 @@ namespace Casino
                     cardRank = "";
                     continue;
                 }                
-            }   
+            }
+
+            return cardsSelectedFromTheTable;
+        }
+
+        private void TakeCardFromTheTable(Card selectedCard, Table table){
+
+            List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
 
             const int ACE_MAX_VALUE = 14;
             const int ACE_MIN_VALUE = 1;
             const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
 
-            if (!tableCards.Any() || tableCards.Sum(c => Convert.ToInt32(c.Rank)) % Convert.ToInt32(selectedCard.Rank) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
+            if (!cardsSelectedFromTheTable.Any() || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank)) % Convert.ToInt32(selectedCard.Rank) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
             {
                 ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
                 ThrowTheCardToTheTable(selectedCard, table);
-            } else if (tableCards.Sum(c => Convert.ToInt32(c.Rank)) % ACE_MAX_VALUE == THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER 
-                    || tableCards.Sum(c => Convert.ToInt32(c.Rank) == ACE_MIN_VALUE ? ACE_MAX_VALUE : Convert.ToInt32(c.Rank)) % ACE_MAX_VALUE == THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
+            } else if (cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank)) % ACE_MAX_VALUE == THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER 
+                    || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank) == ACE_MIN_VALUE ? ACE_MAX_VALUE : Convert.ToInt32(c.Rank)) % ACE_MAX_VALUE == THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
             {
-                table.Cards.RemoveAll(c => tableCards.Contains(c));
-                CapturedCards.AddRange(tableCards);
+                table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Contains(c));
+                CapturedCards.AddRange(cardsSelectedFromTheTable);
                 CapturedCards.Add(selectedCard);
 
                 ConsoleOutput.ShowTableCards(table);
@@ -145,8 +152,8 @@ namespace Casino
             }
         }
 
-        private void BuildCards(Card selectedCard){
-            
+        private Card SelectBuildingRank(Card selectedCard){
+
             ConsoleOutput.SelectYourBuildingRank(this, selectedCard);            
 
             string cardNumber = "";
@@ -177,6 +184,17 @@ namespace Casino
                     continue;                    
                 }
             }
+
+            return buildingRankCard;
+        }
+
+        private void BuildCards(Card selectedCard, Table table){
+            
+            Card buildingRankCard = SelectBuildingRank(selectedCard);                        
+            List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
+
+            // TODO: validate if the cards seleted from the table are at the same rank of buildingRankCard
+            // and then saving it to the table                        
         }
     }
 }
