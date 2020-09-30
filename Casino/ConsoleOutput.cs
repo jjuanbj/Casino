@@ -90,6 +90,11 @@ namespace Casino
             Console.WriteLine(string.Format(": {0}."
                 , string.Join(", ", table.Cards.Select(c => c.CardName))));
 
+            if (table.BuildedCards != null)
+            {
+                Console.WriteLine(string.Format(": {0}."
+                , string.Join(", ", table.BuildedCards.Select(b => b.BuildedCardsRank))));
+            }
             Console.ResetColor();
         }
 
