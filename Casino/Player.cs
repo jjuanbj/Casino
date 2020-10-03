@@ -1,4 +1,3 @@
-using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -195,9 +194,7 @@ namespace Casino
             Card buildingRankCard = SelectBuildingRank(selectedCard);                        
             List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
             cardsSelectedFromTheTable.Add(selectedCard);
-            Console.WriteLine(string.Format(": {0}."
-                    , string.Join(", ", cardsSelectedFromTheTable.Select(c => c.CardName))));
-
+            
             const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
 
             if (!cardsSelectedFromTheTable.Any() 
@@ -213,8 +210,11 @@ namespace Casino
                 buildedCard.BuildedCards = cardsSelectedFromTheTable;
 
                 buildedCard.BuildedCardsRank = buildingRankCard.Rank;
+                                
+                List<BuildedCard> buildedCards = new List<BuildedCard>();
+                buildedCards.Add(buildedCard);
                 
-                // table.BuildedCards = buildedCard;
+                table.BuildedCards = buildedCards;
                 
                 ConsoleOutput.ShowTableCards(table);                
             }                  

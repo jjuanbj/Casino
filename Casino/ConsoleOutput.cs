@@ -92,8 +92,7 @@ namespace Casino
 
             if (table.BuildedCards != null)
             {
-                Console.WriteLine(string.Format(": {0}."
-                , string.Join(", ", table.BuildedCards.Select(b => b.BuildedCardsRank))));
+                Console.WriteLine(table.BuildedCards.FirstOrDefault().BuildedCardsRank);
             }
             Console.ResetColor();
         }
