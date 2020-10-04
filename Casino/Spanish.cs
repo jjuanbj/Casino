@@ -52,6 +52,10 @@ namespace Casino
 
         public string SelectYourBuildingRank { get; set; }
 
+        public string CombinedCards { get; set; }
+
+        public string PairedCards { get; set; }
+
         public Spanish()
         {
             WelcomeToCasinoGame = "¡Bienvenido al juego de casino!";
@@ -77,6 +81,8 @@ namespace Casino
             IfYouWantToSelectAnotherAction = " si quieres seleccionar otra acción.";                        
             YouJustLostYourCardBecauseItIsInvalid = "Acabas de perder tu carta porque no es válida.";
             SelectYourBuildingRank = " selecciona tu rango de combinación: ";
+            CombinedCards = "Rango de cartas combinadas: ";
+            PairedCards = "Rango de cartas emparejadas: ";
         }
     }
 }

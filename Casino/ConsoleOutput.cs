@@ -75,8 +75,9 @@ namespace Casino
             Console.Write(GetSpeak.Welcome);
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(string.Format(": {0}."
-                , string.Join(", ", players.Select(j => j.Name))));
+            Console.WriteLine(string.Format(": {0}.", 
+                              string.Join(", ", players
+                                    .Select(j => j.Name))));
             
             Console.ResetColor();
         }
@@ -87,13 +88,26 @@ namespace Casino
             Console.Write(GetSpeak.OnTable);
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(string.Format(": {0}."
-                , string.Join(", ", table.Cards.Select(c => c.CardName))));
+            Console.WriteLine(string.Format(": {0}.", 
+                              string.Join(", ", table.Cards
+                                    .Select(c => c.CardName))));
 
             if (table.BuildedCards != null)
             {
-                Console.WriteLine(table.BuildedCards.FirstOrDefault().BuildedCardsRank);
+                
+                Console.Write(GetSpeak.CombinedCards);
+                Console.WriteLine(string.Format(": {0}.", 
+                                  string.Join(", ", table.BuildedCards
+                                        .Where(b => b.IsPair == false)
+                                        .Select(r => r.BuildedCardsRank))));    
+                
+                Console.Write(GetSpeak.PairedCards);
+                Console.WriteLine(string.Format(": {0}.", 
+                                  string.Join(", ", table.BuildedCards
+                                        .Where(b => b.IsPair == true)
+                                        .Select(r => r.BuildedCardsRank))));
             }
+
             Console.ResetColor();
         }
 
@@ -105,8 +119,9 @@ namespace Casino
                 Console.Write(player.Name);
 
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine(string.Format(": {0}."
-                    , string.Join(", ", player.Cards.Select(c => c.CardName))));
+                Console.WriteLine(string.Format(": {0}.", 
+                                  string.Join(", ", player.Cards
+                                        .Select(c => c.CardName))));
             }
 
             Console.ResetColor();
@@ -118,8 +133,9 @@ namespace Casino
             Console.Write(GetSpeak.YourCards);
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(string.Format(": {0}."
-                , string.Join(", ", player.Cards.Select(c => c.CardName))));
+            Console.WriteLine(string.Format(": {0}.", 
+                              string.Join(", ", player.Cards
+                                    .Select(c => c.CardName))));
             
             Console.ResetColor();
         }
@@ -130,8 +146,9 @@ namespace Casino
             Console.Write(player.Name + GetSpeak.SelectOneCardByIndexNumber);
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(string.Format("{0}."
-            , string.Join(", ", player.Cards.Select((c, count) => new { Index = count, c.CardName }))));
+            Console.WriteLine(string.Format("{0}.", 
+                              string.Join(", ", player.Cards
+                                    .Select((c, count) => new { Index = count, c.CardName }))));
             
             Console.ResetColor();
         }
@@ -177,8 +194,9 @@ namespace Casino
             Console.Write(GetSpeak.WhichCardWouldYouLikeToTakeFromTheTable);
             
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(string.Format("{0}."
-            , string.Join(", ", table.Cards.Select((c, count) => new { Index = count, c.CardName }))));
+            Console.WriteLine(string.Format("{0}.", 
+                              string.Join(", ", table.Cards
+                                    .Select((c, count) => new { Index = count, c.CardName }))));
             
             Console.ResetColor();
         }
@@ -200,8 +218,10 @@ namespace Casino
             Console.Write(GetSpeak.CapturedCards);
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(string.Format(": {0}."
-                , string.Join(", ", player.CapturedCards.Select(c => c.CardName))));
+            Console.WriteLine(string.Format(": {0}.", 
+                              string.Join(", ", player.CapturedCards
+                                    .Select(c => c.CardName))));
+            
             Console.ResetColor();
         }
 
@@ -225,8 +245,9 @@ namespace Casino
             Console.Write(player.Name + GetSpeak.SelectYourBuildingRank);
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(string.Format("{0}."
-            , string.Join(", ", player.Cards.Where(c => c.CardName != selectCard.CardName)
+            Console.WriteLine(string.Format("{0}.", 
+                              string.Join(", ", player.Cards
+                                    .Where(c => c.CardName != selectCard.CardName)
                                     .Select((c, count) => new { Index = count, c.CardName }))));
             
             Console.ResetColor();

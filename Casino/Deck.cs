@@ -45,6 +45,8 @@ namespace Casino
             foreach (var player in Players)
             {                
                 player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
+                player.Cards.Add(new Card("Queen of Diamond"));
+                player.Cards.Add(new Card("Three of Diamond"));
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
             }            
         }
@@ -52,6 +54,8 @@ namespace Casino
         public void DealCardsTable(Table table)
         {
             table.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
+            table.Cards.Add(new Card("Three of Diamond"));
+            table.Cards.Add(new Card("Nine of Diamond"));
             DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
         }
     }

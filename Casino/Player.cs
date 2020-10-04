@@ -45,7 +45,7 @@ namespace Casino
                     TakeCardFromTheTable(card, table);
                     break;
                 case Keyboard.THREE:
-                    BuildCards(card, table);
+                    CombineCards(card, table);
                     break;
             }            
         }
@@ -189,7 +189,7 @@ namespace Casino
             return buildingRankCard;
         }
 
-        private void BuildCards(Card selectedCard, Table table){
+        private void CombineCards(Card selectedCard, Table table){
             
             Card buildingRankCard = SelectBuildingRank(selectedCard);                        
             List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
@@ -210,7 +210,9 @@ namespace Casino
                 buildedCard.BuildedCards = cardsSelectedFromTheTable;
 
                 buildedCard.BuildedCardsRank = buildingRankCard.Rank;
-                                
+
+                buildedCard.IsPair = false;
+
                 List<BuildedCard> buildedCards = new List<BuildedCard>();
                 buildedCards.Add(buildedCard);
                 
@@ -219,5 +221,9 @@ namespace Casino
                 ConsoleOutput.ShowTableCards(table);                
             }                  
         }
+
+                private void PairCards(Card selectedCard, Table table){
+                    // TODO
+                }
     }
 }

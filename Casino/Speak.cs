@@ -52,5 +52,9 @@ namespace Casino
         public string YouJustLostYourCardBecauseItIsInvalid { get; set; }
 
         public string SelectYourBuildingRank { get; set; }
+
+        public string CombinedCards { get; set; }
+
+        public string PairedCards { get; set; }
     }
 }
