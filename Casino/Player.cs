@@ -219,10 +219,9 @@ namespace Casino
                 } else if (table.BuildedCards.Any(c => c.BuildedCardsRank == buildedCard.BuildedCardsRank))
                 {
                     buildedCard.IsPair = true;
-                    
-                    // TODO: builded card from table must be pair
+                                        
                     table.BuildedCards.Where(c => c.BuildedCardsRank == buildedCard.BuildedCardsRank)
-                                      .Append(buildedCard);
+                                      .FirstOrDefault().IsPair = true;
                 }                
 
                 List<BuildedCard> buildedCards = new List<BuildedCard>();
