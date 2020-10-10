@@ -71,7 +71,7 @@ namespace Casino
             SelectOneCardByIndexNumber = " selecciona una carta por su número de orden: ";
             YouSelected = "Has seleccionado: ";
             TypeValidCardNumber = "Escribe un número de carta válido.";
-            ChooseOneAction = "Elige una acción: 1-Lanzar la carta sobre la mesa, 2-Tomar una carta de la mesa, 3-Combinar cartas";
+            ChooseOneAction = "Elige una acción: 1-Lanzar la carta sobre la mesa, 2-Tomar una carta de la mesa, 3-Combinar cartas, 4-Emparejar cartas";
             ChooseYourLanguage = "Elige tu idioma: 1- English, 2- Español";
             WhichCardWouldYouLikeToTakeFromTheTable = "¿Cuál carta deseas tomar de la mesa? ";
             CapturedCards = "Cartas capturadas: ";

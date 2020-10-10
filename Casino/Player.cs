@@ -26,11 +26,18 @@ namespace Casino
             
             string userinput = "";
 
-            while (userinput != Keyboard.ONE && userinput != Keyboard.TWO && userinput != Keyboard.THREE){
+            while (userinput != Keyboard.ONE 
+                && userinput != Keyboard.TWO 
+                && userinput != Keyboard.THREE
+                && userinput != Keyboard.FOUR){
                 
                 userinput = Console.ReadLine().Trim();
 
-                if (userinput != Keyboard.ONE && userinput != Keyboard.TWO && userinput != Keyboard.THREE){
+                if (userinput != Keyboard.ONE 
+                 && userinput != Keyboard.TWO 
+                 && userinput != Keyboard.THREE
+                 && userinput != Keyboard.FOUR){
+                    
                     ConsoleOutput.ThisIsNotAnAllowedAction();
                     ConsoleOutput.ChooseOneAction();
                 }
@@ -46,6 +53,9 @@ namespace Casino
                     break;
                 case Keyboard.THREE:
                     CombineCards(card, table);
+                    break;
+                case Keyboard.FOUR:
+                    PairCards(card, table);
                     break;
             }            
         }
@@ -205,24 +215,25 @@ namespace Casino
                 ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
                 ThrowTheCardToTheTable(selectedCard, table);
             } else 
-            {
-                BuildedCard buildedCard = new BuildedCard();                
-                
-                buildedCard.BuildedCards = cardsSelectedFromTheTable;
+            {                        
+                table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Contains(c));
 
+                BuildedCard buildedCard = new BuildedCard();         
+                buildedCard.BuildedCards = cardsSelectedFromTheTable;
                 buildedCard.BuildedCardsRank = buildingRankCard.Rank;
 
-                // TODO: Test this
                 if (table.BuildedCards == null)
                 {
                     buildedCard.IsPair = false;    
                 } else if (table.BuildedCards.Any(c => c.BuildedCardsRank == buildedCard.BuildedCardsRank))
                 {
+                    Console.Write("Prueba");
+
                     buildedCard.IsPair = true;
                                         
                     table.BuildedCards.Where(c => c.BuildedCardsRank == buildedCard.BuildedCardsRank)
                                       .FirstOrDefault().IsPair = true;
-                }                
+                }
 
                 List<BuildedCard> buildedCards = new List<BuildedCard>();
                 buildedCards.Add(buildedCard);
@@ -252,12 +263,11 @@ namespace Casino
                 ThrowTheCardToTheTable(selectedCard, table);
             } else 
             {
+                table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Contains(c));
+
                 BuildedCard buildedCard = new BuildedCard();                
-                
                 buildedCard.BuildedCards = cardsSelectedFromTheTable;
-
                 buildedCard.BuildedCardsRank = buildingRankCard.Rank;
-
                 buildedCard.IsPair = true;
 
                 List<BuildedCard> buildedCards = new List<BuildedCard>();

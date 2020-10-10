@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
-//using Console = Colorful.Console;
 
 namespace Casino
 {
@@ -94,20 +93,24 @@ namespace Casino
 
             if (table.BuildedCards != null)
             {
+                if(table.BuildedCards.Any(b => b.IsPair == false))
+                {
+                    Console.Write(GetSpeak.CombinedCards);
+                    Console.WriteLine(string.Format(": {0}.",
+                                    string.Join(", ", table.BuildedCards
+                                            .Where(b => b.IsPair == false)
+                                            .Select(r => r.BuildedCardsRank))));    
+                }
                 
-                Console.Write(GetSpeak.CombinedCards);
-                Console.WriteLine(string.Format(": {0}.", 
-                                  string.Join(", ", table.BuildedCards
-                                        .Where(b => b.IsPair == false)
-                                        .Select(r => r.BuildedCardsRank))));    
-                
-                Console.Write(GetSpeak.PairedCards);
-                Console.WriteLine(string.Format(": {0}.", 
-                                  string.Join(", ", table.BuildedCards
-                                        .Where(b => b.IsPair == true)
-                                        .Select(r => r.BuildedCardsRank))));
+                if(table.BuildedCards.Any(b => b.IsPair == true)) 
+                {
+                    Console.Write(GetSpeak.PairedCards);
+                    Console.WriteLine(string.Format(": {0}.", 
+                                    string.Join(", ", table.BuildedCards
+                                            .Where(b => b.IsPair == true)
+                                            .Select(r => r.BuildedCardsRank))));
+                }                
             }
-
             Console.ResetColor();
         }
 
