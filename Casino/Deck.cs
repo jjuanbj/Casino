@@ -54,6 +54,23 @@ namespace Casino
         {
             table.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
 
+            #region Test
+            
+            List<Card> listCards = new List<Card>();
+            listCards.Add(new Card("Queen of Diamond"));
+            listCards.Add(new Card("Queen of Heart"));
+            
+            BuildedCard builded = new BuildedCard();
+            builded.BuildedCards = listCards;
+            builded.BuildedCardsRank = Rank.Queen;
+            
+            List<BuildedCard> listBuildedCards = new List<BuildedCard>();
+            listBuildedCards.Add(builded);
+            
+            table.BuildedCards = listBuildedCards;
+            
+            #endregion
+
             DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
         }
     }

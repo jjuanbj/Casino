@@ -22,24 +22,26 @@ namespace Casino
         {
             Card card = SelectYourCard();
 
-            ConsoleOutput.ChooseOneAction();
+            bool thereAreBuildedCards = ConsoleOutput.ChooseOneAction(table);
             
             string userinput = "";
 
             while (userinput != Keyboard.ONE 
                 && userinput != Keyboard.TWO 
                 && userinput != Keyboard.THREE
-                && userinput != Keyboard.FOUR){
+                && userinput != Keyboard.FOUR
+                && userinput != Keyboard.FIVE){
                 
                 userinput = Console.ReadLine().Trim();
 
                 if (userinput != Keyboard.ONE 
                  && userinput != Keyboard.TWO 
                  && userinput != Keyboard.THREE
-                 && userinput != Keyboard.FOUR){
+                 && userinput != Keyboard.FOUR
+                 && userinput != Keyboard.FIVE){
                     
                     ConsoleOutput.ThisIsNotAnAllowedAction();
-                    ConsoleOutput.ChooseOneAction();
+                    ConsoleOutput.ChooseOneAction(table);
                 }
             }            
 
@@ -58,6 +60,11 @@ namespace Casino
                     PairCards(card, table);
                     break;
             }            
+
+            if (thereAreBuildedCards && userinput == Keyboard.FIVE)
+            {
+                SeeBuildedCards();
+            }
         }
 
         private Card SelectYourCard()
@@ -227,8 +234,6 @@ namespace Casino
                     buildedCard.IsPair = false;    
                 } else if (table.BuildedCards.Any(c => c.BuildedCardsRank == buildedCard.BuildedCardsRank))
                 {
-                    Console.Write("Prueba");
-
                     buildedCard.IsPair = true;
                                         
                     table.BuildedCards.Where(c => c.BuildedCardsRank == buildedCard.BuildedCardsRank)
@@ -277,6 +282,12 @@ namespace Casino
                 
                 ConsoleOutput.ShowTableCards(table);                
             }                  
+        }
+
+        private void SeeBuildedCards()
+        {
+            // TODO
+            Console.WriteLine("Prueba");
         }
     }
 }

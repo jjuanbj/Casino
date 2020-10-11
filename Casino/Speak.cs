@@ -56,5 +56,7 @@ namespace Casino
         public string CombinedCards { get; set; }
 
         public string PairedCards { get; set; }
+
+        public string SeeBuildedCards { get; set; }
     }
 }

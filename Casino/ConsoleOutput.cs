@@ -183,12 +183,27 @@ namespace Casino
             Console.ResetColor();
         }
 
-        public void ChooseOneAction()
+        public bool ChooseOneAction(Table table)
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine(GetSpeak.ChooseOneAction);
+            Console.Write(GetSpeak.ChooseOneAction);
+
+            bool thereAreBuildedCards = false; 
+
+            if (table.BuildedCards != null)
+            {
+                Console.WriteLine(GetSpeak.SeeBuildedCards);
+                
+                thereAreBuildedCards = true;
+
+            } else
+            {
+                Console.WriteLine(" ");
+            }
             
             Console.ResetColor();
+
+            return thereAreBuildedCards;
         }
 
         public void WhichCardWouldYouLikeToTakeFromTheTable(Table table)

@@ -56,6 +56,8 @@ namespace Casino
 
         public string PairedCards { get; set; }
 
+        public string SeeBuildedCards { get; set; }
+
         public English()
         {
             WelcomeToCasinoGame = "Welcome to casino game!";
@@ -83,6 +85,7 @@ namespace Casino
             SelectYourBuildingRank = " select your building rank: ";
             CombinedCards = "Combined cards rank: ";
             PairedCards = "Paired cards rank: ";
+            SeeBuildedCards = ", 5-See builded cards";
         }
     }
 }
