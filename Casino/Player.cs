@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Casino
 {
@@ -103,7 +102,7 @@ namespace Casino
 
         private List<Card> SelectCardsFromTheTable(Table table)
         {
-            ConsoleOutput.WhichCardWouldYouLikeToTakeFromTheTable(table);
+            int cardsOnTheTable = ConsoleOutput.WhichCardWouldYouLikeToTakeFromTheTable(table);
             ConsoleOutput.PressFWhenFinished();
             
             string cardRank = "";
@@ -115,16 +114,30 @@ namespace Casino
                 cardRank = Console.ReadLine().Trim();
                 
                 if(String.IsNullOrEmpty(cardRank)){
+
                     ConsoleOutput.TypeValidCardNumber();                    
                     continue;
+
                 } else if (cardRank != Keyboard.UPPERCASE_F 
                         && cardRank != Keyboard.LOWERCASE_F
                         && cardRank.All(char.IsDigit)
-                        && Enumerable.Range((int)General.Zero, table.Cards.Count).Contains(Int32.Parse(cardRank)))
+                        && Enumerable.Range((int)General.Zero, cardsOnTheTable).Contains(Int32.Parse(cardRank)))
                         {
-                    ConsoleOutput.YouSelected(table.Cards, cardRank);
+                    bool isBuildedCard = ConsoleOutput.YouSelected(table, cardRank);
                                 
-                    cardsSelectedFromTheTable.Add(table.Cards.ElementAt(Int32.Parse(cardRank)));                    
+                    if (!isBuildedCard)
+                    {
+                        cardsSelectedFromTheTable.Add(table.Cards.ElementAt(Int32.Parse(cardRank)));                        
+                    } else
+                    {
+                        int buildedCardsSelected = Int32.Parse(cardRank) - table.Cards.Count;
+
+                        foreach (var item in table.BuildedCards.ElementAt(buildedCardsSelected).BuildedCards)
+                        {
+                            cardsSelectedFromTheTable.Add(item);    
+                        }                        
+                    }
+                    
                 }  else if (cardRank == Keyboard.UPPERCASE_F || cardRank == Keyboard.LOWERCASE_F){
                     break;                
                 }
@@ -147,8 +160,9 @@ namespace Casino
             const int ACE_MIN_VALUE = 1;
             const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
 
+            //TODO: validate if any selected card are in PairedCard
             if (!cardsSelectedFromTheTable.Any() 
-            || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank)) 
+              || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank)) 
             % Convert.ToInt32(selectedCard.Rank) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
             {
                 ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();

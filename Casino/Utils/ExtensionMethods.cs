@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Casino
+namespace Casino.Extension
 {
     public static class ExtensionMethods
     {

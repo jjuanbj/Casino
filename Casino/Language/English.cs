@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Casino
 {
-    class Spanish
-    {
+    class English
+    {   
         public string WelcomeToCasinoGame { get; private set; }
 
         public string PleaseWritePlayerNamesPress { get; private set; }
@@ -58,34 +57,34 @@ namespace Casino
 
         public string SeeBuildedCards { get; set; }
 
-        public Spanish()
+        public English()
         {
-            WelcomeToCasinoGame = "¡Bienvenido al juego de casino!";
-            PleaseWritePlayerNamesPress = "Por favor escribe el nombre de los jugadores, presiona ";
+            WelcomeToCasinoGame = "Welcome to casino game!";
+            PleaseWritePlayerNamesPress = "Please write player names, press ";
             F = "F";
-            WhenFinished = " cuando termines";
-            Welcome = "Bienvenido";
+            WhenFinished = " when finished";
+            Welcome = "Welcome";
             Computer = "Computer";
-            ThisNameIsNotAllowed = "Este nombre no está permitido.";
-            ThisIsNotAnAllowedAction = "Esta no es una acción permitida";
-            OnTable = "En la mesa";
-            ItsYourTurn = " es tu turno!";
-            SelectOneCardByIndexNumber = " selecciona una carta por su número de orden: ";
-            YouSelected = "Has seleccionado: ";
-            TypeValidCardNumber = "Escribe un número de carta válido.";
-            ChooseOneAction = "Elige una acción: 1-Lanzar la carta sobre la mesa, 2-Tomar una carta de la mesa, 3-Combinar cartas, 4-Emparejar cartas";
-            ChooseYourLanguage = "Elige tu idioma: 1- English, 2- Español";
-            WhichCardWouldYouLikeToTakeFromTheTable = "¿Cuál carta deseas tomar de la mesa? ";
-            CapturedCards = "Cartas capturadas: ";
-            YourCards = "Tus cartas: ";
-            Press = "Presiona ";
+            ThisNameIsNotAllowed = "This name is not allowed.";
+            ThisIsNotAnAllowedAction = "This is not an allowed action";
+            OnTable = "On table";
+            ItsYourTurn = " it's your turn!";
+            SelectOneCardByIndexNumber = " select one card by index number: ";
+            YouSelected = "You selected: ";
+            TypeValidCardNumber = "Type a valid card number.";
+            ChooseOneAction = "Choose one action: 1-Throw the card to the table, 2-Take a card from the table, 3-Combine cards, 4-Pair cards";
+            ChooseYourLanguage = "Choose your language: 1-English, 2-Español";
+            WhichCardWouldYouLikeToTakeFromTheTable = "Which card would you like to take from the table? ";
+            CapturedCards = "Captured cards: ";
+            YourCards = "Your cards: ";
+            Press = "Press ";
             A = "A";
-            IfYouWantToSelectAnotherAction = " si quieres seleccionar otra acción.";                        
-            YouJustLostYourCardBecauseItIsInvalid = "Acabas de perder tu carta porque no es válida.";
-            SelectYourBuildingRank = " selecciona tu rango de combinación: ";
-            CombinedCards = "Cartas combinadas";
-            PairedCards = "Cartas emparejadas";
-            SeeBuildedCards = ", 5-Ver cartas agrupadas";
+            IfYouWantToSelectAnotherAction = " if you want to select another action.";                        
+            YouJustLostYourCardBecauseItIsInvalid = "You just lost your card because it is invalid";
+            SelectYourBuildingRank = " select your building rank: ";
+            CombinedCards = "Combined cards";
+            PairedCards = "Paired cards";
+            SeeBuildedCards = ", 5-See builded cards";
         }
     }
 }

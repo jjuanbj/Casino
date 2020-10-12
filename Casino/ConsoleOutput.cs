@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Text;
 
 namespace Casino
 {
@@ -91,7 +89,6 @@ namespace Casino
             Console.WriteLine(string.Format(": {0}.", 
                               string.Join(", ", table.Cards
                                     .Select(c => c.CardName))));
-            
             
             if (table.BuildedCards != null)
             {
@@ -192,6 +189,36 @@ namespace Casino
             Console.ResetColor();            
         }
 
+        public bool YouSelected(Table table, string cardNumber)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(GetSpeak.YouSelected);
+            
+            bool isBuildedCard = false;
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            if (table.Cards.Count < Int32.Parse(cardNumber))
+            {
+                Console.WriteLine(table.Cards.ElementAt(Int32.Parse(cardNumber)).CardName);    
+            } else {
+                isBuildedCard = true;
+
+                int buildedCardsSelected = Int32.Parse(cardNumber) - table.Cards.Count;
+                
+                var buildedCardsRank = table.BuildedCards.ElementAt(buildedCardsSelected).BuildedCardsRank;
+                
+                Console.Write(buildedCardsRank + "-> ");
+                Console.WriteLine(string.Format(" {0}.", 
+                                  string.Join(", ", table.BuildedCards
+                                        .Where(b => b.BuildedCardsRank == buildedCardsRank)
+                                        .SelectMany(a => a.BuildedCards, (a, b) => b.CardName))));
+            }            
+            
+            Console.ResetColor();
+
+            return isBuildedCard;            
+        }
+
         public void TypeValidCardNumber()
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -227,17 +254,64 @@ namespace Casino
             
         }
 
-        public void WhichCardWouldYouLikeToTakeFromTheTable(Table table)
+        public int WhichCardWouldYouLikeToTakeFromTheTable(Table table)
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write(GetSpeak.WhichCardWouldYouLikeToTakeFromTheTable);
             
+            int cardsOnTheTable = 0;
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(string.Format("{0}.", 
                               string.Join(", ", table.Cards
-                                    .Select((c, count) => new { Index = count, c.CardName }))));
-            
+                                    .Select((c) => new { Index = cardsOnTheTable++, c.CardName }))));
+
+            if (table.BuildedCards != null)
+            {
+                #region DRY Alert!!
+                if(table.BuildedCards.Any(b => b.IsPair == false))
+                {                    
+                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsPair == false))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.Write(GetSpeak.CombinedCards);
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine(string.Format(": {0}->", 
+                                          string.Join(", ", table.BuildedCards                                                
+                                                .Select((r) => new { Index = cardsOnTheTable++, buildedCard.BuildedCardsRank})
+                                                .FirstOrDefault())) +
+                                          string.Format(" {0}.", 
+                                          string.Join(", ", table.BuildedCards
+                                                .Where(b => b.BuildedCardsRank == buildedCard.BuildedCardsRank)
+                                                .SelectMany(a => buildedCard.BuildedCards, (a, b) => b.CardName))));   
+                    }                    
+                }
+                
+                if(table.BuildedCards.Any(b => b.IsPair == true)) 
+                {
+                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsPair == true))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.Write(GetSpeak.PairedCards);
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine(string.Format(": {0}->", 
+                                          string.Join(", ", table.BuildedCards
+                                                .Where(b => buildedCard.IsPair == true)
+                                                .Select((r) => new { Index = cardsOnTheTable++, buildedCard.BuildedCardsRank})
+                                                .FirstOrDefault())) +
+                                          string.Format(" {0}.", 
+                                          string.Join(", ", table.BuildedCards
+                                                .Where(b => b.BuildedCardsRank == buildedCard.BuildedCardsRank)
+                                                .SelectMany(a => buildedCard.BuildedCards, (a, b) => b.CardName))));   
+                    }
+                }              
+                #endregion  
+            }
+
             Console.ResetColor();
+            
+            return cardsOnTheTable;
         }
 
         public void ItsYourTurn(Player player)
