@@ -22,7 +22,7 @@ namespace Casino
         {
             Card card = SelectYourCard();
 
-            bool thereAreBuildedCards = ConsoleOutput.ChooseOneAction(table);
+            ConsoleOutput.ChooseOneAction(table);
             
             string userinput = "";
 
@@ -59,11 +59,6 @@ namespace Casino
                 case Keyboard.FOUR:
                     PairCards(card, table);
                     break;
-            }            
-
-            if (thereAreBuildedCards && userinput == Keyboard.FIVE)
-            {
-                SeeBuildedCards();
             }
         }
 
@@ -282,12 +277,6 @@ namespace Casino
                 
                 ConsoleOutput.ShowTableCards(table);                
             }                  
-        }
-
-        private void SeeBuildedCards()
-        {
-            // TODO
-            Console.WriteLine("Prueba");
         }
     }
 }

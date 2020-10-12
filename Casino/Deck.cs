@@ -57,17 +57,39 @@ namespace Casino
             #region Test
             
             List<Card> listCards = new List<Card>();
-            listCards.Add(new Card("Queen of Diamond"));
-            listCards.Add(new Card("Queen of Heart"));
+            listCards.Add(new Card("Seven of Diamond"));
+            listCards.Add(new Card("Five of Heart"));
             
             BuildedCard builded = new BuildedCard();
             builded.BuildedCards = listCards;
             builded.BuildedCardsRank = Rank.Queen;
+            builded.IsPair = false;
             
+            List<Card> listCards1 = new List<Card>();
+            listCards1.Add(new Card("Three of Diamond"));
+            listCards1.Add(new Card("Four of Heart"));
+            
+            BuildedCard builded1 = new BuildedCard();
+            builded1.BuildedCards = listCards1;
+            builded1.BuildedCardsRank = Rank.Seven;
+            builded1.IsPair = false;
+            
+            List<Card> listCards2 = new List<Card>();
+            listCards2.Add(new Card("Six of Diamond"));
+            listCards2.Add(new Card("Six of Heart"));
+            
+            BuildedCard builded2 = new BuildedCard();
+            builded2.BuildedCards = listCards2;
+            builded2.BuildedCardsRank = Rank.Six;
+            builded2.IsPair = true;
+
             List<BuildedCard> listBuildedCards = new List<BuildedCard>();
             listBuildedCards.Add(builded);
-            
+            listBuildedCards.Add(builded1);
+            listBuildedCards.Add(builded2);
+
             table.BuildedCards = listBuildedCards;
+            
             
             #endregion
 

@@ -83,8 +83,8 @@ namespace Casino
             IfYouWantToSelectAnotherAction = " si quieres seleccionar otra acción.";                        
             YouJustLostYourCardBecauseItIsInvalid = "Acabas de perder tu carta porque no es válida.";
             SelectYourBuildingRank = " selecciona tu rango de combinación: ";
-            CombinedCards = "Rango de cartas combinadas: ";
-            PairedCards = "Rango de cartas emparejadas: ";
+            CombinedCards = "Cartas combinadas";
+            PairedCards = "Cartas emparejadas";
             SeeBuildedCards = ", 5-Ver cartas agrupadas";
         }
     }

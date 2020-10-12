@@ -83,6 +83,7 @@ namespace Casino
 
         public void ShowTableCards(Table table)
         {
+            
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write(GetSpeak.OnTable);
 
@@ -90,26 +91,50 @@ namespace Casino
             Console.WriteLine(string.Format(": {0}.", 
                               string.Join(", ", table.Cards
                                     .Select(c => c.CardName))));
-
+            
+            
             if (table.BuildedCards != null)
             {
+                #region DRY Alert!!
                 if(table.BuildedCards.Any(b => b.IsPair == false))
-                {
-                    Console.Write(GetSpeak.CombinedCards);
-                    Console.WriteLine(string.Format(": {0}.",
-                                    string.Join(", ", table.BuildedCards
-                                            .Where(b => b.IsPair == false)
-                                            .Select(r => r.BuildedCardsRank))));    
+                {                    
+                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsPair == false))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.Write(GetSpeak.CombinedCards);
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine(string.Format(": {0}->", 
+                                          string.Join(", ", table.BuildedCards                                                
+                                                .Select(r => buildedCard.BuildedCardsRank)
+                                                .FirstOrDefault())) +
+                                          string.Format(" {0}.", 
+                                          string.Join(", ", table.BuildedCards
+                                                .Where(b => b.BuildedCardsRank == buildedCard.BuildedCardsRank)
+                                                .SelectMany(a => buildedCard.BuildedCards, (a, b) => b.CardName))));   
+                    }                    
                 }
                 
                 if(table.BuildedCards.Any(b => b.IsPair == true)) 
                 {
-                    Console.Write(GetSpeak.PairedCards);
-                    Console.WriteLine(string.Format(": {0}.", 
-                                    string.Join(", ", table.BuildedCards
-                                            .Where(b => b.IsPair == true)
-                                            .Select(r => r.BuildedCardsRank))));
-                }                
+                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsPair == true))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.Write(GetSpeak.PairedCards);
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine(string.Format(": {0}->", 
+                                          string.Join(", ", table.BuildedCards
+                                                .Where(b => buildedCard.IsPair == true)
+                                                .Select(r => buildedCard.BuildedCardsRank)
+                                                .FirstOrDefault())) +
+                                          string.Format(" {0}.", 
+                                          string.Join(", ", table.BuildedCards
+                                                .Where(b => b.BuildedCardsRank == buildedCard.BuildedCardsRank)
+                                                .SelectMany(a => buildedCard.BuildedCards, (a, b) => b.CardName))));   
+                    }
+                }              
+                #endregion  
             }
             Console.ResetColor();
         }
@@ -183,18 +208,14 @@ namespace Casino
             Console.ResetColor();
         }
 
-        public bool ChooseOneAction(Table table)
+        public void ChooseOneAction(Table table)
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.Write(GetSpeak.ChooseOneAction);
-
-            bool thereAreBuildedCards = false; 
+            Console.Write(GetSpeak.ChooseOneAction);            
 
             if (table.BuildedCards != null)
             {
                 Console.WriteLine(GetSpeak.SeeBuildedCards);
-                
-                thereAreBuildedCards = true;
 
             } else
             {
@@ -203,7 +224,7 @@ namespace Casino
             
             Console.ResetColor();
 
-            return thereAreBuildedCards;
+            
         }
 
         public void WhichCardWouldYouLikeToTakeFromTheTable(Table table)

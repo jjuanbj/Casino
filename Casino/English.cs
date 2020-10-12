@@ -83,8 +83,8 @@ namespace Casino
             IfYouWantToSelectAnotherAction = " if you want to select another action.";                        
             YouJustLostYourCardBecauseItIsInvalid = "You just lost your card because it is invalid";
             SelectYourBuildingRank = " select your building rank: ";
-            CombinedCards = "Combined cards rank: ";
-            PairedCards = "Paired cards rank: ";
+            CombinedCards = "Combined cards";
+            PairedCards = "Paired cards";
             SeeBuildedCards = ", 5-See builded cards";
         }
     }
