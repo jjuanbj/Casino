@@ -100,6 +100,7 @@ namespace Casino
             ConsoleOutput.ShowPlayerCards(this);            
         }
 
+        // TODO: this method must return Table, because is easier to evaluate BuilderCards in TakeCardFromTheTable()
         private List<Card> SelectCardsFromTheTable(Table table)
         {
             int cardsOnTheTable = ConsoleOutput.WhichCardWouldYouLikeToTakeFromTheTable(table);
@@ -165,11 +166,29 @@ namespace Casino
               || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank)) 
             % Convert.ToInt32(selectedCard.Rank) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
             {
+                bool there_are_paired_cards_selected = false;
+
+                if (table.BuildedCards != null)
+                {
+                    List<BuildedCard> selectedBuildedCardsFromTable = table.BuildedCards.Where(b => b.IsPair == true).ToList();
+
+                    there_are_paired_cards_selected = table.BuildedCards.Where(b => b.IsPair == true)
+                                                                        .SelectMany(c => c.BuildedCards
+                                                                        .Select(o => o.CardName))
+                                                                        .Any(x => cardsSelectedFromTheTable
+                                                                        .Any(y => y.CardName == x));
+                }
+
+                if (there_are_paired_cards_selected == true)
+                {
+                    
+                }
+
                 ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
                 ThrowTheCardToTheTable(selectedCard, table);
             } else if (cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank)) % ACE_MAX_VALUE == THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER 
                     || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank) == ACE_MIN_VALUE ? ACE_MAX_VALUE : Convert.ToInt32(c.Rank)) 
-                    % ACE_MAX_VALUE == THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
+                    % ACE_MAX_VALUE == THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER) // TODO: add validation to any selectedCard, not only ACE
             {
                 table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Contains(c));
                 CapturedCards.AddRange(cardsSelectedFromTheTable);
