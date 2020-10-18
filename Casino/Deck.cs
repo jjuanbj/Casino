@@ -44,6 +44,7 @@ namespace Casino
             foreach (var player in Players)
             {                
                 player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
+                player.Cards.Add(new Card("Queen of Diamond"));
                 
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
             }            

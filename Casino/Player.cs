@@ -11,7 +11,8 @@ namespace Casino
         public ConsoleOutput ConsoleOutput { get; set; }
         public List<Card> CapturedCards { get; set; }
 
-        public Player(string name, ConsoleOutput consoleOutput) {
+        public Player(string name, ConsoleOutput consoleOutput)
+        {
             Name = name;
             ConsoleOutput = consoleOutput;
             CapturedCards = new List<Card>();
@@ -22,27 +23,29 @@ namespace Casino
             Card card = SelectYourCard();
 
             ConsoleOutput.ChooseOneAction(table);
-            
+
             string userinput = "";
 
-            while (userinput != Keyboard.ONE 
-                && userinput != Keyboard.TWO 
+            while (userinput != Keyboard.ONE
+                && userinput != Keyboard.TWO
                 && userinput != Keyboard.THREE
                 && userinput != Keyboard.FOUR
-                && userinput != Keyboard.FIVE){
-                
+                && userinput != Keyboard.FIVE)
+            {
+
                 userinput = Console.ReadLine().Trim();
 
-                if (userinput != Keyboard.ONE 
-                 && userinput != Keyboard.TWO 
+                if (userinput != Keyboard.ONE
+                 && userinput != Keyboard.TWO
                  && userinput != Keyboard.THREE
                  && userinput != Keyboard.FOUR
-                 && userinput != Keyboard.FIVE){
-                    
+                 && userinput != Keyboard.FIVE)
+                {
+
                     ConsoleOutput.ThisIsNotAnAllowedAction();
                     ConsoleOutput.ChooseOneAction(table);
                 }
-            }            
+            }
 
             switch (userinput)
             {
@@ -62,8 +65,8 @@ namespace Casino
         }
 
         private Card SelectYourCard()
-        {                   
-            ConsoleOutput.SelectOneCardByIndexNumber(this);            
+        {
+            ConsoleOutput.SelectOneCardByIndexNumber(this);
 
             string cardNumber = "";
             Card card = null;
@@ -84,7 +87,7 @@ namespace Casino
                 {
                     ConsoleOutput.TypeValidCardNumber();
                     cardNumber = "";
-                    continue;                    
+                    continue;
                 }
             }
             return card;
@@ -97,61 +100,67 @@ namespace Casino
 
             ConsoleOutput.ShowTableCards(table);
 
-            ConsoleOutput.ShowPlayerCards(this);            
+            ConsoleOutput.ShowPlayerCards(this);
         }
 
         private Table SelectCardsFromTheTable(Table table)
         {
             int cardsOnTheTable = ConsoleOutput.WhichCardWouldYouLikeToTakeFromTheTable(table);
             ConsoleOutput.PressFWhenFinished();
-            
+
             string cardRank = "";
-            
+
             Table cardsSelectedFromTheTable = new Table();
 
             while (cardRank != Keyboard.UPPERCASE_F && cardRank != Keyboard.LOWERCASE_F)
             {
                 cardRank = Console.ReadLine().Trim();
-                
-                if(String.IsNullOrEmpty(cardRank)){
 
-                    ConsoleOutput.TypeValidCardNumber();                    
+                if (String.IsNullOrEmpty(cardRank))
+                {
+
+                    ConsoleOutput.TypeValidCardNumber();
                     continue;
 
-                } else if (cardRank != Keyboard.UPPERCASE_F 
-                        && cardRank != Keyboard.LOWERCASE_F
-                        && cardRank.All(char.IsDigit)
-                        && Enumerable.Range((int)General.Zero, cardsOnTheTable).Contains(Int32.Parse(cardRank)))
-                        {
+                }
+                else if (cardRank != Keyboard.UPPERCASE_F
+                      && cardRank != Keyboard.LOWERCASE_F
+                      && cardRank.All(char.IsDigit)
+                      && Enumerable.Range((int)General.Zero, cardsOnTheTable).Contains(Int32.Parse(cardRank)))
+                {
                     bool isBuildedCard = ConsoleOutput.YouSelected(table, cardRank);
-                                
+
                     if (!isBuildedCard)
                     {
                         cardsSelectedFromTheTable.Cards = new List<Card>();
-                        cardsSelectedFromTheTable.Cards.Add(table.Cards.ElementAt(Int32.Parse(cardRank)));                        
-                    } else
+                        cardsSelectedFromTheTable.Cards.Add(table.Cards.ElementAt(Int32.Parse(cardRank)));
+                    }
+                    else
                     {
                         int buildedCardsSelected = Int32.Parse(cardRank) - table.Cards.Count;
 
                         cardsSelectedFromTheTable.BuildedCards = new List<BuildedCard>();
-                        cardsSelectedFromTheTable.BuildedCards.Add(table.BuildedCards.ElementAt(buildedCardsSelected));    
+                        cardsSelectedFromTheTable.BuildedCards.Add(table.BuildedCards.ElementAt(buildedCardsSelected));
                     }
-                    
-                }  else if (cardRank == Keyboard.UPPERCASE_F || cardRank == Keyboard.LOWERCASE_F){
-                    break;                
+
+                }
+                else if (cardRank == Keyboard.UPPERCASE_F || cardRank == Keyboard.LOWERCASE_F)
+                {
+                    break;
                 }
                 else
                 {
                     ConsoleOutput.TypeValidCardNumber();
                     cardRank = "";
                     continue;
-                }                
+                }
             }
 
             return cardsSelectedFromTheTable;
         }
 
-        private void TakeCardFromTheTable(Card selectedCard, Table table){
+        private void TakeCardFromTheTable(Card selectedCard, Table table)
+        {
 
             Table cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
 
@@ -160,33 +169,21 @@ namespace Casino
             const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
 
             //TODO: validate if any selected card are in PairedCard
-            if (!cardsSelectedFromTheTable.Cards.Any() 
-              || cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) 
+            if ((cardsSelectedFromTheTable.Cards == null && cardsSelectedFromTheTable.BuildedCards == null)
+             || (cardsSelectedFromTheTable.Cards != null
+             && ((cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank))
             % Convert.ToInt32(selectedCard.Rank) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
+            || (selectedCard.Rank == Rank.Ace && (cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank))
+            % ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)))) // validate when player take ace card by max value within others cards rank
+            || (cardsSelectedFromTheTable.BuildedCards != null
+            && cardsSelectedFromTheTable.BuildedCards.Where(b => b.IsPair == true)
+                                                      .Any(b => b.BuildedCardsRank != selectedCard.Rank)))
             {
-                /*bool there_are_paired_cards_selected = false;
-
-                if (table.BuildedCards != null)
-                {
-                    List<BuildedCard> selectedBuildedCardsFromTable = table.BuildedCards.Where(b => b.IsPair == true).ToList();
-
-                    there_are_paired_cards_selected = table.BuildedCards.Where(b => b.IsPair == true)
-                                                                        .SelectMany(c => c.BuildedCards
-                                                                        .Select(o => o.CardName))
-                                                                        .Any(x => cardsSelectedFromTheTable
-                                                                        .Any(y => y.CardName == x));
-                }
-
-                if (there_are_paired_cards_selected == true)
-                {
-                    
-                }*/
-
                 ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
                 ThrowTheCardToTheTable(selectedCard, table);
-            } else if (cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) % ACE_MAX_VALUE == THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER 
-                    || cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank) == ACE_MIN_VALUE ? ACE_MAX_VALUE : Convert.ToInt32(c.Rank)) 
-                    % ACE_MAX_VALUE == THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER) // TODO: add validation to any selectedCard, not only ACE
+
+            }
+            else
             {
                 table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Cards.Contains(c));
                 CapturedCards.AddRange(cardsSelectedFromTheTable.Cards);
@@ -197,9 +194,10 @@ namespace Casino
             }
         }
 
-        private Card SelectBuildingRank(Card selectedCard){
+        private Card SelectBuildingRank(Card selectedCard)
+        {
 
-            ConsoleOutput.SelectYourBuildingRank(this, selectedCard);            
+            ConsoleOutput.SelectYourBuildingRank(this, selectedCard);
 
             string cardNumber = "";
             Card buildingRankCard = null;
@@ -217,97 +215,102 @@ namespace Casino
                     buildingRankCard = new Card(playerCardsWithoutSelectedCard.ElementAt(Int32.Parse(cardNumber)).CardName);
 
                     if (Cards.Any(c => c.CardName == buildingRankCard.CardName))
-                    {                        
-                        ConsoleOutput.YouSelected(playerCardsWithoutSelectedCard.ToList(), cardNumber);    
+                    {
+                        ConsoleOutput.YouSelected(playerCardsWithoutSelectedCard.ToList(), cardNumber);
                     }
                 }
                 else
                 {
                     ConsoleOutput.TypeValidCardNumber();
                     cardNumber = "";
-                    continue;                    
+                    continue;
                 }
             }
 
             return buildingRankCard;
         }
 
-        private void CombineCards(Card selectedCard, Table table){
-            
-            Card buildingRankCard = SelectBuildingRank(selectedCard);                        
-            
+        private void CombineCards(Card selectedCard, Table table)
+        {
+
+            Card buildingRankCard = SelectBuildingRank(selectedCard);
+
             List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table).Cards;
             cardsSelectedFromTheTable.Add(selectedCard);
-            
+
             const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
 
-            if (!cardsSelectedFromTheTable.Any() 
-              || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank)) 
+            if (!cardsSelectedFromTheTable.Any()
+              || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank))
               % Convert.ToInt32(buildingRankCard.Rank) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
             {
                 ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
                 ThrowTheCardToTheTable(selectedCard, table);
-            } else 
-            {                        
+            }
+            else
+            {
                 table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Contains(c));
 
-                BuildedCard buildedCard = new BuildedCard();         
+                BuildedCard buildedCard = new BuildedCard();
                 buildedCard.BuildedCards = cardsSelectedFromTheTable;
                 buildedCard.BuildedCardsRank = buildingRankCard.Rank;
 
                 if (table.BuildedCards == null)
                 {
-                    buildedCard.IsPair = false;    
-                } else if (table.BuildedCards.Any(c => c.BuildedCardsRank == buildedCard.BuildedCardsRank))
+                    buildedCard.IsPair = false;
+                }
+                else if (table.BuildedCards.Any(c => c.BuildedCardsRank == buildedCard.BuildedCardsRank))
                 {
                     buildedCard.IsPair = true;
-                                        
+
                     table.BuildedCards.Where(c => c.BuildedCardsRank == buildedCard.BuildedCardsRank)
                                       .FirstOrDefault().IsPair = true;
                 }
 
                 List<BuildedCard> buildedCards = new List<BuildedCard>();
                 buildedCards.Add(buildedCard);
-                
+
                 table.BuildedCards = buildedCards;
-                
-                ConsoleOutput.ShowTableCards(table);                
-            }                  
+
+                ConsoleOutput.ShowTableCards(table);
+            }
         }
 
-        private void PairCards(Card selectedCard, Table table){
-            
-            Card buildingRankCard = SelectBuildingRank(selectedCard);                        
-            
+        private void PairCards(Card selectedCard, Table table)
+        {
+
+            Card buildingRankCard = SelectBuildingRank(selectedCard);
+
             List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table).Cards;
             cardsSelectedFromTheTable.Add(selectedCard);
 
             const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
 
-            if (!cardsSelectedFromTheTable.Any() 
+            if (!cardsSelectedFromTheTable.Any()
               || cardsSelectedFromTheTable.All(c => c.Rank != buildingRankCard.Rank)
-              || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank)) 
+              || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank))
               % Convert.ToInt32(buildingRankCard.Rank) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
             {
                 ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
-              
+
                 ThrowTheCardToTheTable(selectedCard, table);
-            } else 
+            }
+            else
             {
                 table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Contains(c));
 
-                BuildedCard buildedCard = new BuildedCard();                
+                BuildedCard buildedCard = new BuildedCard();
                 buildedCard.BuildedCards = cardsSelectedFromTheTable;
                 buildedCard.BuildedCardsRank = buildingRankCard.Rank;
                 buildedCard.IsPair = true;
 
                 List<BuildedCard> buildedCards = new List<BuildedCard>();
                 buildedCards.Add(buildedCard);
-                
+
                 table.BuildedCards = buildedCards;
-                
-                ConsoleOutput.ShowTableCards(table);                
-            }                  
+
+                ConsoleOutput.ShowTableCards(table);
+            }
         }
     }
 }
