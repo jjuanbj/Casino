@@ -100,15 +100,14 @@ namespace Casino
             ConsoleOutput.ShowPlayerCards(this);            
         }
 
-        // TODO: this method must return Table, because is easier to evaluate BuilderCards in TakeCardFromTheTable()
-        private List<Card> SelectCardsFromTheTable(Table table)
+        private Table SelectCardsFromTheTable(Table table)
         {
             int cardsOnTheTable = ConsoleOutput.WhichCardWouldYouLikeToTakeFromTheTable(table);
             ConsoleOutput.PressFWhenFinished();
             
             string cardRank = "";
             
-            List<Card> cardsSelectedFromTheTable = new List<Card>();
+            Table cardsSelectedFromTheTable = new Table();
 
             while (cardRank != Keyboard.UPPERCASE_F && cardRank != Keyboard.LOWERCASE_F)
             {
@@ -128,15 +127,14 @@ namespace Casino
                                 
                     if (!isBuildedCard)
                     {
-                        cardsSelectedFromTheTable.Add(table.Cards.ElementAt(Int32.Parse(cardRank)));                        
+                        cardsSelectedFromTheTable.Cards = new List<Card>();
+                        cardsSelectedFromTheTable.Cards.Add(table.Cards.ElementAt(Int32.Parse(cardRank)));                        
                     } else
                     {
                         int buildedCardsSelected = Int32.Parse(cardRank) - table.Cards.Count;
 
-                        foreach (var item in table.BuildedCards.ElementAt(buildedCardsSelected).BuildedCards)
-                        {
-                            cardsSelectedFromTheTable.Add(item);    
-                        }                        
+                        cardsSelectedFromTheTable.BuildedCards = new List<BuildedCard>();
+                        cardsSelectedFromTheTable.BuildedCards.Add(table.BuildedCards.ElementAt(buildedCardsSelected));    
                     }
                     
                 }  else if (cardRank == Keyboard.UPPERCASE_F || cardRank == Keyboard.LOWERCASE_F){
@@ -155,18 +153,18 @@ namespace Casino
 
         private void TakeCardFromTheTable(Card selectedCard, Table table){
 
-            List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
+            Table cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
 
             const int ACE_MAX_VALUE = 14;
             const int ACE_MIN_VALUE = 1;
             const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
 
             //TODO: validate if any selected card are in PairedCard
-            if (!cardsSelectedFromTheTable.Any() 
-              || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank)) 
+            if (!cardsSelectedFromTheTable.Cards.Any() 
+              || cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) 
             % Convert.ToInt32(selectedCard.Rank) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
             {
-                bool there_are_paired_cards_selected = false;
+                /*bool there_are_paired_cards_selected = false;
 
                 if (table.BuildedCards != null)
                 {
@@ -182,16 +180,16 @@ namespace Casino
                 if (there_are_paired_cards_selected == true)
                 {
                     
-                }
+                }*/
 
                 ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
                 ThrowTheCardToTheTable(selectedCard, table);
-            } else if (cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank)) % ACE_MAX_VALUE == THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER 
-                    || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank) == ACE_MIN_VALUE ? ACE_MAX_VALUE : Convert.ToInt32(c.Rank)) 
+            } else if (cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) % ACE_MAX_VALUE == THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER 
+                    || cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank) == ACE_MIN_VALUE ? ACE_MAX_VALUE : Convert.ToInt32(c.Rank)) 
                     % ACE_MAX_VALUE == THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER) // TODO: add validation to any selectedCard, not only ACE
             {
-                table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Contains(c));
-                CapturedCards.AddRange(cardsSelectedFromTheTable);
+                table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Cards.Contains(c));
+                CapturedCards.AddRange(cardsSelectedFromTheTable.Cards);
                 CapturedCards.Add(selectedCard);
 
                 ConsoleOutput.ShowTableCards(table);
@@ -238,7 +236,7 @@ namespace Casino
             
             Card buildingRankCard = SelectBuildingRank(selectedCard);                        
             
-            List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
+            List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table).Cards;
             cardsSelectedFromTheTable.Add(selectedCard);
             
             const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
@@ -281,7 +279,7 @@ namespace Casino
             
             Card buildingRankCard = SelectBuildingRank(selectedCard);                        
             
-            List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
+            List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table).Cards;
             cardsSelectedFromTheTable.Add(selectedCard);
 
             const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;

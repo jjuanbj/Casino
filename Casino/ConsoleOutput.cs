@@ -189,7 +189,7 @@ namespace Casino
             Console.ResetColor();            
         }
 
-        public bool YouSelected(Table table, string cardNumber)
+        public bool YouSelected(Table table, string cardRank)
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write(GetSpeak.YouSelected);
@@ -197,13 +197,13 @@ namespace Casino
             bool isBuildedCard = false;
 
             Console.ForegroundColor = ConsoleColor.Green;
-            if (table.Cards.Count < Int32.Parse(cardNumber))
+            if (table.Cards.Count > Int32.Parse(cardRank))
             {
-                Console.WriteLine(table.Cards.ElementAt(Int32.Parse(cardNumber)).CardName);    
+                Console.WriteLine(table.Cards.ElementAt(Int32.Parse(cardRank)).CardName);    
             } else {
                 isBuildedCard = true;
 
-                int buildedCardsSelected = Int32.Parse(cardNumber) - table.Cards.Count;
+                int buildedCardsSelected = Int32.Parse(cardRank) - table.Cards.Count;
                 
                 var buildedCardsRank = table.BuildedCards.ElementAt(buildedCardsSelected).BuildedCardsRank;
                 
