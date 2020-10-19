@@ -181,9 +181,11 @@ namespace Casino
             }
         }
 
+        //TODO: Test each scenario of this method
         private bool ValidateTakenCards(Table cardsSelectedFromTheTable, Card selectedCard){
 
             bool takenCardsFromTableAreValid = true;
+            
             const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
             const int ACE_MAX_VALUE = 14;
 
@@ -191,7 +193,8 @@ namespace Casino
             const bool SELECTED_CARD_AND_CARDS_TAKEN_FROM_TABLE_DO_NOT_HAVE_SAME_RANK = false;
             const bool SELECTED_ACE_BUT_TAKEN_CARDS_FROM_TABLE_ARE_NOT_EQUAL_TO_FOURTEEN = false;
             const bool SELECTED_CARD_AND_PAIRED_CARDS_DO_NOT_HAVE_SAME_RANK = false;
-
+            const bool OTHER_CARDS_ARE_NOT_EQUAL_TO_FOURTEEN = false;
+            
             if (cardsSelectedFromTheTable.Cards == null && cardsSelectedFromTheTable.BuildedCards == null)
             {
                 takenCardsFromTableAreValid = USER_DID_NOT_TAKE_CARDS_FROM_TABLE;    
@@ -207,7 +210,16 @@ namespace Casino
                 % ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER))
                 {
                     takenCardsFromTableAreValid = SELECTED_ACE_BUT_TAKEN_CARDS_FROM_TABLE_ARE_NOT_EQUAL_TO_FOURTEEN;        
+
+                } else if (selectedCard.Rank == Rank.Ace && (cardsSelectedFromTheTable.Cards.Any(c => c.Rank == Rank.Ace) 
+                                                         &&  cardsSelectedFromTheTable.Cards.Any(c => c.Rank != Rank.Ace) 
+                                                         && (cardsSelectedFromTheTable.Cards.Where(c => c.Rank != Rank.Ace)
+                                                                                            .Sum(c => Convert.ToInt32(c.Rank)) 
+                                                          % ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)))
+                {
+                    takenCardsFromTableAreValid = OTHER_CARDS_ARE_NOT_EQUAL_TO_FOURTEEN;        
                 }
+
             } else if (cardsSelectedFromTheTable.BuildedCards != null
                     && cardsSelectedFromTheTable.BuildedCards.Where(b => b.IsPair == true)
                                                              .Any(b => b.BuildedCardsRank != selectedCard.Rank))
