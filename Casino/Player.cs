@@ -111,6 +111,8 @@ namespace Casino
             string cardRank = "";
 
             Table cardsSelectedFromTheTable = new Table();
+            cardsSelectedFromTheTable.Cards = new List<Card>();
+            cardsSelectedFromTheTable.BuildedCards = new List<BuildedCard>();
 
             while (cardRank != Keyboard.UPPERCASE_F && cardRank != Keyboard.LOWERCASE_F)
             {
@@ -131,15 +133,13 @@ namespace Casino
                     bool isBuildedCard = ConsoleOutput.YouSelected(table, cardRank);
 
                     if (!isBuildedCard)
-                    {
-                        cardsSelectedFromTheTable.Cards = new List<Card>();
+                    {                        
                         cardsSelectedFromTheTable.Cards.Add(table.Cards.ElementAt(Int32.Parse(cardRank)));
                     }
                     else
                     {
                         int buildedCardsSelected = Int32.Parse(cardRank) - table.Cards.Count;
-
-                        cardsSelectedFromTheTable.BuildedCards = new List<BuildedCard>();
+                        
                         cardsSelectedFromTheTable.BuildedCards.Add(table.BuildedCards.ElementAt(buildedCardsSelected));
                     }
 
@@ -156,6 +156,12 @@ namespace Casino
                 }
             }
 
+            if (!cardsSelectedFromTheTable.Cards.Any()) 
+                 cardsSelectedFromTheTable.Cards = null;
+            
+            if (!cardsSelectedFromTheTable.BuildedCards.Any())            
+                 cardsSelectedFromTheTable.BuildedCards = null;
+            
             return cardsSelectedFromTheTable;
         }
 
@@ -168,20 +174,28 @@ namespace Casino
             {
                 ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
                 ThrowTheCardToTheTable(selectedCard, table);
-
             }
             else
             {
-                table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Cards.Contains(c));
-                CapturedCards.AddRange(cardsSelectedFromTheTable.Cards);
+                if(cardsSelectedFromTheTable.Cards != null) {
+                    
+                    table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Cards.Contains(c));
+                    CapturedCards.AddRange(cardsSelectedFromTheTable.Cards);
+                } 
+                  
+                if(cardsSelectedFromTheTable.BuildedCards != null) {
+
+                    table.BuildedCards.RemoveAll(c => cardsSelectedFromTheTable.BuildedCards.Contains(c));
+                    CapturedCards.AddRange(cardsSelectedFromTheTable.BuildedCards.SelectMany(b => b.BuildedCards).Distinct());
+                }                    
+                
                 CapturedCards.Add(selectedCard);
 
                 ConsoleOutput.ShowTableCards(table);
                 ConsoleOutput.ShowCapturedCards(this);
             }
         }
-
-        //TODO: Test each scenario of this method
+        
         private bool ValidateTakenCards(Table cardsSelectedFromTheTable, Card selectedCard){
 
             bool takenCardsFromTableAreValid = true;
@@ -192,24 +206,26 @@ namespace Casino
             const bool USER_DID_NOT_TAKE_CARDS_FROM_TABLE = false;
             const bool SELECTED_CARD_AND_CARDS_TAKEN_FROM_TABLE_DO_NOT_HAVE_SAME_RANK = false;
             const bool SELECTED_ACE_BUT_TAKEN_CARDS_FROM_TABLE_ARE_NOT_EQUAL_TO_FOURTEEN = false;
-            const bool SELECTED_CARD_AND_PAIRED_CARDS_DO_NOT_HAVE_SAME_RANK = false;
-            const bool OTHER_CARDS_ARE_NOT_EQUAL_TO_FOURTEEN = false;
+            const bool SELECTED_CARD_AND_BUILDED_CARDS_DO_NOT_HAVE_SAME_RANK = false;
+            const bool SELECTED_ACE_AND_OTHER_CARDS_BUT_OTHER_CARDS_ARE_NOT_EQUAL_TO_FOURTEEN = false;
+            const bool SELECTED_ACE_BUT_BUILDED_CARDS_DO_NOT_HAVE_ACE_MAX_VALUE = false;
             
             if (cardsSelectedFromTheTable.Cards == null && cardsSelectedFromTheTable.BuildedCards == null)
             {
-                takenCardsFromTableAreValid = USER_DID_NOT_TAKE_CARDS_FROM_TABLE;    
+                takenCardsFromTableAreValid = USER_DID_NOT_TAKE_CARDS_FROM_TABLE;                    
 
             } else if (cardsSelectedFromTheTable.Cards != null)
             {
                 if (cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) 
                 % Convert.ToInt32(selectedCard.Rank) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
                 {
-                    takenCardsFromTableAreValid = SELECTED_CARD_AND_CARDS_TAKEN_FROM_TABLE_DO_NOT_HAVE_SAME_RANK;
+                    takenCardsFromTableAreValid = SELECTED_CARD_AND_CARDS_TAKEN_FROM_TABLE_DO_NOT_HAVE_SAME_RANK;                    
 
-                } else if (selectedCard.Rank == Rank.Ace && (cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) 
-                % ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER))
+                } else if (selectedCard.Rank == Rank.Ace && (!cardsSelectedFromTheTable.Cards.Any(c => c.Rank == Rank.Ace)
+                                                         && cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) 
+                                                          % ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER))
                 {
-                    takenCardsFromTableAreValid = SELECTED_ACE_BUT_TAKEN_CARDS_FROM_TABLE_ARE_NOT_EQUAL_TO_FOURTEEN;        
+                    takenCardsFromTableAreValid = SELECTED_ACE_BUT_TAKEN_CARDS_FROM_TABLE_ARE_NOT_EQUAL_TO_FOURTEEN;         
 
                 } else if (selectedCard.Rank == Rank.Ace && (cardsSelectedFromTheTable.Cards.Any(c => c.Rank == Rank.Ace) 
                                                          &&  cardsSelectedFromTheTable.Cards.Any(c => c.Rank != Rank.Ace) 
@@ -217,14 +233,20 @@ namespace Casino
                                                                                             .Sum(c => Convert.ToInt32(c.Rank)) 
                                                           % ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)))
                 {
-                    takenCardsFromTableAreValid = OTHER_CARDS_ARE_NOT_EQUAL_TO_FOURTEEN;        
+                    takenCardsFromTableAreValid = SELECTED_ACE_AND_OTHER_CARDS_BUT_OTHER_CARDS_ARE_NOT_EQUAL_TO_FOURTEEN;        
                 }
 
-            } else if (cardsSelectedFromTheTable.BuildedCards != null
-                    && cardsSelectedFromTheTable.BuildedCards.Where(b => b.IsPair == true)
-                                                             .Any(b => b.BuildedCardsRank != selectedCard.Rank))
+            } else if (cardsSelectedFromTheTable.BuildedCards != null)
             {
-                takenCardsFromTableAreValid = SELECTED_CARD_AND_PAIRED_CARDS_DO_NOT_HAVE_SAME_RANK;
+                if (cardsSelectedFromTheTable.BuildedCards.Any(b => b.BuildedCardsRank != selectedCard.Rank))
+                {
+                    takenCardsFromTableAreValid = SELECTED_CARD_AND_BUILDED_CARDS_DO_NOT_HAVE_SAME_RANK;    
+                    
+                } else if (selectedCard.Rank == Rank.Ace 
+                          && cardsSelectedFromTheTable.BuildedCards.Any(b => Convert.ToInt32(b.BuildedCardsRank) != ACE_MAX_VALUE))
+                {
+                    takenCardsFromTableAreValid = SELECTED_ACE_BUT_BUILDED_CARDS_DO_NOT_HAVE_ACE_MAX_VALUE;         
+                }                
             }
 
             return takenCardsFromTableAreValid;

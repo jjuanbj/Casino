@@ -44,8 +44,14 @@ namespace Casino
             foreach (var player in Players)
             {                
                 player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
+                
+                #region Test
+                
+                player.Cards.Add(new Card("Ace of Diamond"));
                 player.Cards.Add(new Card("Queen of Diamond"));
                 
+                #endregion
+
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
             }            
         }
@@ -90,7 +96,9 @@ namespace Casino
 
             table.BuildedCards = listBuildedCards;
             
-            
+            table.Cards.Add(new Card("Ace of Heart"));
+            table.Cards.Add(new Card("Five of Heart"));
+            table.Cards.Add(new Card("Nine of Heart"));
             #endregion
 
             DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
