@@ -10,6 +10,7 @@ namespace Casino
         {            
             Start start = new Start();
             start.ChooseLanguage();
+            
             Game game = new Game
             {
                 ConsoleOutput = new ConsoleOutput(start.Speak)

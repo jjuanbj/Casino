@@ -31,6 +31,7 @@ namespace Casino
                 && userinput != Keyboard.THREE
                 && userinput != Keyboard.FOUR)
             {
+
                 userinput = Console.ReadLine().Trim();
 
                 if (userinput != Keyboard.ONE
