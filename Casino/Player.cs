@@ -29,19 +29,15 @@ namespace Casino
             while (userinput != Keyboard.ONE
                 && userinput != Keyboard.TWO
                 && userinput != Keyboard.THREE
-                && userinput != Keyboard.FOUR
-                && userinput != Keyboard.FIVE)
+                && userinput != Keyboard.FOUR)
             {
-
                 userinput = Console.ReadLine().Trim();
 
                 if (userinput != Keyboard.ONE
                  && userinput != Keyboard.TWO
                  && userinput != Keyboard.THREE
-                 && userinput != Keyboard.FOUR
-                 && userinput != Keyboard.FIVE)
+                 && userinput != Keyboard.FOUR)
                 {
-
                     ConsoleOutput.ThisIsNotAnAllowedAction();
                     ConsoleOutput.ChooseOneAction(table);
                 }

@@ -238,20 +238,9 @@ namespace Casino
         public void ChooseOneAction(Table table)
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.Write(GetSpeak.ChooseOneAction);            
-
-            if (table.BuildedCards != null)
-            {
-                Console.WriteLine(GetSpeak.SeeBuildedCards);
-
-            } else
-            {
-                Console.WriteLine(" ");
-            }
+            Console.WriteLine(GetSpeak.ChooseOneAction);            
             
-            Console.ResetColor();
-
-            
+            Console.ResetColor();            
         }
 
         public int WhichCardWouldYouLikeToTakeFromTheTable(Table table)

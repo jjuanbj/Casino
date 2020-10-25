@@ -53,9 +53,7 @@ namespace Casino
 
         public string CombinedCards { get; set; }
 
-        public string PairedCards { get; set; }
-
-        public string SeeBuildedCards { get; set; }
+        public string PairedCards { get; set; }      
 
         public English()
         {
@@ -83,8 +81,7 @@ namespace Casino
             YouJustLostYourCardBecauseItIsInvalid = "You just lost your card because it is invalid";
             SelectYourBuildingRank = " select your building rank: ";
             CombinedCards = "Combined cards";
-            PairedCards = "Paired cards";
-            SeeBuildedCards = ", 5-See builded cards";
+            PairedCards = "Paired cards";            
         }
     }
 }
