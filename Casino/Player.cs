@@ -18,7 +18,7 @@ namespace Casino
             CapturedCards = new List<Card>();
         }
 
-        public void Play(Table table)
+        public virtual void Play(Table table)
         {
             Card card = SelectYourCard();
 
@@ -61,7 +61,7 @@ namespace Casino
             }
         }
 
-        private Card SelectYourCard()
+        public virtual Card SelectYourCard()
         {
             ConsoleOutput.SelectOneCardByIndexNumber(this);
 
@@ -90,7 +90,7 @@ namespace Casino
             return card;
         }
 
-        private void ThrowTheCardToTheTable(Card card, Table table)
+        public virtual void ThrowTheCardToTheTable(Card card, Table table)
         {
             table.Cards.Add(card);
             Cards.RemoveAll(c => c.CardName == card.CardName);
@@ -162,7 +162,7 @@ namespace Casino
             return cardsSelectedFromTheTable;
         }
 
-        private void TakeCardFromTheTable(Card selectedCard, Table table)
+        public virtual void TakeCardFromTheTable(Card selectedCard, Table table)
         {
 
             Table cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
@@ -285,9 +285,8 @@ namespace Casino
             return buildingRankCard;
         }
 
-        private void CombineCards(Card selectedCard, Table table)
+        public virtual void CombineCards(Card selectedCard, Table table)
         {
-
             Card buildingRankCard = SelectBuildingRank(selectedCard);
 
             List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table).Cards;
@@ -331,7 +330,7 @@ namespace Casino
             }
         }
 
-        private void PairCards(Card selectedCard, Table table)
+        public virtual void PairCards(Card selectedCard, Table table)
         {
 
             Card buildingRankCard = SelectBuildingRank(selectedCard);
