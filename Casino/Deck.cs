@@ -43,17 +43,23 @@ namespace Casino
         {
             foreach (var player in Players)
             {                
-                player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
-                
-                #region Test
-                
-                player.Cards.Add(new Card("Ace of Diamond"));
-                player.Cards.Add(new Card("Queen of Diamond"));
-                
-                #endregion
+                player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();                
 
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
             }            
+            
+            #region Test
+            foreach (var player in Players.Where(p => p.Name == Constants.Computer))
+            {                
+                List<Card> listCards = new List<Card>();
+                listCards.Add(new Card("Seven of Diamond"));
+                listCards.Add(new Card("Ten of Heart"));
+                listCards.Add(new Card("Jack of Diamond"));
+                listCards.Add(new Card("King of Heart"));
+                
+                player.Cards = listCards;                            
+            }           
+            #endregion 
         }
         
         public void DealCardsTable(Table table)
@@ -65,40 +71,45 @@ namespace Casino
             List<Card> listCards = new List<Card>();
             listCards.Add(new Card("Seven of Diamond"));
             listCards.Add(new Card("Five of Heart"));
-            
-            BuildedCard builded = new BuildedCard();
-            builded.BuildedCards = listCards;
-            builded.BuildedCardsRank = Rank.Queen;
-            builded.IsPair = false;
-            
-            List<Card> listCards1 = new List<Card>();
-            listCards1.Add(new Card("Three of Diamond"));
-            listCards1.Add(new Card("Four of Heart"));
-            
-            BuildedCard builded1 = new BuildedCard();
-            builded1.BuildedCards = listCards1;
-            builded1.BuildedCardsRank = Rank.Seven;
-            builded1.IsPair = false;
-            
-            List<Card> listCards2 = new List<Card>();
-            listCards2.Add(new Card("Six of Diamond"));
-            listCards2.Add(new Card("Six of Heart"));
-            
-            BuildedCard builded2 = new BuildedCard();
-            builded2.BuildedCards = listCards2;
-            builded2.BuildedCardsRank = Rank.Six;
-            builded2.IsPair = true;
+            listCards.Add(new Card("Ace of Diamond"));
+            listCards.Add(new Card("Nine of Heart"));
 
-            List<BuildedCard> listBuildedCards = new List<BuildedCard>();
-            listBuildedCards.Add(builded);
-            listBuildedCards.Add(builded1);
-            listBuildedCards.Add(builded2);
-
-            table.BuildedCards = listBuildedCards;
+            // BuildedCard builded = new BuildedCard();
+            // builded.BuildedCards = listCards;
+            // builded.BuildedCardsRank = Rank.Queen;
+            // builded.IsPair = false;
             
-            table.Cards.Add(new Card("Ace of Heart"));
-            table.Cards.Add(new Card("Five of Heart"));
-            table.Cards.Add(new Card("Nine of Heart"));
+            // List<Card> listCards1 = new List<Card>();
+            // listCards1.Add(new Card("Three of Diamond"));
+            // listCards1.Add(new Card("Four of Heart"));
+            
+            // BuildedCard builded1 = new BuildedCard();
+            // builded1.BuildedCards = listCards1;
+            // builded1.BuildedCardsRank = Rank.Seven;
+            // builded1.IsPair = false;
+            
+            // List<Card> listCards2 = new List<Card>();
+            // listCards2.Add(new Card("Six of Diamond"));
+            // listCards2.Add(new Card("Six of Heart"));
+            
+            // BuildedCard builded2 = new BuildedCard();
+            // builded2.BuildedCards = listCards2;
+            // builded2.BuildedCardsRank = Rank.Six;
+            // builded2.IsPair = true;
+
+            // List<BuildedCard> listBuildedCards = new List<BuildedCard>();
+            // listBuildedCards.Add(builded);
+            // listBuildedCards.Add(builded1);
+            // listBuildedCards.Add(builded2);
+
+            // table.BuildedCards = listBuildedCards;
+            
+            // table.Cards.Add(new Card("Ace of Heart"));
+            // table.Cards.Add(new Card("Five of Heart"));
+            // table.Cards.Add(new Card("Nine of Heart"));
+            // table.Cards.Add(new Card("Four of Heart"));
+            table.Cards = listCards;
+
             #endregion
 
             DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);

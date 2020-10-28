@@ -8,7 +8,7 @@ namespace Casino
     {
         public string Name { get; set; }
         public List<Card> Cards { get; set; }
-        public ConsoleOutput ConsoleOutput { get; set; }
+        public static ConsoleOutput ConsoleOutput { get; set; }
         public List<Card> CapturedCards { get; set; }
 
         public Player(string name, ConsoleOutput consoleOutput)

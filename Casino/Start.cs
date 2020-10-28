@@ -44,7 +44,7 @@ namespace Casino
                 }                
             }
 
-            game.Players.Add(new Player(Constants.Computer, game.ConsoleOutput));
+            game.Players.Add(new Computer());
 
             game.ConsoleOutput.WelcomePlayers(game.Players);            
 

@@ -5,8 +5,6 @@ using System.Linq;
 namespace Casino
 {
     class Computer : Player {
-        
-        public new static ConsoleOutput ConsoleOutput { get; set; }
 
         public Computer() : base(Constants.Computer, ConsoleOutput) { }   
 
@@ -35,7 +33,7 @@ namespace Casino
 
         public override Card SelectYourCard()
         {            
-            Card card = null;
+            Card card = null;            
  
             return card;
         }
@@ -43,6 +41,11 @@ namespace Casino
         private string ChooseOneAction(Table table)
         {
             string actionSelected = "";
+            
+            if (!table.Cards.Any(x => this.Cards.Any(y => y.Rank == x.Rank)))
+            {
+                actionSelected = Keyboard.TWO;
+            }           
 
             return actionSelected;
         }

@@ -14,10 +14,7 @@ namespace Casino
             {
                 game.ConsoleOutput.ItsYourTurn(player);
                 
-                if (player.Name != Constants.Computer)
-                {
-                    player.Play(game.Table);                    
-                }
+                player.Play(game.Table);                                   
             }
         }        
     }
