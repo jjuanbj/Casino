@@ -12,8 +12,8 @@ namespace Casino
         {            
             string actionSelected = ChooseOneAction(table);
 
-            Card card = SelectYourCard(actionSelected);
-
+            Card card = SelectYourCard(actionSelected, table);
+            
             switch (actionSelected)
             {
                 case Keyboard.ONE:
@@ -29,6 +29,8 @@ namespace Casino
                     PairCards(card, table);
                     break;
             }
+
+            ConsoleOutput.ShowTableCards(table);
         }        
 
         private string ChooseOneAction(Table table)
@@ -39,21 +41,23 @@ namespace Casino
              && (table.BuildedCards != null 
              && !table.BuildedCards.Any(x => this.Cards.Any(y => y.Rank == x.BuildedCardsRank))))
             {
-                actionSelected = Keyboard.TWO;
-                Console.WriteLine("Test this");
+                actionSelected = Keyboard.TWO;                
             }           
 
             return actionSelected;
         }
 
-        private Card SelectYourCard(String actionSelected)
+        private Card SelectYourCard(String actionSelected, Table table)
         {            
             Card card = null;            
 
-            if (actionSelected == Keyboard.TWO)
+            if (actionSelected == Keyboard.ONE)
+            {                
+                card = this.Cards.OrderBy(c => c.Rank).FirstOrDefault();                
+
+            } else if (actionSelected == Keyboard.TWO)
             {
-                // Return the card with minimum rank (but no Ace, unless it is the only card in computer)
-                card = this.Cards.Min();
+                //card = this.Cards.Where(c => table.Cards.Where(b => b.Rank == c.Rank))
             }
 
             return card;
