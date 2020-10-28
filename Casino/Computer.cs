@@ -9,10 +9,10 @@ namespace Casino
         public Computer() : base(Constants.Computer, ConsoleOutput) { }   
 
         public override void Play(Table table)
-        {
-            Card card = SelectYourCard();
-
+        {            
             string actionSelected = ChooseOneAction(table);
+
+            Card card = SelectYourCard(actionSelected);
 
             switch (actionSelected)
             {
@@ -29,25 +29,34 @@ namespace Casino
                     PairCards(card, table);
                     break;
             }
-        }
-
-        public override Card SelectYourCard()
-        {            
-            Card card = null;            
- 
-            return card;
-        }
+        }        
 
         private string ChooseOneAction(Table table)
         {
             string actionSelected = "";
             
-            if (!table.Cards.Any(x => this.Cards.Any(y => y.Rank == x.Rank)))
+            if (!table.Cards.Any(x => this.Cards.Any(y => y.Rank == x.Rank)) 
+             && (table.BuildedCards != null 
+             && !table.BuildedCards.Any(x => this.Cards.Any(y => y.Rank == x.BuildedCardsRank))))
             {
                 actionSelected = Keyboard.TWO;
+                Console.WriteLine("Test this");
             }           
 
             return actionSelected;
+        }
+
+        private Card SelectYourCard(String actionSelected)
+        {            
+            Card card = null;            
+
+            if (actionSelected == Keyboard.TWO)
+            {
+                // Return the card with minimum rank (but no Ace, unless it is the only card in computer)
+                card = this.Cards.Min();
+            }
+
+            return card;
         }
 
         public override void ThrowTheCardToTheTable(Card card, Table table)

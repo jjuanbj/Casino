@@ -61,7 +61,7 @@ namespace Casino
             }
         }
 
-        public virtual Card SelectYourCard()
+        private Card SelectYourCard()
         {
             ConsoleOutput.SelectOneCardByIndexNumber(this);
 
