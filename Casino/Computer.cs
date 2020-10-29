@@ -12,21 +12,21 @@ namespace Casino
         {            
             string actionSelected = ChooseOneAction(table);
 
-            Card card = SelectYourCard(actionSelected, table);
+            Card selectedCard = SelectYourCard(actionSelected, table);
             
             switch (actionSelected)
             {
                 case Keyboard.ONE:
-                    ThrowTheCardToTheTable(card, table);
+                    ThrowTheCardToTheTable(selectedCard, table);
                     break;
                 case Keyboard.TWO:
-                    TakeCardFromTheTable(card, table);
+                    TakeCardFromTheTable(selectedCard, table);
                     break;
                 case Keyboard.THREE:
-                    CombineCards(card, table);
+                    CombineCards(selectedCard, table);
                     break;
                 case Keyboard.FOUR:
-                    PairCards(card, table);
+                    PairCards(selectedCard, table);
                     break;
             }
 
@@ -37,11 +37,11 @@ namespace Casino
         {
             string actionSelected = "";
             
-            if (!table.Cards.Any(x => this.Cards.Any(y => y.Rank == x.Rank)) 
+            if (table.Cards.Any(x => this.Cards.Any(y => y.Rank == x.Rank)) 
              && (table.BuildedCards != null 
-             && !table.BuildedCards.Any(x => this.Cards.Any(y => y.Rank == x.BuildedCardsRank))))
+             && table.BuildedCards.Any(x => this.Cards.Any(y => y.Rank == x.BuildedCardsRank))))
             {
-                actionSelected = Keyboard.TWO;                
+                actionSelected = Keyboard.TWO;                                
             }           
 
             return actionSelected;
@@ -49,19 +49,21 @@ namespace Casino
 
         private Card SelectYourCard(String actionSelected, Table table)
         {            
-            Card card = null;            
+            Card selectedCard = null;            
 
             if (actionSelected == Keyboard.ONE)
             {                
-                card = this.Cards.OrderBy(c => c.Rank).FirstOrDefault();                
+                selectedCard = this.Cards.OrderBy(c => c.Rank).FirstOrDefault();                
 
             } else if (actionSelected == Keyboard.TWO)
-            {
-                List<Card> cards = new List<Card>();
-                cards = this.Cards.Where(a => table.Cards.Any(b => a.Rank == b.Rank)).ToList(); //Test
+            {                
+                selectedCard = this.Cards.Where(a => table.Cards
+                                         .Any(b => a.Rank == b.Rank))
+                                         .OrderBy(a => a.Rank)
+                                         .FirstOrDefault();                
             }
 
-            return card;
+            return selectedCard;
         }
 
         public override void ThrowTheCardToTheTable(Card card, Table table)
@@ -70,7 +72,19 @@ namespace Casino
             Cards.RemoveAll(c => c.CardName == card.CardName);
         }
 
-        public override void TakeCardFromTheTable(Card selectedCard, Table table) { }
+        public override void TakeCardFromTheTable(Card selectedCard, Table table) 
+        {
+            List<Card> capturedCards = new List<Card>();
+            capturedCards = table.Cards.Where(c => c.Rank == selectedCard.Rank).ToList();
+
+            foreach (Card tableCards in capturedCards)
+            {
+                table.Cards.Remove(tableCards);
+            }
+
+            this.CapturedCards = capturedCards;
+            this.CapturedCards.Add(selectedCard);            
+        }
 
         public override void CombineCards(Card selectedCard, Table table) { }
 
