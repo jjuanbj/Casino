@@ -58,7 +58,7 @@ namespace Casino
             } else if (actionSelected == Keyboard.TWO)
             {
                 List<Card> cards = new List<Card>();
-                cards = this.Cards.Where(a => table.Cards.Any(b => a.Rank == b.Rank)).ToList(); 
+                cards = this.Cards.Where(a => table.Cards.Any(b => a.Rank == b.Rank)).ToList(); //
             }
 
             return card;
