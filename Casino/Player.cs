@@ -20,7 +20,7 @@ namespace Casino
 
         public virtual void Play(Table table)
         {
-            Card card = SelectYourCard();
+            Card selectedCard = SelectYourCard();
 
             ConsoleOutput.ChooseOneAction(table);
 
@@ -47,16 +47,16 @@ namespace Casino
             switch (userinput)
             {
                 case Keyboard.ONE:
-                    ThrowTheCardToTheTable(card, table);
+                    ThrowTheCardToTheTable(selectedCard, table);
                     break;
                 case Keyboard.TWO:
-                    TakeCardFromTheTable(card, table);
+                    TakeCardFromTheTable(selectedCard, table);
                     break;
                 case Keyboard.THREE:
-                    CombineCards(card, table);
+                    CombineCards(selectedCard, table);
                     break;
                 case Keyboard.FOUR:
-                    PairCards(card, table);
+                    PairCards(selectedCard, table);
                     break;
             }
         }
@@ -90,10 +90,10 @@ namespace Casino
             return card;
         }
 
-        public virtual void ThrowTheCardToTheTable(Card card, Table table)
+        public virtual void ThrowTheCardToTheTable(Card selectedCard, Table table)
         {
-            table.Cards.Add(card);
-            Cards.RemoveAll(c => c.CardName == card.CardName);
+            table.Cards.Add(selectedCard);
+            Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
 
             ConsoleOutput.ShowTableCards(table);
 
@@ -177,15 +177,21 @@ namespace Casino
                 if(cardsSelectedFromTheTable.Cards != null) {
                     
                     table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Cards.Contains(c));
-                    CapturedCards.AddRange(cardsSelectedFromTheTable.Cards);
+
+                    CapturedCards.AddRange(cardsSelectedFromTheTable.Cards);                    
                 } 
                   
                 if(cardsSelectedFromTheTable.BuildedCards != null) {
 
                     table.BuildedCards.RemoveAll(c => cardsSelectedFromTheTable.BuildedCards.Contains(c));
-                    CapturedCards.AddRange(cardsSelectedFromTheTable.BuildedCards.SelectMany(b => b.BuildedCards).Distinct());
+
+                    CapturedCards.AddRange(cardsSelectedFromTheTable.BuildedCards
+                                 .SelectMany(b => b.BuildedCards)
+                                 .Distinct());
                 }                    
                 
+                Cards.Remove(selectedCard);
+
                 CapturedCards.Add(selectedCard);
 
                 ConsoleOutput.ShowTableCards(table);
