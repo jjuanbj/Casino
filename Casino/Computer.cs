@@ -38,7 +38,7 @@ namespace Casino
             string actionSelected = "";
             
             if (table.Cards.Any(x => this.Cards.Any(y => y.Rank == x.Rank)) 
-             || (table.BuildedCards != null 
+            || (table.BuildedCards != null 
              && table.BuildedCards.Any(x => this.Cards.Any(y => y.Rank == x.BuildedCardsRank))))
             {
                 actionSelected = Keyboard.TWO;                                                
@@ -59,7 +59,8 @@ namespace Casino
             {   
                 if (this.Cards.Where(a => table.Cards
                               .Any(b => a.Rank == b.Rank))
-                              .OrderBy(a => a.Rank).Any())
+                              .OrderBy(a => a.Rank)
+                              .Any())
                 {
                     selectedCard = this.Cards.Where(a => table.Cards
                                              .Any(b => a.Rank == b.Rank))
