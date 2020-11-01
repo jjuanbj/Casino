@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -9,13 +9,22 @@ namespace Casino
     class Turn
     {
         public void TurnToPlay(Game game)
-        {                        
-            foreach (var player in game.Players)
+        {
+            while (game.Deck.DeckCards.Any())
             {
-                game.ConsoleOutput.ItsYourTurn(player);
-                
-                player.Play(game.Table);                                   
-            }
+                while (game.Players.Select(p => p.Cards).Any())
+                {
+                    foreach (var player in game.Players)
+                    {
+                        game.ConsoleOutput.ItsYourTurn(player);
+                        
+                        player.Play(game.Table);                                   
+                    }        
+                }
+
+                game.Deck.DealCardsTable(game.Table);
+                game.Deck.DealCardsPlayer(game.Players);
+            }             
         }        
     }
 }
