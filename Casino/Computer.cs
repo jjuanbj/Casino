@@ -120,7 +120,7 @@ namespace Casino
                                                          .ToList();
 
                 foreach (Card card in capturedCards)
-                {
+                {   
                     table.BuildedCards.Where(c => c.BuildedCardsRank == selectedCard.Rank)
                                       .Select(b => b.BuildedCards
                                       .RemoveAll(d => d.CardName == card.CardName));

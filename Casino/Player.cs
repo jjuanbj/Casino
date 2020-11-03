@@ -344,9 +344,37 @@ namespace Casino
 
             Card buildingRankCard = SelectBuildingRank(selectedCard);
 
-            List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table).Cards;
+            List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table).Cards;            
 
-            if (cardsSelectedFromTheTable != null)
+            // TODO: Maybe I can divide this to each scenario of pairing cards 
+            if (SelectCardsFromTheTable(table).BuildedCards != null)
+            {
+                if (cardsSelectedFromTheTable == null)
+                {
+                    BuildedCard buildedCardsSelectedFromTheTable = new BuildedCard();
+                    buildedCardsSelectedFromTheTable = SelectCardsFromTheTable(table).BuildedCards.FirstOrDefault();
+                    buildedCardsSelectedFromTheTable.BuildedCards.Add(selectedCard);
+
+                    if (buildedCardsSelectedFromTheTable.BuildedCardsRank != buildingRankCard.Rank)
+                    {
+                        ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
+
+                        ThrowTheCardToTheTable(selectedCard, table);
+                    }
+                    else if (table.BuildedCards.Any(b => b.IsPair == true))
+                    {
+                        
+                    } else
+                    {
+                        
+                    }   
+
+                } else
+                {
+                    
+                }                
+
+            } else if (cardsSelectedFromTheTable != null)
             {
                 cardsSelectedFromTheTable.Add(selectedCard);
 
@@ -379,27 +407,6 @@ namespace Casino
 
                     ConsoleOutput.ShowTableCards(table);
                 }   
-            }
-
-            // TODO: when player have two cards with same rank, and wants to convert a combined cards to pair
-            // cards 
-            List<BuildedCard> buildedCardsSelectedFromTheTable = SelectCardsFromTheTable(table).BuildedCards;
-
-            if (buildedCardsSelectedFromTheTable != null)
-            {
-               if (buildedCardsSelectedFromTheTable.Any(b => b.IsPair == false))
-               {
-                    foreach (var item in buildedCardsSelectedFromTheTable.Where(b => b.IsPair == false))
-                    {
-                        
-                    }
-
-                    buildedCardsSelectedFromTheTable.Where(b => b.IsPair == false).
-                    for (int i = 0; i < 1; i++)
-                    {
-                        
-                    }
-                } 
             }
         }
     }
