@@ -1,5 +1,6 @@
 # Casino
 Casino card game
 
-References: https://www.britannica.com/topic/casino-card-game
-
+References: 
+<a href="https://www.britannica.com/topic/casino-card-game/" target="_blank">Britannica</a>
+<a href="https://www.pagat.com/fishing/casino.html/" target="_blank">Pagat</a>
