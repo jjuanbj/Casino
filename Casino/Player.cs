@@ -93,6 +93,7 @@ namespace Casino
         public virtual void ThrowTheCardToTheTable(Card selectedCard, Table table)
         {
             table.Cards.Add(selectedCard);
+            
             Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
 
             ConsoleOutput.ShowTableCards(table);
@@ -190,7 +191,7 @@ namespace Casino
                                  .Distinct());
                 }                    
                 
-                Cards.Remove(selectedCard);
+                Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
 
                 CapturedCards.Add(selectedCard);
 
@@ -309,6 +310,8 @@ namespace Casino
             }
             else
             {
+                Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+
                 table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Contains(c));
 
                 BuildedCard buildedCard = new BuildedCard();
@@ -342,34 +345,61 @@ namespace Casino
             Card buildingRankCard = SelectBuildingRank(selectedCard);
 
             List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table).Cards;
-            cardsSelectedFromTheTable.Add(selectedCard);
 
-            const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
-
-            if (!cardsSelectedFromTheTable.Any()
-              || cardsSelectedFromTheTable.All(c => c.Rank != buildingRankCard.Rank)
-              || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank))
-              % Convert.ToInt32(buildingRankCard.Rank) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
+            if (cardsSelectedFromTheTable != null)
             {
-                ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
+                cardsSelectedFromTheTable.Add(selectedCard);
 
-                ThrowTheCardToTheTable(selectedCard, table);
+                const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
+
+                if (!cardsSelectedFromTheTable.Any()
+                  || cardsSelectedFromTheTable.All(c => c.Rank != buildingRankCard.Rank)
+                  || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank))
+                  % Convert.ToInt32(buildingRankCard.Rank) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
+                {
+                    ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
+
+                    ThrowTheCardToTheTable(selectedCard, table);
+                }
+                else
+                {
+                    Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+
+                    table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Contains(c));
+
+                    BuildedCard buildedCard = new BuildedCard();
+                    buildedCard.BuildedCards = cardsSelectedFromTheTable;
+                    buildedCard.BuildedCardsRank = buildingRankCard.Rank;
+                    buildedCard.IsPair = true;
+
+                    List<BuildedCard> buildedCards = new List<BuildedCard>();
+                    buildedCards.Add(buildedCard);
+
+                    table.BuildedCards = buildedCards;
+
+                    ConsoleOutput.ShowTableCards(table);
+                }   
             }
-            else
+
+            // TODO: when player have two cards with same rank, and wants to convert a combined cards to pair
+            // cards 
+            List<BuildedCard> buildedCardsSelectedFromTheTable = SelectCardsFromTheTable(table).BuildedCards;
+
+            if (buildedCardsSelectedFromTheTable != null)
             {
-                table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Contains(c));
+               if (buildedCardsSelectedFromTheTable.Any(b => b.IsPair == false))
+               {
+                    foreach (var item in buildedCardsSelectedFromTheTable.Where(b => b.IsPair == false))
+                    {
+                        
+                    }
 
-                BuildedCard buildedCard = new BuildedCard();
-                buildedCard.BuildedCards = cardsSelectedFromTheTable;
-                buildedCard.BuildedCardsRank = buildingRankCard.Rank;
-                buildedCard.IsPair = true;
-
-                List<BuildedCard> buildedCards = new List<BuildedCard>();
-                buildedCards.Add(buildedCard);
-
-                table.BuildedCards = buildedCards;
-
-                ConsoleOutput.ShowTableCards(table);
+                    buildedCardsSelectedFromTheTable.Where(b => b.IsPair == false).
+                    for (int i = 0; i < 1; i++)
+                    {
+                        
+                    }
+                } 
             }
         }
     }

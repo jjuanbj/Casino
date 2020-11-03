@@ -11,16 +11,25 @@ namespace Casino
         public override void Play(Table table)
         {            
             string actionSelected = ChooseOneAction(table);
+            Console.WriteLine("Action selected: " + actionSelected); // Test
 
             Card selectedCard = SelectYourCard(actionSelected, table);
-            
+            Console.Write("Computer cards: "); // Test
+            Console.WriteLine(string.Format(": {0}.",
+                              string.Join(", ", this.Cards
+                                    .Select(c => c.CardName)))); // Test
+            Console.WriteLine("Selected card: " + selectedCard.CardName); // Test
+
             switch (actionSelected)
             {
                 case Keyboard.ONE:
                     ThrowTheCardToTheTable(selectedCard, table);
+                    Console.WriteLine("ThrowTheCardToTheTable"); // Test
                     break;
                 case Keyboard.TWO:
                     TakeCardFromTheTable(selectedCard, table);
+            
+                    Console.WriteLine("TakeCardFromTheTable"); // Test
                     break;
                 case Keyboard.THREE:
                     CombineCards(selectedCard, table);
@@ -42,6 +51,9 @@ namespace Casino
              && table.BuildedCards.Any(x => this.Cards.Any(y => y.Rank == x.BuildedCardsRank))))
             {
                 actionSelected = Keyboard.TWO;                                                
+            } else
+            {
+                actionSelected = Keyboard.ONE;
             }           
 
             return actionSelected;
@@ -80,10 +92,11 @@ namespace Casino
             return selectedCard;
         }
 
-        public override void ThrowTheCardToTheTable(Card card, Table table)
+        public override void ThrowTheCardToTheTable(Card selectedCard, Table table)
         {
-            table.Cards.Add(card);
-            Cards.RemoveAll(c => c.CardName == card.CardName);
+            table.Cards.Add(selectedCard);
+            
+            Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
         }
 
         public override void TakeCardFromTheTable(Card selectedCard, Table table) 
@@ -98,7 +111,7 @@ namespace Casino
 
                 foreach (Card card in capturedCards)
                 {
-                    table.Cards.Remove(card);
+                    table.Cards.RemoveAll(c => c.CardName == card.CardName);
                 }
 
                 List<Card> capturedBuildedCards = new List<Card>();
@@ -110,7 +123,7 @@ namespace Casino
                 {
                     table.BuildedCards.Where(c => c.BuildedCardsRank == selectedCard.Rank)
                                       .Select(b => b.BuildedCards
-                                      .Remove(card));
+                                      .RemoveAll(d => d.CardName == card.CardName));
                 }
 
                 table.BuildedCards.Remove(table.BuildedCards
@@ -128,7 +141,7 @@ namespace Casino
 
                 foreach (Card card in capturedCards)
                 {
-                    table.Cards.Remove(card);
+                    table.Cards.RemoveAll(c => c.CardName == card.CardName);
                 }
 
             } else
@@ -141,16 +154,18 @@ namespace Casino
                 {
                     table.BuildedCards.Where(c => c.BuildedCardsRank == selectedCard.Rank)
                                       .Select(b => b.BuildedCards
-                                      .Remove(card));                                                                      
+                                      .RemoveAll(c => c.CardName == card.CardName));                                                                      
                 }
 
                 table.BuildedCards.Remove(table.BuildedCards
                                   .Where(c => c.BuildedCardsRank == selectedCard.Rank)
                                   .FirstOrDefault());
-            }            
+            }
+            
+            Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
 
-            this.CapturedCards = capturedCards;
-            this.CapturedCards.Add(selectedCard);            
+            CapturedCards = capturedCards;
+            CapturedCards.Add(selectedCard);            
         }
 
         public override void CombineCards(Card selectedCard, Table table) { }
