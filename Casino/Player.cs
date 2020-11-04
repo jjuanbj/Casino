@@ -355,16 +355,15 @@ namespace Casino
                     buildedCardsSelectedFromTheTable = SelectCardsFromTheTable(table).BuildedCards.FirstOrDefault();
                     buildedCardsSelectedFromTheTable.BuildedCards.Add(selectedCard);
 
-                    if (buildedCardsSelectedFromTheTable.BuildedCardsRank != buildingRankCard.Rank)
+                    // TODO: the player must be able to select only one buildedCard
+                    if (buildedCardsSelectedFromTheTable.BuildedCardsRank != buildingRankCard.Rank
+                    &&  table.BuildedCards.Any(b => b.IsPair == true))
                     {
                         ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
 
                         ThrowTheCardToTheTable(selectedCard, table);
                     }
-                    else if (table.BuildedCards.Any(b => b.IsPair == true))
-                    {
-                        
-                    } else
+                     else
                     {
                         
                     }   

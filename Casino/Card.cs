@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Casino
 {
     class Card
-    {
-        [Display(Name = "Card Name")]
+    {        
         public string CardName { get; set; }        
         public Rank Rank { get; set; }
         public Suit Suit { get; set; }
