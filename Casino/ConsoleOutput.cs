@@ -354,5 +354,10 @@ namespace Casino
             
             Console.ResetColor();
         }
+
+        public void YouCantSelectMoreThanOneBuildedCard()
+        {
+            Console.WriteLine(GetSpeak.YouCantSelectMoreThanOneBuildedCard);
+        }
     }
 }

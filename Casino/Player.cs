@@ -133,6 +133,10 @@ namespace Casino
                     if (!isBuildedCard)
                     {                        
                         cardsSelectedFromTheTable.Cards.Add(table.Cards.ElementAt(Int32.Parse(cardRank)));
+                    } else if (isBuildedCard && cardsSelectedFromTheTable.BuildedCards.Any())
+                    {
+                        ConsoleOutput.YouCantSelectMoreThanOneBuildedCard();
+                        continue;
                     }
                     else
                     {
@@ -344,18 +348,17 @@ namespace Casino
 
             Card buildingRankCard = SelectBuildingRank(selectedCard);
 
-            List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table).Cards;            
+            Table cardsSelectedFromTheTable = SelectCardsFromTheTable(table);            
 
             // TODO: Maybe I can divide this to each scenario of pairing cards 
-            if (SelectCardsFromTheTable(table).BuildedCards != null)
+            if (cardsSelectedFromTheTable.BuildedCards != null)
             {
                 if (cardsSelectedFromTheTable == null)
                 {
                     BuildedCard buildedCardsSelectedFromTheTable = new BuildedCard();
-                    buildedCardsSelectedFromTheTable = SelectCardsFromTheTable(table).BuildedCards.FirstOrDefault();
+                    buildedCardsSelectedFromTheTable = cardsSelectedFromTheTable.BuildedCards.FirstOrDefault();
                     buildedCardsSelectedFromTheTable.BuildedCards.Add(selectedCard);
-
-                    // TODO: the player must be able to select only one buildedCard
+                    
                     if (buildedCardsSelectedFromTheTable.BuildedCardsRank != buildingRankCard.Rank
                     &&  table.BuildedCards.Any(b => b.IsPair == true))
                     {
@@ -375,13 +378,13 @@ namespace Casino
 
             } else if (cardsSelectedFromTheTable != null)
             {
-                cardsSelectedFromTheTable.Add(selectedCard);
+                cardsSelectedFromTheTable.Cards.Add(selectedCard);
 
                 const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
 
-                if (!cardsSelectedFromTheTable.Any()
-                  || cardsSelectedFromTheTable.All(c => c.Rank != buildingRankCard.Rank)
-                  || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank))
+                if (!cardsSelectedFromTheTable.Cards.Any()
+                  || cardsSelectedFromTheTable.Cards.All(c => c.Rank != buildingRankCard.Rank)
+                  || cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank))
                   % Convert.ToInt32(buildingRankCard.Rank) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
                 {
                     ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
@@ -392,10 +395,10 @@ namespace Casino
                 {
                     Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
 
-                    table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Contains(c));
+                    table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Cards.Contains(c));
 
                     BuildedCard buildedCard = new BuildedCard();
-                    buildedCard.BuildedCards = cardsSelectedFromTheTable;
+                    buildedCard.BuildedCards = cardsSelectedFromTheTable.Cards;
                     buildedCard.BuildedCardsRank = buildingRankCard.Rank;
                     buildedCard.IsPair = true;
 
