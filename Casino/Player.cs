@@ -353,14 +353,10 @@ namespace Casino
             // TODO: Maybe I can divide this to each scenario of pairing cards 
             if (cardsSelectedFromTheTable.BuildedCards != null)
             {
-                if (cardsSelectedFromTheTable == null)
+                if (cardsSelectedFromTheTable.Cards == null)
                 {
-                    BuildedCard buildedCardsSelectedFromTheTable = new BuildedCard();
-                    buildedCardsSelectedFromTheTable = cardsSelectedFromTheTable.BuildedCards.FirstOrDefault();
-                    buildedCardsSelectedFromTheTable.BuildedCards.Add(selectedCard);
-                    
-                    if (buildedCardsSelectedFromTheTable.BuildedCardsRank != buildingRankCard.Rank
-                    &&  table.BuildedCards.Any(b => b.IsPair == true))
+                    if (cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank != buildingRankCard.Rank
+                    &&  cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsPair == true)
                     {
                         ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
 
@@ -368,7 +364,18 @@ namespace Casino
                     }
                      else
                     {
-                        
+                        table.BuildedCards.RemoveAll(b => cardsSelectedFromTheTable.BuildedCards.Contains(b));
+
+                        cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsPair = true;
+
+                        cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank = buildingRankCard.Rank;
+
+                        cardsSelectedFromTheTable.BuildedCards.FirstOrDefault()
+                                                 .BuildedCards.Add(selectedCard);
+
+                        table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
+
+                        ConsoleOutput.ShowTableCards(table);                        
                     }   
 
                 } else
@@ -376,7 +383,7 @@ namespace Casino
                     
                 }                
 
-            } else if (cardsSelectedFromTheTable != null)
+            } else if (cardsSelectedFromTheTable.Cards != null)
             {
                 cardsSelectedFromTheTable.Cards.Add(selectedCard);
 

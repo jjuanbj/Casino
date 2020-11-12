@@ -41,10 +41,15 @@ namespace Casino
 
         public void DealCardsPlayer(List<Player> Players)
         {
-            foreach (var player in Players)
+            foreach (var player in Players.Where(p => p.Name != Constants.Computer))
             {                
-                player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();                
-
+                player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
+                
+                #region Test
+                player.Cards.Add(new Card("King of Heart"));
+                player.Cards.Add(new Card("Six of Heart"));
+                #endregion
+                
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
             }
             
