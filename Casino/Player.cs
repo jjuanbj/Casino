@@ -390,10 +390,11 @@ namespace Casino
 
                     ConsoleOutput.ShowTableCards(table);
                     
-                } else if (cardsSelectedFromTheTable.Cards != null )
+                } else if ((cardsSelectedFromTheTable.BuildedCards.Sum(b => Convert.ToInt32(b.BuildedCardsRank)) 
+                 + Convert.ToInt32(selectedCard.Rank)) % Convert.ToInt32(buildingRankCard) == 0)
                 {
-                    // Third scenario
-                    
+                    // TODO: Complete this scenario
+
                 } else
                 {
                     ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();

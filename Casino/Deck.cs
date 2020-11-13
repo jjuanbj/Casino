@@ -47,7 +47,7 @@ namespace Casino
                 
                 #region Test
                 player.Cards.Add(new Card("Queen of Heart"));
-                player.Cards.Add(new Card("Seven of Heart"));
+                player.Cards.Add(new Card("Five of Heart"));
                 #endregion
                 
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
