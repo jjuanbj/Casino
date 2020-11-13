@@ -93,12 +93,12 @@ namespace Casino
             if (table.BuildedCards != null)
             {
                 #region DRY Alert!!
-                if(table.BuildedCards.Any(b => b.IsPair == false))
+                if(table.BuildedCards.Any(b => b.IsMultiple == false))
                 {                    
-                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsPair == false))
+                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsMultiple == false))
                     {
                         Console.ForegroundColor = ConsoleColor.Magenta;
-                        Console.Write(GetSpeak.CombinedCards);
+                        Console.Write(GetSpeak.SingleBuild);
 
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine(string.Format(": {0}->", 
@@ -112,17 +112,17 @@ namespace Casino
                     }                    
                 }
                 
-                if(table.BuildedCards.Any(b => b.IsPair == true)) 
+                if(table.BuildedCards.Any(b => b.IsMultiple == true)) 
                 {
-                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsPair == true))
+                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsMultiple == true))
                     {
                         Console.ForegroundColor = ConsoleColor.Magenta;
-                        Console.Write(GetSpeak.PairedCards);
+                        Console.Write(GetSpeak.MultipleBuild);
 
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine(string.Format(": {0}->", 
                                           string.Join(", ", table.BuildedCards
-                                                .Where(b => buildedCard.IsPair == true)
+                                                .Where(b => buildedCard.IsMultiple == true)
                                                 .Select(r => buildedCard.BuildedCardsRank)
                                                 .FirstOrDefault())) +
                                           string.Format(" {0}.", 
@@ -257,12 +257,12 @@ namespace Casino
             if (table.BuildedCards != null)
             {
                 #region DRY Alert!!
-                if(table.BuildedCards.Any(b => b.IsPair == false))
+                if(table.BuildedCards.Any(b => b.IsMultiple == false))
                 {                    
-                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsPair == false))
+                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsMultiple == false))
                     {
                         Console.ForegroundColor = ConsoleColor.Magenta;
-                        Console.Write(GetSpeak.CombinedCards);
+                        Console.Write(GetSpeak.SingleBuild);
 
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine(string.Format(": {0}->", 
@@ -276,17 +276,17 @@ namespace Casino
                     }                    
                 }
                 
-                if(table.BuildedCards.Any(b => b.IsPair == true)) 
+                if(table.BuildedCards.Any(b => b.IsMultiple == true)) 
                 {
-                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsPair == true))
+                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsMultiple == true))
                     {
                         Console.ForegroundColor = ConsoleColor.Magenta;
-                        Console.Write(GetSpeak.PairedCards);
+                        Console.Write(GetSpeak.MultipleBuild);
 
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine(string.Format(": {0}->", 
                                           string.Join(", ", table.BuildedCards
-                                                .Where(b => buildedCard.IsPair == true)
+                                                .Where(b => buildedCard.IsMultiple == true)
                                                 .Select((r) => new { Index = cardsOnTheTable++, buildedCard.BuildedCardsRank})
                                                 .FirstOrDefault())) +
                                           string.Format(" {0}.", 

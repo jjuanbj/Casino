@@ -52,9 +52,9 @@ namespace Casino
 
         public string SelectYourBuildingRank { get; set; }
 
-        public string CombinedCards { get; set; }
+        public string SingleBuild { get; set; }
 
-        public string PairedCards { get; set; }
+        public string MultipleBuild { get; set; }
 
         public string YouCantSelectMoreThanOneBuildedCard { get; set; }
     }

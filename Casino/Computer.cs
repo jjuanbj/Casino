@@ -32,10 +32,10 @@ namespace Casino
                     Console.WriteLine("TakeCardFromTheTable"); // Test
                     break;
                 case Keyboard.THREE:
-                    CombineCards(selectedCard, table);
+                    CreateSingleBuildCards(selectedCard, table);
                     break;
                 case Keyboard.FOUR:
-                    PairCards(selectedCard, table);
+                    CreateMultipleBuildCards(selectedCard, table);
                     break;
             }
 
@@ -168,8 +168,8 @@ namespace Casino
             CapturedCards.Add(selectedCard);            
         }
 
-        public override void CombineCards(Card selectedCard, Table table) { }
+        public override void CreateSingleBuildCards(Card selectedCard, Table table) { }
 
-        public override void PairCards(Card selectedCard, Table table) { }
+        public override void CreateMultipleBuildCards(Card selectedCard, Table table) { }
     }
 }

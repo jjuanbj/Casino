@@ -9,6 +9,6 @@ namespace Casino {
 
         public Rank BuildedCardsRank { get; set; }
         
-        public bool IsPair { get; set; }
+        public bool IsMultiple { get; set; }
     }
 }

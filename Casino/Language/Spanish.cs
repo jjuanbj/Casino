@@ -51,9 +51,9 @@ namespace Casino
 
         public string SelectYourBuildingRank { get; set; }
 
-        public string CombinedCards { get; set; }
+        public string SingleBuild { get; set; }
 
-        public string PairedCards { get; set; }
+        public string MultipleBuild { get; set; }
 
         public string YouCantSelectMoreThanOneBuildedCard { get; set; }
 
@@ -82,8 +82,8 @@ namespace Casino
             IfYouWantToSelectAnotherAction = " si quieres seleccionar otra acción.";                        
             YouJustLostYourCardBecauseItIsInvalid = "Acabas de perder tu carta porque no es válida.";
             SelectYourBuildingRank = " selecciona tu rango de combinación: ";
-            CombinedCards = "Cartas combinadas";
-            PairedCards = "Cartas emparejadas";
+            SingleBuild = "Cartas combinadas";
+            MultipleBuild = "Cartas emparejadas";
             YouCantSelectMoreThanOneBuildedCard = "No puedes seleccionar más de una carta combinada";
         }
     }

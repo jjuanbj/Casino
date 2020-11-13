@@ -46,8 +46,8 @@ namespace Casino
                 player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
                 
                 #region Test
-                player.Cards.Add(new Card("King of Heart"));
-                player.Cards.Add(new Card("Six of Heart"));
+                player.Cards.Add(new Card("Queen of Heart"));
+                player.Cards.Add(new Card("Seven of Heart"));
                 #endregion
                 
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
@@ -76,7 +76,7 @@ namespace Casino
             BuildedCard builded = new BuildedCard();
             builded.BuildedCards = listCards;
             builded.BuildedCardsRank = Rank.Queen;
-            builded.IsPair = false;
+            builded.IsMultiple = false;
             
             List<Card> listCards1 = new List<Card>();
             listCards1.Add(new Card("Three of Diamond"));
@@ -85,7 +85,7 @@ namespace Casino
             BuildedCard builded1 = new BuildedCard();
             builded1.BuildedCards = listCards1;
             builded1.BuildedCardsRank = Rank.Seven;
-            builded1.IsPair = false;
+            builded1.IsMultiple = false;
             
             List<Card> listCards2 = new List<Card>();
             listCards2.Add(new Card("Six of Diamond"));
@@ -94,7 +94,7 @@ namespace Casino
             BuildedCard builded2 = new BuildedCard();
             builded2.BuildedCards = listCards2;
             builded2.BuildedCardsRank = Rank.Six;
-            builded2.IsPair = true;
+            builded2.IsMultiple = true;
 
             List<BuildedCard> listBuildedCards = new List<BuildedCard>();
             listBuildedCards.Add(builded);
