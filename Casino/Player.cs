@@ -133,12 +133,7 @@ namespace Casino
                     if (!isBuildedCard)
                     {                        
                         cardsSelectedFromTheTable.Cards.Add(table.Cards.ElementAt(Int32.Parse(cardRank)));
-                    } else if (isBuildedCard && cardsSelectedFromTheTable.BuildedCards.Any())
-                    {
-                        ConsoleOutput.YouCantSelectMoreThanOneBuildedCard();
-                        continue;
-                    }
-                    else
+                    } else
                     {
                         int buildedCardsSelected = Int32.Parse(cardRank) - table.Cards.Count;
                         
@@ -347,56 +342,63 @@ namespace Casino
         {
             Rank buildingRankCard = SelectBuildingRank(selectedCard);
 
-            Table cardsSelectedFromTheTable = SelectCardsFromTheTable(table);            
-        
+            Table cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
+
+            const int THERE_IS_ONLY_ONE_BUILDED_CARD = 1;
+
             if (cardsSelectedFromTheTable.BuildedCards != null)
-            {
-                if (cardsSelectedFromTheTable.Cards == null)
+            {                
+                if (cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank == selectedCard.Rank
+                &&  cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple != true
+                &&  cardsSelectedFromTheTable.BuildedCards.Take(2).Count() == THERE_IS_ONLY_ONE_BUILDED_CARD
+                &&  selectedCard.Rank == buildingRankCard
+                &&  cardsSelectedFromTheTable.Cards == null)
                 {
-                    if (cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank != selectedCard.Rank
-                    &&  cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple == true
-                    &&  selectedCard.Rank != buildingRankCard)
+                    table.BuildedCards.RemoveAll(b => cardsSelectedFromTheTable.BuildedCards.Contains(b));
+
+                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple = true;
+
+                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank = buildingRankCard;
+
+                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault()
+                                             .BuildedCards.Add(selectedCard);
+
+                    table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
+
+                    ConsoleOutput.ShowTableCards(table);
+
+                } else if (cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank == buildingRankCard                        
+                        && cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) + Convert.ToInt32(selectedCard.Rank) == Convert.ToInt32(buildingRankCard)
+                        && cardsSelectedFromTheTable.BuildedCards.Take(2).Count() == THERE_IS_ONLY_ONE_BUILDED_CARD
+                        && cardsSelectedFromTheTable.Cards != null)
+                {
+                    table.BuildedCards.RemoveAll(b => cardsSelectedFromTheTable.BuildedCards.Contains(b));
+                    table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Cards.Contains(c));
+
+                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple = true;
+                    
+                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault()
+                                             .BuildedCards.Add(selectedCard);
+                    
+                    foreach (Card card in cardsSelectedFromTheTable.Cards)
                     {
-                        ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
-
-                        ThrowTheCardToTheTable(selectedCard, table);
-                    }
-                     else
-                    {
-                        table.BuildedCards.RemoveAll(b => cardsSelectedFromTheTable.BuildedCards.Contains(b));
-
-                        cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple = true;
-
-                        cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank = buildingRankCard;
-
                         cardsSelectedFromTheTable.BuildedCards.FirstOrDefault()
-                                                 .BuildedCards.Add(selectedCard);
+                                                 .BuildedCards.Add(card);
+                    }
 
-                        table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
+                    table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
 
-                        ConsoleOutput.ShowTableCards(table);                        
-                    }   
-
+                    ConsoleOutput.ShowTableCards(table);
+                    
+                } else if (cardsSelectedFromTheTable.Cards != null )
+                {
+                    // Third scenario
+                    
                 } else
                 {
-                    // TODO: reevaluate this scenario
-                    int looseCardsRank = Convert.ToInt32(selectedCard.Rank) + cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank));
-                    
-                    BuildedCard buildedCardsSelectedFromTheTable = cardsSelectedFromTheTable.BuildedCards.FirstOrDefault();
+                    ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
 
-                    if (((buildedCardsSelectedFromTheTable.BuildedCardsRank != buildingRankCard
-                    && looseCardsRank != Convert.ToInt32(buildingRankCard))
-                    || (looseCardsRank + Convert.ToInt32(buildedCardsSelectedFromTheTable.BuildedCardsRank) != Convert.ToInt32(buildingRankCard))) 
-                    && buildedCardsSelectedFromTheTable.IsMultiple == true)
-                    {
-                        Console.WriteLine("Prueba");
-                        ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
-
-                        ThrowTheCardToTheTable(selectedCard, table);
-                    } else
-                    {
-                        Console.WriteLine("Prueba1");
-                    }
+                    ThrowTheCardToTheTable(selectedCard, table);                    
                 }                
 
             } else if (cardsSelectedFromTheTable.Cards != null)

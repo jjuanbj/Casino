@@ -55,7 +55,5 @@ namespace Casino
         public string SingleBuild { get; set; }
 
         public string MultipleBuild { get; set; }
-
-        public string YouCantSelectMoreThanOneBuildedCard { get; set; }
     }
 }

@@ -55,8 +55,6 @@ namespace Casino
 
         public string MultipleBuild { get; set; }    
 
-        public string YouCantSelectMoreThanOneBuildedCard { get; set; }  
-
         public English()
         {
             WelcomeToCasinoGame = "Welcome to casino game!";
@@ -83,8 +81,7 @@ namespace Casino
             YouJustLostYourCardBecauseItIsInvalid = "You just lost your card because it is invalid";
             SelectYourBuildingRank = " select your building rank: ";
             SingleBuild = "Single build";
-            MultipleBuild = "Multiple build";
-            YouCantSelectMoreThanOneBuildedCard = "You cant select more than one builded card";
+            MultipleBuild = "Multiple build";            
         }
     }
 }
