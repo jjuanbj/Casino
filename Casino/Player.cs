@@ -391,9 +391,26 @@ namespace Casino
                     ConsoleOutput.ShowTableCards(table);
                     
                 } else if ((cardsSelectedFromTheTable.BuildedCards.Sum(b => Convert.ToInt32(b.BuildedCardsRank)) 
-                 + Convert.ToInt32(selectedCard.Rank)) % Convert.ToInt32(buildingRankCard) == 0)
+                 + Convert.ToInt32(selectedCard.Rank)) % Convert.ToInt32(buildingRankCard) == 0
+                 && cardsSelectedFromTheTable.Cards == null)
                 {
-                    // TODO: Complete this scenario
+                    // TODO: Test this
+                    table.BuildedCards.RemoveAll(b => cardsSelectedFromTheTable.BuildedCards.Contains(b));
+
+                    BuildedCard newBuildedCard = new BuildedCard();
+
+                    foreach (List<Card> card in cardsSelectedFromTheTable.BuildedCards.Select(c => c.BuildedCards))
+                    {
+                        newBuildedCard.BuildedCards.AddRange(card);
+                    }
+
+                    newBuildedCard.IsMultiple = true;
+                    newBuildedCard.BuildedCardsRank = buildingRankCard;
+                    newBuildedCard.BuildedCards.Add(selectedCard);
+                    
+                    table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
+
+                    ConsoleOutput.ShowTableCards(table);
 
                 } else
                 {
