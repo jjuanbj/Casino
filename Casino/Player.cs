@@ -340,10 +340,11 @@ namespace Casino
 
         public virtual void CreateMultipleBuildCards(Card selectedCard, Table table)
         {
+            
             Rank buildingRankCard = SelectBuildingRank(selectedCard);
-
+            
             Table cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
-
+            
             const int THERE_IS_ONLY_ONE_BUILDED_CARD = 1;
 
             if (cardsSelectedFromTheTable.BuildedCards != null)
@@ -367,10 +368,10 @@ namespace Casino
 
                     ConsoleOutput.ShowTableCards(table);
 
-                } else if (cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank == buildingRankCard                        
+                } else if (cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank == buildingRankCard
+                        && cardsSelectedFromTheTable.Cards != null
                         && cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) + Convert.ToInt32(selectedCard.Rank) == Convert.ToInt32(buildingRankCard)
-                        && cardsSelectedFromTheTable.BuildedCards.Take(2).Count() == THERE_IS_ONLY_ONE_BUILDED_CARD
-                        && cardsSelectedFromTheTable.Cards != null)
+                        && cardsSelectedFromTheTable.BuildedCards.Take(2).Count() == THERE_IS_ONLY_ONE_BUILDED_CARD)
                 {
                     table.BuildedCards.RemoveAll(b => cardsSelectedFromTheTable.BuildedCards.Contains(b));
                     table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Cards.Contains(c));
@@ -394,10 +395,14 @@ namespace Casino
                  + Convert.ToInt32(selectedCard.Rank)) % Convert.ToInt32(buildingRankCard) == 0
                  && cardsSelectedFromTheTable.Cards == null)
                 {
-                    // TODO: Test this
-                    table.BuildedCards.RemoveAll(b => cardsSelectedFromTheTable.BuildedCards.Contains(b));
-
+                    Console.WriteLine("Prueba");
+                    foreach (var item in cardsSelectedFromTheTable.BuildedCards)
+                    {
+                        table.BuildedCards.RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank);    
+                    }
+                    
                     BuildedCard newBuildedCard = new BuildedCard();
+                    newBuildedCard.BuildedCards = new List<Card>();
 
                     foreach (List<Card> card in cardsSelectedFromTheTable.BuildedCards.Select(c => c.BuildedCards))
                     {
@@ -408,7 +413,7 @@ namespace Casino
                     newBuildedCard.BuildedCardsRank = buildingRankCard;
                     newBuildedCard.BuildedCards.Add(selectedCard);
                     
-                    table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
+                    table.BuildedCards.Add(newBuildedCard);
 
                     ConsoleOutput.ShowTableCards(table);
 

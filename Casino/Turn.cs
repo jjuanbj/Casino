@@ -12,6 +12,7 @@ namespace Casino
         {
             while (game.Deck.DeckCards.Any())
             {
+                // TODO: check why not deal cards when there is no cards to play 
                 while (game.Players.Select(p => p.Cards).Any())
                 {
                     foreach (var player in game.Players)
