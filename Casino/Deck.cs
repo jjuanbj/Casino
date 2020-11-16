@@ -43,8 +43,8 @@ namespace Casino
         {
             foreach (var player in Players.Where(p => p.Name != Constants.Computer))
             {                
-                player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();                
-            
+                player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
+               
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
             }
             
@@ -71,7 +71,7 @@ namespace Casino
             // BuildedCard builded = new BuildedCard();
             // builded.BuildedCards = listCards;
             // builded.BuildedCardsRank = Rank.Queen;
-            // builded.IsMultiple = true;
+            // builded.IsMultiple = false;
             
             // List<Card> listCards1 = new List<Card>();
             // listCards1.Add(new Card("Three of Diamond"));
@@ -92,8 +92,8 @@ namespace Casino
             // builded2.IsMultiple = true;
 
             // List<BuildedCard> listBuildedCards = new List<BuildedCard>();
-            // listBuildedCards.Add(builded);
             // listBuildedCards.Add(builded1);
+            // listBuildedCards.Add(builded);
             // listBuildedCards.Add(builded2);
 
             // table.BuildedCards = listBuildedCards;

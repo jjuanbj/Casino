@@ -337,8 +337,7 @@ namespace Casino
                 ConsoleOutput.ShowTableCards(table);
             }
         }
-
-        //TODO Test each scenario
+        
         public virtual void CreateMultipleBuildCards(Card selectedCard, Table table)
         {
             
@@ -360,7 +359,7 @@ namespace Casino
                     {
                         table.BuildedCards.RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank);
                     }
-
+                                                      
                     cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple = true;
 
                     cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank = buildingRankCard;
@@ -369,7 +368,10 @@ namespace Casino
                                              .BuildedCards.Add(selectedCard);
 
                     table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
-
+                    
+                    this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                    
+                    Console.WriteLine("Prueba0");
                     ConsoleOutput.ShowTableCards(table);
 
                 } else if (cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank == buildingRankCard
@@ -396,7 +398,10 @@ namespace Casino
                     }
 
                     table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
-
+                    
+                    this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                    
+                    Console.WriteLine("Prueba1");  
                     ConsoleOutput.ShowTableCards(table);
                     
                 } else if ((cardsSelectedFromTheTable.BuildedCards.Sum(b => Convert.ToInt32(b.BuildedCardsRank)) 
@@ -421,12 +426,15 @@ namespace Casino
                     newBuildedCard.BuildedCards.Add(selectedCard);
                     
                     table.BuildedCards.Add(newBuildedCard);
-
+                    this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                    Console.WriteLine("Prueba2");                    
                     ConsoleOutput.ShowTableCards(table);
 
                 } else
                 {
                     ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
+
+                    this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
 
                     ThrowTheCardToTheTable(selectedCard, table);                    
                 }                
@@ -444,6 +452,8 @@ namespace Casino
                 {
                     ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
 
+                    this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                    
                     ThrowTheCardToTheTable(selectedCard, table);
                 }
                 else
@@ -464,6 +474,8 @@ namespace Casino
                     buildedCards.Add(buildedCard);
 
                     table.BuildedCards = buildedCards;
+                    
+                    this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
 
                     ConsoleOutput.ShowTableCards(table);
                 }   
