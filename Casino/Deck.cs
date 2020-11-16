@@ -45,15 +45,18 @@ namespace Casino
             {                
                 player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
                
+                // At the end of the turn, Casino fails in this line
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
             }
             
+            #region Test
             foreach (var player in Players.Where(p => p.Name == Constants.Computer))
             {                
                 player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();                
 
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);                            
             }
+            #endregion
         }
         
         public void DealCardsTable(Table table)
