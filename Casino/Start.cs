@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -47,11 +47,9 @@ namespace Casino
             game.Players.Add(new Computer());
 
             game.ConsoleOutput.WelcomePlayers(game.Players);            
-
-            game.Deck.DealCardsTable(game.Table);
+            
             game.Deck.DealCardsPlayer(game.Players);
-
-            game.ConsoleOutput.ShowTableCards(game.Table);
+            
             game.ConsoleOutput.ShowPlayersCards(game.Players);
         }
 
