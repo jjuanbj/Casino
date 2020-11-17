@@ -10,6 +10,9 @@ namespace Casino
     {
         public void TurnToPlay(Game game)
         {
+            game.Deck.DealCardsTable(game.Table);
+            game.ConsoleOutput.ShowTableCards(game.Table);
+              
             while (game.Deck.DeckCards.Any())
             {                
                 while (game.Players.SelectMany(p => p.Cards).Any())
@@ -20,9 +23,8 @@ namespace Casino
                         
                         player.Play(game.Table);                                   
                     }
-                }
-             
-                game.Deck.DealCardsTable(game.Table);
+                }            
+                
                 game.Deck.DealCardsPlayer(game.Players);
             }             
         }        
