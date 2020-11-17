@@ -98,7 +98,10 @@ namespace Casino
 
             ConsoleOutput.ShowTableCards(table);
 
-            ConsoleOutput.ShowPlayerCards(this);
+            if (this.Cards.Any())
+            {
+                ConsoleOutput.ShowPlayerCards(this);    
+            }            
         }
 
         private Table SelectCardsFromTheTable(Table table)
@@ -164,12 +167,12 @@ namespace Casino
 
         public virtual void TakeCardFromTheTable(Card selectedCard, Table table)
         {
-
             Table cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
     
             if (!ValidateTakenCards(cardsSelectedFromTheTable, selectedCard))
             {
                 ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
+         
                 ThrowTheCardToTheTable(selectedCard, table);
             }
             else
@@ -225,7 +228,7 @@ namespace Casino
                     takenCardsFromTableAreValid = SELECTED_CARD_AND_CARDS_TAKEN_FROM_TABLE_DO_NOT_HAVE_SAME_RANK;                    
 
                 } else if (selectedCard.Rank == Rank.Ace && (!cardsSelectedFromTheTable.Cards.Any(c => c.Rank == Rank.Ace)
-                                                         && cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) 
+                                                         &&   cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) 
                                                           % ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER))
                 {
                     takenCardsFromTableAreValid = SELECTED_ACE_BUT_TAKEN_CARDS_FROM_TABLE_ARE_NOT_EQUAL_TO_FOURTEEN;         
