@@ -10,6 +10,7 @@ namespace Casino
         public List<Card> Cards { get; set; }
         public static ConsoleOutput ConsoleOutput { get; set; }
         public List<Card> CapturedCards { get; set; }
+        public List<Points> Score { get; set; }
 
         public Player(string name, ConsoleOutput consoleOutput)
         {
