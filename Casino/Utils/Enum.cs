@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Casino
@@ -18,5 +18,15 @@ namespace Casino
         TotalCards = 52,
         NumberCardsToDeal = 4,
         Zero = 0
+    }
+
+    enum Points
+    {
+        MostCards = 3,
+        MostSpades = 1,
+        TenOfDiamonds = 2, 
+        TwoOfSpades = 1,
+        Ace = 1,
+        Sweep = 1
     }
 }
