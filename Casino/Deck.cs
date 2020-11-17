@@ -61,7 +61,7 @@ namespace Casino
         
         public void DealCardsTable(Table table)
         {
-            table.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
+            table.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();            
 
             // #region Test
             
