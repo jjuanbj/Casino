@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Casino
@@ -18,6 +18,11 @@ namespace Casino
             Deck = deck;
             Players = players;
             Table = table;
+        }
+
+        public void ExcecuteGame(Game game){
+            Turn turn = new Turn();
+            turn.TurnToPlay(game);
         }
     }
 }
