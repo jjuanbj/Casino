@@ -21,7 +21,9 @@ namespace Casino
                     {
                         game.ConsoleOutput.ItsYourTurn(player);
                         
-                        player.Play(game.Table);                                   
+                        player.Play(game.Table);
+
+                        game.Counter.CountPoints(game.Players);
                     }
                 }            
                 

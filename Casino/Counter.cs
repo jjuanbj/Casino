@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -5,15 +6,53 @@ namespace Casino
 {
     class Counter
     {
+        public void CountPoints(List<Player> players){
+            
+            int firstPlayerCards = players.Where(p => p.Name != Constants.Computer)
+                                          .FirstOrDefault().CapturedCards.Count;
 
-        public void CountPointsForIndividualPlayers(List<Player> players){
+            int computerCards = players.Where(p => p.Name == Constants.Computer)
+                                       .FirstOrDefault().CapturedCards.Count;
 
-            // TODO: check which player has more cards
-            if (players.Count > 2 || (players.Count == 2 && players.SelectMany(p => p.CapturedCards)
-                                                                   .Count() != (int)General.TotalCards / 2))
+            if (firstPlayerCards > computerCards)
             {
-                Player player = players.Where(p => (int)General.TotalCards / p.CapturedCards.Count > 
-                                                   (int)General.TotalCards / p.CapturedCards.Count).FirstOrDefault();    
+                // TODO: Maybe I need to instanciate Score inside Player
+                players.Where(p => p.Name != Constants.Computer)
+                       .FirstOrDefault().Score
+                       .Add(Points.MostCards);
+
+                if (players.Where(p => p.Name == Constants.Computer)
+                           .FirstOrDefault().Score
+                           .Contains(Points.MostCards))
+                {
+                    players.Where(p => p.Name == Constants.Computer)
+                           .FirstOrDefault().Score
+                           .Remove(Points.MostCards);
+                }
+
+                Console.WriteLine("Prueba: " + players.Where(p => p.Name != Constants.Computer)
+                                                      .FirstOrDefault().Score
+                                                      .FirstOrDefault()
+                                                      .ToString());
+            } else
+            {
+                players.Where(p => p.Name == Constants.Computer)
+                       .FirstOrDefault().Score
+                       .Add(Points.MostCards);
+
+                if (players.Where(p => p.Name != Constants.Computer)
+                           .FirstOrDefault().Score
+                           .Contains(Points.MostCards))
+                {
+                    players.Where(p => p.Name != Constants.Computer)
+                           .FirstOrDefault().Score
+                           .Remove(Points.MostCards);
+                }
+
+                Console.WriteLine("Prueba: " + players.Where(p => p.Name == Constants.Computer)
+                                                      .FirstOrDefault().Score
+                                                      .FirstOrDefault()
+                                                      .ToString());
             }
         }
     }
