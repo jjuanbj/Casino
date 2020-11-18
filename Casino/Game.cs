@@ -5,10 +5,10 @@ namespace Casino
 {
     class Game
     {
-        private Deck deck = new Deck();
-        private List<Player> players = new List<Player>();
-        private Table table = new Table();
-        private Counter counter = new Counter();
+        // private Deck deck = new Deck();
+        // private List<Player> players = new List<Player>();
+        // private Table table = new Table();
+        // private Counter counter = new Counter();
         public Deck Deck { get; set; }
         public List<Player> Players { get; set; }
         public Table Table { get; set; }
@@ -17,10 +17,10 @@ namespace Casino
 
         public Game()
         {
-            Deck = deck;
-            Players = players;
-            Table = table;
-            Counter = counter;
+            Deck = new Deck(); //deck;
+            Players = new List<Player>(); //players;
+            Table = new Table(); //table;
+            Counter = new Counter(); //counter;
         }
 
         public void ExcecuteGame(Game game){

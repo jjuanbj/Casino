@@ -34,7 +34,7 @@ namespace Casino
                                                       .FirstOrDefault().Score
                                                       .FirstOrDefault()
                                                       .ToString());
-            } else
+            } else if (firstPlayerCards < computerCards)
             {
                 players.Where(p => p.Name == Constants.Computer)
                        .FirstOrDefault().Score
@@ -49,10 +49,17 @@ namespace Casino
                            .Remove(Points.MostCards);
                 }
 
-                Console.WriteLine("Prueba: " + players.Where(p => p.Name == Constants.Computer)
-                                                      .FirstOrDefault().Score
-                                                      .FirstOrDefault()
-                                                      .ToString());
+                Console.WriteLine("Prueba1: " + players.Where(p => p.Name == Constants.Computer)
+                                                       .FirstOrDefault().Score
+                                                       .FirstOrDefault()
+                                                       .ToString());
+            } else if (firstPlayerCards == computerCards)
+            {
+                if (players.SelectMany(p => p.Score)
+                           .Contains(Points.MostCards))
+                {
+                    // TODO: complete this statement
+                }
             }
         }
     }

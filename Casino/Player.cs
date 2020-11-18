@@ -17,6 +17,7 @@ namespace Casino
             Name = name;
             ConsoleOutput = consoleOutput;
             CapturedCards = new List<Card>();
+            Score = new List<Points>();
         }
 
         public virtual void Play(Table table)
