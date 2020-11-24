@@ -449,11 +449,17 @@ namespace Casino
                 cardsSelectedFromTheTable.Cards.Add(selectedCard);
 
                 const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
+                const int ACE_MAX_VALUE = 14;
 
                 if (!cardsSelectedFromTheTable.Cards.Any()
                   || cardsSelectedFromTheTable.Cards.All(c => c.Rank != buildingRankCard)
-                  || cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank))
-                  % Convert.ToInt32(buildingRankCard) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
+                  || cardsSelectedFromTheTable.Cards.Where(c => c.CardName != selectedCard.CardName)
+                                                    .Sum(c => Convert.ToInt32(c.Rank))
+                  % Convert.ToInt32(buildingRankCard) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER
+                  || (buildingRankCard == Rank.Ace 
+                  && cardsSelectedFromTheTable.Cards.Where(c => c.CardName != selectedCard.CardName)
+                                                    .Sum(c => Convert.ToInt32(c.Rank))
+                  % ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER))
                 {
                     ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
 
@@ -462,7 +468,7 @@ namespace Casino
                     ThrowTheCardToTheTable(selectedCard, table);
                 }
                 else
-                {
+                {                    
                     Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
 
                     foreach (var item in cardsSelectedFromTheTable.Cards)

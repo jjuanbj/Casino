@@ -249,6 +249,7 @@ namespace Casino
             Console.Write(GetSpeak.WhichCardWouldYouLikeToTakeFromTheTable);
             
             int cardsOnTheTable = 0;
+
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(string.Format("{0}.", 
                               string.Join(", ", table.Cards

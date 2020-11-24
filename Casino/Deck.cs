@@ -44,7 +44,12 @@ namespace Casino
             foreach (var player in Players.Where(p => p.Name != Constants.Computer))
             {
                 player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
-            
+                
+                #region Test
+                // player.Cards.Add(new Card("Ace of Diamond"));
+                // player.Cards.Add(new Card("Ace of Spade"));
+                #endregion
+
                 // At the end of the turn, Casino fails in this line
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
             }
@@ -101,9 +106,9 @@ namespace Casino
 
             // table.BuildedCards = listBuildedCards;
 
-            // table.Cards.Add(new Card("Ace of Heart"));
-            // table.Cards.Add(new Card("Eight of Club"));
-            // table.Cards.Add(new Card("Four of Spade"));
+            // table.Cards.Add(new Card("Six of Spade"));
+            // table.Cards.Add(new Card("Five of Heart"));
+            // table.Cards.Add(new Card("Two of Spade"));
             // table.Cards.Add(new Card("Ace of Diamond"));
             // table.Cards = listCards;
 
