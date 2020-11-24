@@ -375,8 +375,7 @@ namespace Casino
                     table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
                     
                     this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
-                    
-                    Console.WriteLine("Prueba0");
+                                        
                     ConsoleOutput.ShowTableCards(table);
 
                 } else if (cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank == buildingRankCard
@@ -405,8 +404,7 @@ namespace Casino
                     table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
                     
                     this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
-                    
-                    Console.WriteLine("Prueba1");  
+                                        
                     ConsoleOutput.ShowTableCards(table);
                     
                 } else if ((cardsSelectedFromTheTable.BuildedCards.Sum(b => Convert.ToInt32(b.BuildedCardsRank)) 

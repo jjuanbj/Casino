@@ -6,6 +6,22 @@ namespace Casino
 {
     class Counter
     {
+        private int playerCapturedCards = 0;
+
+        private int computerCapturedCards = 0;
+
+        private void CountMostCards(List<Player> players){
+            playerCapturedCards = players.Where(p => p.Name != Constants.Computer)
+                                         .FirstOrDefault().CapturedCards.Count;
+
+            computerCapturedCards = players.Where(p => p.Name == Constants.Computer)
+                                           .FirstOrDefault().CapturedCards.Count;
+        }
+
+        private void CalculatePoints(List<Player> players){
+
+        }
+        
         public void CountPoints(List<Player> players){
             
             int firstPlayerCards = players.Where(p => p.Name != Constants.Computer)
@@ -15,8 +31,7 @@ namespace Casino
                                        .FirstOrDefault().CapturedCards.Count;
 
             if (firstPlayerCards > computerCards)
-            {
-                // TODO: Maybe I need to instanciate Score inside Player
+            {                
                 players.Where(p => p.Name != Constants.Computer)
                        .FirstOrDefault().Score
                        .Add(Points.MostCards);
@@ -29,11 +44,14 @@ namespace Casino
                            .FirstOrDefault().Score
                            .Remove(Points.MostCards);
                 }
+                
+                #region Test
+                Console.WriteLine("Test: firstPlayerCards" + players.Where(p => p.Name != Constants.Computer)
+                                                                    .FirstOrDefault().Score
+                                                                    .FirstOrDefault()
+                                                                    .ToString());
+                #endregion
 
-                Console.WriteLine("Prueba: " + players.Where(p => p.Name != Constants.Computer)
-                                                      .FirstOrDefault().Score
-                                                      .FirstOrDefault()
-                                                      .ToString());
             } else if (firstPlayerCards < computerCards)
             {
                 players.Where(p => p.Name == Constants.Computer)
@@ -49,17 +67,26 @@ namespace Casino
                            .Remove(Points.MostCards);
                 }
 
-                Console.WriteLine("Prueba1: " + players.Where(p => p.Name == Constants.Computer)
-                                                       .FirstOrDefault().Score
-                                                       .FirstOrDefault()
-                                                       .ToString());
+                #region Test
+                Console.WriteLine("Test1: " + players.Where(p => p.Name == Constants.Computer)
+                                                     .FirstOrDefault().Score
+                                                     .FirstOrDefault()
+                                                     .ToString());
+                #endregion
+
             } else if (firstPlayerCards == computerCards)
             {
                 if (players.SelectMany(p => p.Score)
                            .Contains(Points.MostCards))
-                {
-                    // TODO: complete this statement
+                {                    
+                    players.FirstOrDefault().Score
+                           .Remove(Points.MostCards);                    
                 }
+
+                #region Test
+                Console.WriteLine("Prueba2: " + players.Any(p => p.Score
+                                                       .Contains(Points.MostCards)));
+                #endregion
             }
         }
     }
