@@ -269,15 +269,20 @@ namespace Casino
 
             string cardNumber = "";
             Card buildingRankCard = null;
+            int cardsCount = this.Cards.Count; // TODO: Index out of range
 
             while (String.IsNullOrEmpty(cardNumber))
             {
                 cardNumber = Console.ReadLine().Trim();
 
+                Console.WriteLine("Test: " + cardsCount);
+
                 if (!String.IsNullOrEmpty(cardNumber)
                 && cardNumber.All(char.IsDigit)
-                && Enumerable.Range((int)General.Zero, Cards.Count).Contains(Int32.Parse(cardNumber)))
+                && Enumerable.Range((int)General.Zero, cardsCount).Contains(Int32.Parse(cardNumber)))
                 {
+                    cardsCount = cardsCount - 1;
+
                     List<Card> playerCardsWithoutSelectedCard = new List<Card>(Cards.Where(c => c.CardName != selectedCard.CardName));
 
                     buildingRankCard = new Card(playerCardsWithoutSelectedCard.ElementAt(Int32.Parse(cardNumber)).CardName);
@@ -452,7 +457,7 @@ namespace Casino
                 const int ACE_MAX_VALUE = 14;
 
                 // TODO: This if is too big
-                if (!cardsSelectedFromTheTable.Cards.Any()
+                if ( !cardsSelectedFromTheTable.Cards.Any()
                   || (cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) / Convert.ToInt32(buildingRankCard) == 1 
                   &&  cardsSelectedFromTheTable.Cards.All(c => c.Rank != buildingRankCard))
                   || (cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) / Convert.ToInt32(buildingRankCard) == 1
@@ -467,9 +472,6 @@ namespace Casino
                                                     .Sum(c => Convert.ToInt32(c.Rank))
                   % ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER))
                 {
-                    Console.WriteLine("Test: " + (cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) / Convert.ToInt32(buildingRankCard) != 1));
-                    Console.WriteLine("Test 1: " + cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)));
-                    Console.WriteLine("Test 2: " + Convert.ToInt32(buildingRankCard));
                     ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
 
                     this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
