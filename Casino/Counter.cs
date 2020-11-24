@@ -10,61 +10,60 @@ namespace Casino
 
         private int computerCapturedCards = 0;
 
+        public void CountPoints(List<Player> players)
+        {
+            CountMostCards(players);
+        }
+
         private void CountMostCards(List<Player> players){
+
             playerCapturedCards = players.Where(p => p.Name != Constants.Computer)
                                          .FirstOrDefault().CapturedCards.Count;
 
             computerCapturedCards = players.Where(p => p.Name == Constants.Computer)
                                            .FirstOrDefault().CapturedCards.Count;
+
+            CalculatePoints(players, Points.MostCards);
         }
 
-        private void CalculatePoints(List<Player> players){
+        private void CalculatePoints(List<Player> players, Points points){
 
-        }
-        
-        public void CountPoints(List<Player> players){
-            
-            int firstPlayerCards = players.Where(p => p.Name != Constants.Computer)
-                                          .FirstOrDefault().CapturedCards.Count;
-
-            int computerCards = players.Where(p => p.Name == Constants.Computer)
-                                       .FirstOrDefault().CapturedCards.Count;
-
-            if (firstPlayerCards > computerCards)
-            {                
+            if (playerCapturedCards > computerCapturedCards)
+            {
                 players.Where(p => p.Name != Constants.Computer)
                        .FirstOrDefault().Score
-                       .Add(Points.MostCards);
+                       .Add(points);
 
                 if (players.Where(p => p.Name == Constants.Computer)
                            .FirstOrDefault().Score
-                           .Contains(Points.MostCards))
+                           .Contains(points))
                 {
                     players.Where(p => p.Name == Constants.Computer)
                            .FirstOrDefault().Score
-                           .Remove(Points.MostCards);
+                           .Remove(points);
                 }
-                
+
                 #region Test
-                Console.WriteLine("Test: firstPlayerCards" + players.Where(p => p.Name != Constants.Computer)
+                Console.WriteLine("Test: playerCapturedCards" + players.Where(p => p.Name != Constants.Computer)
                                                                     .FirstOrDefault().Score
                                                                     .FirstOrDefault()
                                                                     .ToString());
                 #endregion
 
-            } else if (firstPlayerCards < computerCards)
+            }
+            else if (playerCapturedCards < computerCapturedCards)
             {
                 players.Where(p => p.Name == Constants.Computer)
                        .FirstOrDefault().Score
-                       .Add(Points.MostCards);
+                       .Add(points);
 
                 if (players.Where(p => p.Name != Constants.Computer)
                            .FirstOrDefault().Score
-                           .Contains(Points.MostCards))
+                           .Contains(points))
                 {
                     players.Where(p => p.Name != Constants.Computer)
                            .FirstOrDefault().Score
-                           .Remove(Points.MostCards);
+                           .Remove(points);
                 }
 
                 #region Test
@@ -74,18 +73,19 @@ namespace Casino
                                                      .ToString());
                 #endregion
 
-            } else if (firstPlayerCards == computerCards)
+            }
+            else if (playerCapturedCards == computerCapturedCards)
             {
                 if (players.SelectMany(p => p.Score)
-                           .Contains(Points.MostCards))
-                {                    
+                           .Contains(points))
+                {
                     players.FirstOrDefault().Score
-                           .Remove(Points.MostCards);                    
+                           .Remove(points);
                 }
 
                 #region Test
                 Console.WriteLine("Prueba2: " + players.Any(p => p.Score
-                                                       .Contains(Points.MostCards)));
+                                                       .Contains(points)));
                 #endregion
             }
         }
