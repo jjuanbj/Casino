@@ -355,5 +355,13 @@ namespace Casino
             
             Console.ResetColor();
         }
+
+        public void YouCannotThrowCardsWhenYouAreABuildingCardOwner(){
+            
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(GetSpeak.YouCannotThrowCardsWhenYouAreABuildingCardOwner);
+
+            Console.ResetColor();                        
+        }
     }
 }

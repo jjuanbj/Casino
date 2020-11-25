@@ -44,7 +44,7 @@ namespace Casino
                 }
 
                 #region Test
-                Console.WriteLine("Test: playerCapturedCards" + players.Where(p => p.Name != Constants.Computer)
+                Console.WriteLine("Test: User with most cards" + players.Where(p => p.Name != Constants.Computer)
                                                                     .FirstOrDefault().Score
                                                                     .FirstOrDefault()
                                                                     .ToString());
@@ -67,7 +67,7 @@ namespace Casino
                 }
 
                 #region Test
-                Console.WriteLine("Test1: " + players.Where(p => p.Name == Constants.Computer)
+                Console.WriteLine("Test: computer with most cards" + players.Where(p => p.Name == Constants.Computer)
                                                      .FirstOrDefault().Score
                                                      .FirstOrDefault()
                                                      .ToString());
@@ -84,7 +84,7 @@ namespace Casino
                 }
 
                 #region Test
-                Console.WriteLine("Prueba2: " + players.Any(p => p.Score
+                Console.WriteLine("Test: neither have most cards" + players.Any(p => p.Score
                                                        .Contains(points)));
                 #endregion
             }

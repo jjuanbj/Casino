@@ -55,6 +55,8 @@ namespace Casino
 
         public string MultipleBuild { get; set; }
 
+        public string YouCannotThrowCardsWhenYouAreABuildingCardOwner { get; set; }
+
         public Spanish()
         {
             WelcomeToCasinoGame = "¡Bienvenido al juego de casino!";
@@ -82,6 +84,7 @@ namespace Casino
             SelectYourBuildingRank = " selecciona tu rango de combinación: ";
             SingleBuild = "Cartas combinadas";
             MultipleBuild = "Cartas emparejadas";
+            YouCannotThrowCardsWhenYouAreABuildingCardOwner = "No puedes lanzar cartas cuando eres dueño de cartas combinadas o emparejadas";
         }
     }
 }

@@ -55,6 +55,8 @@ namespace Casino
 
         public string MultipleBuild { get; set; }    
 
+        public string YouCannotThrowCardsWhenYouAreABuildingCardOwner { get; set; }
+
         public English()
         {
             WelcomeToCasinoGame = "Welcome to casino game!";
@@ -81,7 +83,8 @@ namespace Casino
             YouJustLostYourCardBecauseItIsInvalid = "You just lost your card because it is invalid";
             SelectYourBuildingRank = " select your building rank: ";
             SingleBuild = "Single build";
-            MultipleBuild = "Multiple build";            
+            MultipleBuild = "Multiple build";
+            YouCannotThrowCardsWhenYouAreABuildingCardOwner = "You cannot throw cards when you are a building card owner";
         }
     }
 }

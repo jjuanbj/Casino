@@ -46,8 +46,8 @@ namespace Casino
                 player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
                 
                 #region Test
-                player.Cards.Add(new Card("Ten of Diamond"));
-                player.Cards.Add(new Card("Jack of Spade"));
+                 player.Cards.Add(new Card("Ten of Diamond"));
+                 player.Cards.Add(new Card("Jack of Spade"));
                 #endregion
 
                 // At the end of the turn, Casino fails in this line
@@ -106,10 +106,10 @@ namespace Casino
 
             // table.BuildedCards = listBuildedCards;
 
-            table.Cards.Add(new Card("Ace of Spade"));
-            table.Cards.Add(new Card("Four of Spade"));
-            table.Cards.Add(new Card("Seven of Heart"));
-            // table.Cards.Add(new Card("Ace of Diamond"));
+            // table.Cards.Add(new Card("Ace of Spade"));
+            // table.Cards.Add(new Card("Four of Spade"));
+            // table.Cards.Add(new Card("Seven of Heart"));
+             table.Cards.Add(new Card("Ace of Diamond"));
             // table.Cards = listCards;
 
             // #endregion

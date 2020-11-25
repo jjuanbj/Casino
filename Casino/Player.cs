@@ -28,12 +28,8 @@ namespace Casino
 
             string userinput = "";
 
-            while (userinput != Keyboard.ONE
-                && userinput != Keyboard.TWO
-                && userinput != Keyboard.THREE
-                && userinput != Keyboard.FOUR)
+            while (userinput == "")
             {
-
                 userinput = Console.ReadLine().Trim();
 
                 if (userinput != Keyboard.ONE
@@ -41,9 +37,23 @@ namespace Casino
                  && userinput != Keyboard.THREE
                  && userinput != Keyboard.FOUR)
                 {
+                    userinput = "";
+
                     ConsoleOutput.ThisIsNotAnAllowedAction();
-                    ConsoleOutput.ChooseOneAction(table);
-                }
+                    ConsoleOutput.ChooseOneAction(table);                    
+
+                } else if (table.BuildedCards != null
+                        && table.BuildedCards.Any(b => b.Owner == this.Name
+                        && userinput == Keyboard.ONE))
+                {
+                    userinput = "";
+
+                    ConsoleOutput.YouCannotThrowCardsWhenYouAreABuildingCardOwner();
+                    
+                    selectedCard = SelectYourCard();
+                    
+                    ConsoleOutput.ChooseOneAction(table);    
+                }                
             }
 
             switch (userinput)
@@ -52,7 +62,7 @@ namespace Casino
                     ThrowTheCardToTheTable(selectedCard, table);
                     break;
                 case Keyboard.TWO:
-                    TakeCardFromTheTable(selectedCard, table);
+                    TakeCardFromTheTable(selectedCard, table); // Test when user is builded card owner and choose this action
                     break;
                 case Keyboard.THREE:
                     CreateSingleBuildCards(selectedCard, table);
@@ -328,6 +338,7 @@ namespace Casino
                 BuildedCard buildedCard = new BuildedCard();
                 buildedCard.BuildedCards = cardsSelectedFromTheTable;
                 buildedCard.BuildedCardsRank = buildingRankCard;
+                buildedCard.Owner = this.Name;
 
                 if (table.BuildedCards == null)
                 {
@@ -373,11 +384,10 @@ namespace Casino
                     }
                                                       
                     cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple = true;
-
-                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank = buildingRankCard;
-
-                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault()
-                                             .BuildedCards.Add(selectedCard);
+                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank = buildingRankCard;                    
+                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().Owner = this.Name;
+                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCards
+                                                          .Add(selectedCard);
 
                     table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
                     
@@ -397,11 +407,11 @@ namespace Casino
                         table.BuildedCards.RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank);
                     }
                     
-                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple = true;
-                    
-                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault()
-                                             .BuildedCards.Add(selectedCard);
-                    
+                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple = true;                                        
+                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().Owner = this.Name;
+                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCards
+                                                          .Add(selectedCard);
+
                     foreach (Card card in cardsSelectedFromTheTable.Cards)
                     {
                         cardsSelectedFromTheTable.BuildedCards.FirstOrDefault()
@@ -434,10 +444,12 @@ namespace Casino
                     newBuildedCard.IsMultiple = true;
                     newBuildedCard.BuildedCardsRank = buildingRankCard;
                     newBuildedCard.BuildedCards.Add(selectedCard);
-                    
+                    newBuildedCard.Owner = this.Name;
+
                     table.BuildedCards.Add(newBuildedCard);
+
                     this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
-                    Console.WriteLine("Prueba2");                    
+
                     ConsoleOutput.ShowTableCards(table);
 
                 } else
@@ -491,6 +503,7 @@ namespace Casino
                     buildedCard.BuildedCards = cardsSelectedFromTheTable.Cards;
                     buildedCard.BuildedCardsRank = buildingRankCard;
                     buildedCard.IsMultiple = true;
+                    buildedCard.Owner = this.Name;
 
                     List<BuildedCard> buildedCards = new List<BuildedCard>();
                     buildedCards.Add(buildedCard);
