@@ -268,21 +268,19 @@ namespace Casino
             ConsoleOutput.SelectYourBuildingRank(this, selectedCard);
 
             string cardNumber = "";
+
             Card buildingRankCard = null;
-            int cardsCount = this.Cards.Count; // TODO: Index out of range
+            
+            int cardsCount = this.Cards.Count - 1;
 
             while (String.IsNullOrEmpty(cardNumber))
             {
                 cardNumber = Console.ReadLine().Trim();
 
-                Console.WriteLine("Test: " + cardsCount);
-
                 if (!String.IsNullOrEmpty(cardNumber)
                 && cardNumber.All(char.IsDigit)
                 && Enumerable.Range((int)General.Zero, cardsCount).Contains(Int32.Parse(cardNumber)))
                 {
-                    cardsCount = cardsCount - 1;
-
                     List<Card> playerCardsWithoutSelectedCard = new List<Card>(Cards.Where(c => c.CardName != selectedCard.CardName));
 
                     buildingRankCard = new Card(playerCardsWithoutSelectedCard.ElementAt(Int32.Parse(cardNumber)).CardName);
@@ -295,7 +293,9 @@ namespace Casino
                 else
                 {
                     ConsoleOutput.TypeValidCardNumber();
+                    
                     cardNumber = "";
+                    
                     continue;
                 }
             }
