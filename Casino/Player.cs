@@ -22,6 +22,7 @@ namespace Casino
 
         public virtual void Play(Table table)
         {
+            SelectCard:
             Card selectedCard = SelectYourCard();
 
             ConsoleOutput.ChooseOneAction(table);
@@ -56,13 +57,15 @@ namespace Casino
                 }                
             }
 
+            bool buildedCardOwner = false;
+            
             switch (userinput)
             {
                 case Keyboard.ONE:
                     ThrowTheCardToTheTable(selectedCard, table);
                     break;
                 case Keyboard.TWO:
-                    TakeCardFromTheTable(selectedCard, table); // Test when user is builded card owner and choose this action
+                    buildedCardOwner = TakeCardFromTheTable(selectedCard, table);
                     break;
                 case Keyboard.THREE:
                     CreateSingleBuildCards(selectedCard, table);
@@ -71,6 +74,9 @@ namespace Casino
                     CreateMultipleBuildCards(selectedCard, table);
                     break;
             }
+
+            if (buildedCardOwner == true)            
+                goto SelectCard;            
         }
 
         private Card SelectYourCard()
@@ -78,6 +84,7 @@ namespace Casino
             ConsoleOutput.SelectOneCardByIndexNumber(this);
 
             string cardNumber = "";
+
             Card card = null;
 
             while (String.IsNullOrEmpty(cardNumber))
@@ -95,7 +102,9 @@ namespace Casino
                 else
                 {
                     ConsoleOutput.TypeValidCardNumber();
+            
                     cardNumber = "";
+            
                     continue;
                 }
             }
@@ -119,6 +128,7 @@ namespace Casino
         private Table SelectCardsFromTheTable(Table table)
         {
             int cardsOnTheTable = ConsoleOutput.WhichCardWouldYouLikeToTakeFromTheTable(table);
+            
             ConsoleOutput.PressFWhenFinished();
 
             string cardRank = "";
@@ -133,10 +143,9 @@ namespace Casino
 
                 if (String.IsNullOrEmpty(cardRank))
                 {
-
                     ConsoleOutput.TypeValidCardNumber();
+                 
                     continue;
-
                 }
                 else if (cardRank != Keyboard.UPPERCASE_F
                       && cardRank != Keyboard.LOWERCASE_F
@@ -163,7 +172,9 @@ namespace Casino
                 else
                 {
                     ConsoleOutput.TypeValidCardNumber();
+                    
                     cardRank = "";
+                    
                     continue;
                 }
             }
@@ -177,16 +188,27 @@ namespace Casino
             return cardsSelectedFromTheTable;
         }
 
-        public virtual void TakeCardFromTheTable(Card selectedCard, Table table)
+        public virtual bool TakeCardFromTheTable(Card selectedCard, Table table)
         {
+            bool buildedCardOwner = false;
+
             Table cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
-    
-            if (!ValidateTakenCards(cardsSelectedFromTheTable, selectedCard))
+
+            if (!ValidateTakenCards(cardsSelectedFromTheTable, selectedCard) 
+                        && table.BuildedCards != null
+                        && table.BuildedCards.Any(b => b.Owner == this.Name))
+            {
+                ConsoleOutput.IfYouDontHaveMoreMoveYouMustCaptureYourBuildingCard();
+
+                buildedCardOwner = true;
+
+            } else if (!ValidateTakenCards(cardsSelectedFromTheTable, selectedCard))
             {
                 ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
-         
+
                 ThrowTheCardToTheTable(selectedCard, table);
-            }
+
+            }            
             else
             {
                 if(cardsSelectedFromTheTable.Cards != null) {
@@ -212,6 +234,8 @@ namespace Casino
                 ConsoleOutput.ShowTableCards(table);
                 ConsoleOutput.ShowCapturedCards(this);
             }
+
+            return buildedCardOwner;
         }
         
         private bool ValidateTakenCards(Table cardsSelectedFromTheTable, Card selectedCard){

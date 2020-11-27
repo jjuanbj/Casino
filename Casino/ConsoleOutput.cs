@@ -363,5 +363,13 @@ namespace Casino
 
             Console.ResetColor();                        
         }
+
+        public void IfYouDontHaveMoreMoveYouMustCaptureYourBuildingCard() {
+            
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(GetSpeak.IfYouDontHaveMoreMoveYouMustCaptureYourBuildingCard);
+
+            Console.ResetColor();
+        }
     }
 }

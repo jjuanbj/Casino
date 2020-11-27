@@ -57,5 +57,7 @@ namespace Casino
         public string MultipleBuild { get; set; }
 
         public string YouCannotThrowCardsWhenYouAreABuildingCardOwner { get; set; }
+
+        public string IfYouDontHaveMoreMoveYouMustCaptureYourBuildingCard { get; set; }
     }
 }

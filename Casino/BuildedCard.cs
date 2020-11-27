@@ -10,5 +10,7 @@ namespace Casino {
         public Rank BuildedCardsRank { get; set; }
         
         public bool IsMultiple { get; set; }
+
+        public String Owner { get; set; }
     }
 }

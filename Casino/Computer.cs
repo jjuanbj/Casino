@@ -99,7 +99,7 @@ namespace Casino
             Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
         }
 
-        public override void TakeCardFromTheTable(Card selectedCard, Table table) 
+        public override bool TakeCardFromTheTable(Card selectedCard, Table table) 
         {
             List<Card> capturedCards = new List<Card>();
 
@@ -165,7 +165,9 @@ namespace Casino
             Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
 
             CapturedCards = capturedCards;
-            CapturedCards.Add(selectedCard);            
+            CapturedCards.Add(selectedCard);
+
+            return false;
         }
 
         public override void CreateSingleBuildCards(Card selectedCard, Table table) { }
