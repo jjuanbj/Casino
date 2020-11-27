@@ -46,8 +46,8 @@ namespace Casino
                 player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
                 
                 #region Test
-                //  player.Cards.Add(new Card("Ten of Diamond"));
-                //  player.Cards.Add(new Card("Jack of Spade"));
+                 player.Cards.Add(new Card("Ace of Diamond"));
+                 player.Cards.Add(new Card("Jack of Spade"));
                 #endregion
 
                 // At the end of the turn, Casino fails in this line
@@ -70,16 +70,16 @@ namespace Casino
 
             // #region Test
 
-            // List<Card> listCards = new List<Card>();
-            // listCards.Add(new Card("Seven of Diamond"));
-            // listCards.Add(new Card("Five of Heart"));
+            List<Card> listCards = new List<Card>();
+            listCards.Add(new Card("Four of Heart"));
+            listCards.Add(new Card("Ten of Heart"));
             // listCards.Add(new Card("Ace of Diamond"));
             // listCards.Add(new Card("Nine of Heart"));
 
-            // BuildedCard builded = new BuildedCard();
-            // builded.BuildedCards = listCards;
-            // builded.BuildedCardsRank = Rank.Queen;
-            // builded.IsMultiple = false;
+             BuildedCard builded = new BuildedCard();
+             builded.BuildedCards = listCards;
+             builded.BuildedCardsRank = Rank.Ace;
+             builded.IsMultiple = false;
 
             // List<Card> listCards1 = new List<Card>();
             // listCards1.Add(new Card("Three of Diamond"));
@@ -99,16 +99,16 @@ namespace Casino
             // builded2.BuildedCardsRank = Rank.Six;
             // builded2.IsMultiple = true;
 
-            // List<BuildedCard> listBuildedCards = new List<BuildedCard>();
+             List<BuildedCard> listBuildedCards = new List<BuildedCard>();
             // listBuildedCards.Add(builded1);
-            // listBuildedCards.Add(builded);
+             listBuildedCards.Add(builded);
             // listBuildedCards.Add(builded2);
 
-            // table.BuildedCards = listBuildedCards;
+             table.BuildedCards = listBuildedCards;
 
-            // table.Cards.Add(new Card("Ace of Spade"));
-            // table.Cards.Add(new Card("Four of Spade"));
-            // table.Cards.Add(new Card("Seven of Heart"));
+             table.Cards.Add(new Card("Three of Club"));
+            // table.Cards.Add(new Card("Two of Spade"));
+            // table.Cards.Add(new Card("Queen of Spade"));
             //  table.Cards.Add(new Card("Ace of Diamond"));
             // table.Cards = listCards;
 
