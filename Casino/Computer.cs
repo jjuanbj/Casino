@@ -14,10 +14,12 @@ namespace Casino
             Console.WriteLine("Action selected: " + actionSelected); // Test
 
             Card selectedCard = SelectYourCard(actionSelected, table);
-            Console.Write("Computer cards: "); // Test
-            Console.WriteLine(string.Format(": {0}.",
-                              string.Join(", ", this.Cards
-                                    .Select(c => c.CardName)))); // Test
+            
+            // Console.Write("Computer cards: "); // Test
+            // Console.WriteLine(string.Format(": {0}.",
+            //                   string.Join(", ", this.Cards
+            //                         .Select(c => c.CardName)))); // Test
+            
             Console.WriteLine("Selected card: " + selectedCard.CardName); // Test
 
             switch (actionSelected)
@@ -27,8 +29,7 @@ namespace Casino
                     Console.WriteLine("ThrowTheCardToTheTable"); // Test
                     break;
                 case Keyboard.TWO:
-                    TakeCardFromTheTable(selectedCard, table);
-            
+                    TakeCardFromTheTable(selectedCard, table);            
                     Console.WriteLine("TakeCardFromTheTable"); // Test
                     break;
                 case Keyboard.THREE:
@@ -163,8 +164,7 @@ namespace Casino
             }
             
             Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
-
-            CapturedCards = capturedCards;
+            
             CapturedCards.Add(selectedCard);
 
             return false;
