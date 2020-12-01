@@ -205,7 +205,6 @@ namespace Casino
             } else if (!ValidateTakenCards(cardsSelectedFromTheTable, selectedCard))
             {
                 ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
-
                 ThrowTheCardToTheTable(selectedCard, table);
 
             }            
@@ -242,8 +241,7 @@ namespace Casino
 
             bool takenCardsFromTableAreValid = true;
             
-            const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
-            const int ACE_MAX_VALUE = 14;
+            const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;            
 
             const bool USER_DID_NOT_TAKE_CARDS_FROM_TABLE = false;
             const bool SELECTED_CARD_AND_CARDS_TAKEN_FROM_TABLE_DO_NOT_HAVE_SAME_RANK = false;
@@ -265,7 +263,7 @@ namespace Casino
 
                 } else if (selectedCard.Rank == Rank.Ace && (!cardsSelectedFromTheTable.Cards.Any(c => c.Rank == Rank.Ace)
                                                          &&   cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) 
-                                                          % ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER))
+                                                          % Constants.ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER))
                 {
                     takenCardsFromTableAreValid = SELECTED_ACE_BUT_TAKEN_CARDS_FROM_TABLE_ARE_NOT_EQUAL_TO_FOURTEEN;         
 
@@ -273,9 +271,9 @@ namespace Casino
                                                          &&  cardsSelectedFromTheTable.Cards.Any(c => c.Rank != Rank.Ace) 
                                                          && (cardsSelectedFromTheTable.Cards.Where(c => c.Rank != Rank.Ace)
                                                                                             .Sum(c => Convert.ToInt32(c.Rank)) 
-                                                          % ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
+                                                          % Constants.ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
                                                          && cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank))
-                                                          % ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER))
+                                                          % Constants.ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER))
                 {
                     takenCardsFromTableAreValid = SELECTED_ACE_AND_OTHER_CARDS_BUT_THOSE_CARDS_ARE_NOT_EQUAL_TO_FOURTEEN;                    
                 }
@@ -287,7 +285,7 @@ namespace Casino
                     takenCardsFromTableAreValid = SELECTED_CARD_AND_BUILDED_CARDS_DO_NOT_HAVE_SAME_RANK;    
                     
                 } else if (selectedCard.Rank == Rank.Ace 
-                          && cardsSelectedFromTheTable.BuildedCards.Any(b => Convert.ToInt32(b.BuildedCardsRank) != ACE_MAX_VALUE))
+                          && cardsSelectedFromTheTable.BuildedCards.Any(b => Convert.ToInt32(b.BuildedCardsRank) != Constants.ACE_MAX_VALUE))
                 {
                     takenCardsFromTableAreValid = SELECTED_ACE_BUT_BUILDED_CARDS_DO_NOT_HAVE_ACE_MAX_VALUE;         
                 }                
@@ -341,26 +339,24 @@ namespace Casino
         {
             Rank buildingRankCard = SelectBuildingRank(selectedCard);
 
-            List<Card> cardsSelectedFromTheTable = SelectCardsFromTheTable(table).Cards;
-            cardsSelectedFromTheTable.Add(selectedCard);
-
-            const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
-
-            if (!cardsSelectedFromTheTable.Any()
-              || cardsSelectedFromTheTable.Sum(c => Convert.ToInt32(c.Rank))
-              % Convert.ToInt32(buildingRankCard) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
-            {
-                ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
-                ThrowTheCardToTheTable(selectedCard, table);
-            }
-            else
+            var cardsSelectedFromTheTable = SelectCardsFromTheTable(table);            
+            
+            if (cardsSelectedFromTheTable.BuildedCards == null
+            && ((buildingRankCard != Rank.Ace 
+            && cardsSelectedFromTheTable.Cards.Sum(r => Convert.ToInt32(r.Rank)) 
+            +  Convert.ToInt32(selectedCard.Rank) == Convert.ToInt32(buildingRankCard))
+            || (buildingRankCard == Rank.Ace
+            && cardsSelectedFromTheTable.Cards.Sum(r => Convert.ToInt32(r.Rank)) 
+            +  Convert.ToInt32(selectedCard.Rank) == Constants.ACE_MAX_VALUE)))
             {
                 Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
 
-                table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Contains(c));
+                table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Cards.Contains(c));
+
+                cardsSelectedFromTheTable.Cards.Add(selectedCard);
 
                 BuildedCard buildedCard = new BuildedCard();
-                buildedCard.BuildedCards = cardsSelectedFromTheTable;
+                buildedCard.BuildedCards = cardsSelectedFromTheTable.Cards;
                 buildedCard.BuildedCardsRank = buildingRankCard;
                 buildedCard.Owner = this.Name;
 
@@ -381,29 +377,54 @@ namespace Casino
 
                 table.BuildedCards = buildedCards;
 
+                ConsoleOutput.ShowTableCards(table);                
+
+            } else if (cardsSelectedFromTheTable.BuildedCards != null
+            && cardsSelectedFromTheTable.Cards == null
+            && ((buildingRankCard != Rank.Ace
+            && cardsSelectedFromTheTable.BuildedCards.Sum(r => Convert.ToInt32(r.BuildedCardsRank)) 
+            +  Convert.ToInt32(selectedCard.Rank) == Convert.ToInt32(buildingRankCard))
+            || buildingRankCard == Rank.Ace
+            && cardsSelectedFromTheTable.BuildedCards.Sum(r => Convert.ToInt32(r.BuildedCardsRank))
+            + Convert.ToInt32(selectedCard.Rank) == Convert.ToInt32(Constants.ACE_MAX_VALUE)))
+            {
+                foreach (var item in cardsSelectedFromTheTable.BuildedCards)
+                {
+                    table.BuildedCards.RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank);
+                }
+                                                    
+                cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple = false;
+                cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank = buildingRankCard;                    
+                cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().Owner = this.Name;
+                cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCards
+                                                        .Add(selectedCard);
+
+                table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
+                
+                this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                                    
                 ConsoleOutput.ShowTableCards(table);
             }
+            else
+            {
+                ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
+                ThrowTheCardToTheTable(selectedCard, table);
+            }
         }
-        
+
+        // TODO: refactor this method because it's getting big and complex        
         public virtual void CreateMultipleBuildCards(Card selectedCard, Table table)
-        {
-            
+        {            
             Rank buildingRankCard = SelectBuildingRank(selectedCard);
             
             Table cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
             
-            const int THERE_IS_ONLY_ONE_BUILDED_CARD = 1;
-
             if (cardsSelectedFromTheTable.BuildedCards != null)
             {                
-                if (cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank == selectedCard.Rank
-                &&  cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple != true
-                &&  cardsSelectedFromTheTable.BuildedCards.Take(2).Count() == THERE_IS_ONLY_ONE_BUILDED_CARD
+                if (cardsSelectedFromTheTable.BuildedCards.All(b => b.BuildedCardsRank == selectedCard.Rank && b.IsMultiple != true)                
                 &&  selectedCard.Rank == buildingRankCard
                 &&  cardsSelectedFromTheTable.Cards == null)
                 {
-                    Console.WriteLine("Test 1");
-
                     foreach (var item in cardsSelectedFromTheTable.BuildedCards)
                     {
                         table.BuildedCards.RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank);
@@ -421,13 +442,10 @@ namespace Casino
                                         
                     ConsoleOutput.ShowTableCards(table);
 
-                } else if (cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank == buildingRankCard
+                } else if (cardsSelectedFromTheTable.BuildedCards.All(b => b.BuildedCardsRank == buildingRankCard)
                         && cardsSelectedFromTheTable.Cards != null
-                        && cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) + Convert.ToInt32(selectedCard.Rank) == Convert.ToInt32(buildingRankCard)
-                        && cardsSelectedFromTheTable.BuildedCards.Take(2).Count() == THERE_IS_ONLY_ONE_BUILDED_CARD)
+                        && cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) + Convert.ToInt32(selectedCard.Rank) == Convert.ToInt32(buildingRankCard))
                 {
-                    Console.WriteLine("Test 2");
-
                     table.BuildedCards.RemoveAll(b => cardsSelectedFromTheTable.BuildedCards.Contains(b));
                     
                     foreach (var item in cardsSelectedFromTheTable.BuildedCards)
@@ -457,9 +475,7 @@ namespace Casino
                  && cardsSelectedFromTheTable.Cards == null
                  && cardsSelectedFromTheTable.BuildedCards.All(b => b.BuildedCardsRank != Rank.Ace)
                  && buildingRankCard != Rank.Ace)
-                {
-                    Console.WriteLine("Test 3");
-                                     
+                {                    
                     foreach (var item in cardsSelectedFromTheTable.BuildedCards)
                     {
                         table.BuildedCards.RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank);    
@@ -484,7 +500,37 @@ namespace Casino
 
                     ConsoleOutput.ShowTableCards(table);
 
-                } else // TODO: scenario for buildingRankCard == ACE missed
+                } else if (cardsSelectedFromTheTable.Cards != null
+                 && (cardsSelectedFromTheTable.Cards.Sum(b => Convert.ToInt32(b.Rank)) 
+                 + Convert.ToInt32(selectedCard.Rank)) % Constants.ACE_MAX_VALUE == 0                 
+                 && cardsSelectedFromTheTable.BuildedCards.All(b => b.BuildedCardsRank == Rank.Ace)                 
+                 && buildingRankCard == Rank.Ace)
+                 {
+                    table.BuildedCards.RemoveAll(b => cardsSelectedFromTheTable.BuildedCards.Contains(b));
+                    
+                    foreach (var item in cardsSelectedFromTheTable.BuildedCards)
+                    {
+                        table.BuildedCards.RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank);
+                    }
+                    
+                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple = true;                                        
+                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().Owner = this.Name;
+                    cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCards
+                                                          .Add(selectedCard);
+
+                    foreach (Card card in cardsSelectedFromTheTable.Cards)
+                    {
+                        cardsSelectedFromTheTable.BuildedCards.FirstOrDefault()
+                                                 .BuildedCards.Add(card);
+                    }
+
+                    table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
+                    
+                    this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                                        
+                    ConsoleOutput.ShowTableCards(table);
+                 }
+                else 
                 {
                     ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
 
@@ -492,13 +538,11 @@ namespace Casino
 
                     ThrowTheCardToTheTable(selectedCard, table);                    
                 }                
-
             } else if (cardsSelectedFromTheTable.Cards != null)
             {
                 cardsSelectedFromTheTable.Cards.Add(selectedCard);
 
-                const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
-                const int ACE_MAX_VALUE = 14;
+                const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;                
 
                 // TODO: This if is too big
                 if ( !cardsSelectedFromTheTable.Cards.Any()
@@ -513,7 +557,7 @@ namespace Casino
                   % Convert.ToInt32(buildingRankCard) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
                   || (buildingRankCard == Rank.Ace 
                   && cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank))
-                  % ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER))
+                  % Constants.ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER))
                 {
                     ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
 
