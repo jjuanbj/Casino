@@ -6,29 +6,58 @@ namespace Casino
 {
     class Counter
     {
-        private int playerCapturedCards = 0;
+        private int userCards = 0;
 
-        private int computerCapturedCards = 0;
+        private int computerCards = 0;
 
         public void CountPoints(List<Player> players)
         {
             CountMostCards(players);
+            CountMostSpades(players);
         }
 
         private void CountMostCards(List<Player> players){
 
-            playerCapturedCards = players.Where(p => p.Name != Constants.Computer)
-                                         .FirstOrDefault().CapturedCards.Count;
+            userCards = players.Where(p => p.Name != Constants.Computer)
+                               .FirstOrDefault().CapturedCards
+                               .Count;
 
-            computerCapturedCards = players.Where(p => p.Name == Constants.Computer)
-                                           .FirstOrDefault().CapturedCards.Count;
+            computerCards = players.Where(p => p.Name == Constants.Computer)
+                                   .FirstOrDefault().CapturedCards
+                                   .Count;
 
             CalculatePoints(players, Points.MostCards);
         }
 
+        // TODO: test this
+        private void CountMostSpades(List<Player> players){
+
+            if (players.Where(p => p.Name != Constants.Computer)
+                       .FirstOrDefault().CapturedCards
+                       .Any(c => c.Suit == Suit.Spade))
+            {
+                userCards = players.Where(p => p.Name != Constants.Computer)
+                                   .FirstOrDefault().CapturedCards
+                                   .Where(c => c.Suit == Suit.Spade)
+                                   .Count();    
+            }
+            
+            if (players.Where(p => p.Name == Constants.Computer)
+                       .FirstOrDefault().CapturedCards
+                       .Any(c => c.Suit == Suit.Spade))
+            {
+                computerCards = players.Where(p => p.Name == Constants.Computer)
+                                       .FirstOrDefault().CapturedCards
+                                       .Where(c => c.Suit == Suit.Spade)
+                                       .Count();
+            }
+
+            CalculatePoints(players, Points.MostSpades);
+        }
+
         private void CalculatePoints(List<Player> players, Points points){
 
-            if (playerCapturedCards > computerCapturedCards)
+            if (userCards > computerCards)
             {
                 players.Where(p => p.Name != Constants.Computer)
                        .FirstOrDefault().Score
@@ -42,16 +71,8 @@ namespace Casino
                            .FirstOrDefault().Score
                            .Remove(points);
                 }
-
-                #region Test
-                Console.WriteLine("Test: User with most cards" + players.Where(p => p.Name != Constants.Computer)
-                                                                    .FirstOrDefault().Score
-                                                                    .FirstOrDefault()
-                                                                    .ToString());
-                #endregion
-
             }
-            else if (playerCapturedCards < computerCapturedCards)
+            else if (userCards < computerCards)
             {
                 players.Where(p => p.Name == Constants.Computer)
                        .FirstOrDefault().Score
@@ -65,16 +86,8 @@ namespace Casino
                            .FirstOrDefault().Score
                            .Remove(points);
                 }
-
-                #region Test
-                Console.WriteLine("Test: computer with most cards" + players.Where(p => p.Name == Constants.Computer)
-                                                     .FirstOrDefault().Score
-                                                     .FirstOrDefault()
-                                                     .ToString());
-                #endregion
-
             }
-            else if (playerCapturedCards == computerCapturedCards)
+            else if (userCards == computerCards)
             {
                 if (players.SelectMany(p => p.Score)
                            .Contains(points))
@@ -82,11 +95,6 @@ namespace Casino
                     players.FirstOrDefault().Score
                            .Remove(points);
                 }
-
-                #region Test
-                Console.WriteLine("Test: neither have most cards" + players.Any(p => p.Score
-                                                       .Contains(points)));
-                #endregion
             }
         }
     }
