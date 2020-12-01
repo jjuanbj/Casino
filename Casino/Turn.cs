@@ -24,6 +24,9 @@ namespace Casino
                         player.Play(game.Table);
 
                         game.Counter.CountPoints(game.Players);
+
+                        //Console.WriteLine(game.Players.SelectMany(p => p.Score == Points.MostCards));
+                        // TODO: count Most Cards and Most Spades here
                     }
                 }            
                 
