@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Casino
@@ -74,7 +74,7 @@ namespace Casino
             SelectOneCardByIndexNumber = " select one card by index number: ";
             YouSelected = "You selected: ";
             TypeValidCardNumber = "Type a valid card number.";
-            ChooseOneAction = "Choose one action: 1-Throw the card to the table, 2-Take a card from the table, 3-Combine cards, 4-Pair cards";
+            ChooseOneAction = "Choose one action: 1-Throw the card to the table, 2-Take cards from the table, 3-Combine cards, 4-Pair cards";
             ChooseYourLanguage = "Choose your language: 1-English, 2-Español";
             WhichCardWouldYouLikeToTakeFromTheTable = "Which card would you like to take from the table? ";
             CapturedCards = "Captured cards: ";
