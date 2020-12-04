@@ -248,8 +248,7 @@ namespace Casino
             const bool SELECTED_ACE_BUT_TAKEN_CARDS_FROM_TABLE_ARE_NOT_EQUAL_TO_FOURTEEN = false;
             const bool SELECTED_CARD_AND_BUILDED_CARDS_DO_NOT_HAVE_SAME_RANK = false;
             const bool SELECTED_ACE_AND_OTHER_CARDS_BUT_THOSE_CARDS_ARE_NOT_EQUAL_TO_FOURTEEN = false;
-            const bool SELECTED_ACE_BUT_BUILDED_CARDS_DO_NOT_HAVE_ACE_MAX_VALUE = false;
-            
+                        
             if (cardsSelectedFromTheTable.Cards == null && cardsSelectedFromTheTable.BuildedCards == null)
             {
                 takenCardsFromTableAreValid = USER_DID_NOT_TAKE_CARDS_FROM_TABLE;                    
@@ -282,13 +281,8 @@ namespace Casino
             {
                 if (cardsSelectedFromTheTable.BuildedCards.Any(b => b.BuildedCardsRank != selectedCard.Rank))
                 {
-                    takenCardsFromTableAreValid = SELECTED_CARD_AND_BUILDED_CARDS_DO_NOT_HAVE_SAME_RANK;    
-                    
-                } else if (selectedCard.Rank == Rank.Ace 
-                          && cardsSelectedFromTheTable.BuildedCards.Any(b => Convert.ToInt32(b.BuildedCardsRank) != Constants.ACE_MAX_VALUE))
-                {
-                    takenCardsFromTableAreValid = SELECTED_ACE_BUT_BUILDED_CARDS_DO_NOT_HAVE_ACE_MAX_VALUE;         
-                }                
+                    takenCardsFromTableAreValid = SELECTED_CARD_AND_BUILDED_CARDS_DO_NOT_HAVE_SAME_RANK;                        
+                }                                
             }
 
             return takenCardsFromTableAreValid;
@@ -296,7 +290,6 @@ namespace Casino
 
         private Rank SelectBuildingRank(Card selectedCard)
         {
-
             ConsoleOutput.SelectYourBuildingRank(this, selectedCard);
 
             string cardNumber = "";
