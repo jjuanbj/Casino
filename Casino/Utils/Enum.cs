@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Casino
 {
@@ -22,7 +23,10 @@ namespace Casino
 
     enum Points
     {
+        [Display(Name = "Most cards")]
         MostCards = 3,
+
+        [Display(Name = "Most spades")]
         MostSpades = 1,
         TenOfDiamonds = 2, 
         TwoOfSpades = 1,
