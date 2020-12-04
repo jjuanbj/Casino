@@ -13,13 +13,8 @@ namespace Casino
             string actionSelected = ChooseOneAction(table);
             Console.WriteLine("Action selected: " + actionSelected); // Test
 
-            Card selectedCard = SelectYourCard(actionSelected, table);
-            
-            // Console.Write("Computer cards: "); // Test
-            // Console.WriteLine(string.Format(": {0}.",
-            //                   string.Join(", ", this.Cards
-            //                         .Select(c => c.CardName)))); // Test
-            
+            Card selectedCard = SelectYourCard(actionSelected, table);            
+        
             Console.WriteLine("Selected card: " + selectedCard.CardName); // Test
 
             switch (actionSelected)
