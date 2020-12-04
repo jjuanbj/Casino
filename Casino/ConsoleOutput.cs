@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -79,6 +79,8 @@ namespace Casino
             Console.ResetColor();
         }
 
+        // TODO: merge this method with WhichCardWouldYouLikeToTakeFromTheTable
+        // Or unify cards displaying 
         public void ShowTableCards(Table table)
         {
             
@@ -92,46 +94,32 @@ namespace Casino
             
             if (table.BuildedCards != null)
             {
-                #region DRY Alert!!
-                if(table.BuildedCards.Any(b => b.IsMultiple == false))
-                {                    
-                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsMultiple == false))
+                if (table.BuildedCards != null)
+                {                                 
+                    foreach (var buildedCard in table.BuildedCards)
                     {
                         Console.ForegroundColor = ConsoleColor.Magenta;
                         Console.Write(GetSpeak.SingleBuild);
 
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine(string.Format(": {0}->", 
+                        Console.WriteLine(string.Format(" {0}->", 
                                           string.Join(", ", table.BuildedCards                                                
-                                                .Select(r => buildedCard.BuildedCardsRank)
+                                                .Select((r) => new { buildedCard.Owner })
+                                                .FirstOrDefault())) +
+                                          string.Format(" {0}->", 
+                                          string.Join(", ", table.BuildedCards                                                
+                                                .Select((r) => new { Build = buildedCard.IsMultiple == true ? GetSpeak.MultipleBuild : GetSpeak.SingleBuild})
+                                                .FirstOrDefault())) +
+                                          string.Format(" {0}->", 
+                                          string.Join(", ", table.BuildedCards                                                
+                                                .Select((r) => new { buildedCard.BuildedCardsRank})
                                                 .FirstOrDefault())) +
                                           string.Format(" {0}.", 
                                           string.Join(", ", table.BuildedCards
                                                 .Where(b => b.BuildedCardsRank == buildedCard.BuildedCardsRank)
                                                 .SelectMany(a => buildedCard.BuildedCards, (a, b) => b.CardName))));   
-                    }                    
-                }
-                
-                if(table.BuildedCards.Any(b => b.IsMultiple == true)) 
-                {
-                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsMultiple == true))
-                    {
-                        Console.ForegroundColor = ConsoleColor.Magenta;
-                        Console.Write(GetSpeak.MultipleBuild);
-
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine(string.Format(": {0}->", 
-                                          string.Join(", ", table.BuildedCards
-                                                .Where(b => buildedCard.IsMultiple == true)
-                                                .Select(r => buildedCard.BuildedCardsRank)
-                                                .FirstOrDefault())) +
-                                          string.Format(" {0}.", 
-                                          string.Join(", ", table.BuildedCards
-                                                .Where(b => b.BuildedCardsRank == buildedCard.BuildedCardsRank)
-                                                .SelectMany(a => buildedCard.BuildedCards, (a, b) => b.CardName))));   
-                    }
-                }              
-                #endregion  
+                    }                                 
+                }  
             }
             Console.ResetColor();
         }
@@ -206,7 +194,7 @@ namespace Casino
                 int buildedCardsSelected = Int32.Parse(cardRank) - table.Cards.Count;
                 
                 var buildedCardsRank = table.BuildedCards.ElementAt(buildedCardsSelected).BuildedCardsRank;
-                
+
                 Console.Write(buildedCardsRank + "-> ");
                 Console.WriteLine(string.Format(" {0}.", 
                                   string.Join(", ", table.BuildedCards
@@ -256,47 +244,30 @@ namespace Casino
                                     .Select((c) => new { Index = cardsOnTheTable++, c.CardName }))));
 
             if (table.BuildedCards != null)
-            {
-                #region DRY Alert!!
-                if(table.BuildedCards.Any(b => b.IsMultiple == false))
-                {                    
-                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsMultiple == false))
-                    {
-                        Console.ForegroundColor = ConsoleColor.Magenta;
-                        Console.Write(GetSpeak.SingleBuild);
-
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine(string.Format(": {0}->", 
-                                          string.Join(", ", table.BuildedCards                                                
-                                                .Select((r) => new { Index = cardsOnTheTable++, buildedCard.BuildedCardsRank})
-                                                .FirstOrDefault())) +
-                                          string.Format(" {0}.", 
-                                          string.Join(", ", table.BuildedCards
-                                                .Where(b => b.BuildedCardsRank == buildedCard.BuildedCardsRank)
-                                                .SelectMany(a => buildedCard.BuildedCards, (a, b) => b.CardName))));   
-                    }                    
-                }
-                
-                if(table.BuildedCards.Any(b => b.IsMultiple == true)) 
+            {                                 
+                foreach (var buildedCard in table.BuildedCards)
                 {
-                    foreach (var buildedCard in table.BuildedCards.Where(b => b.IsMultiple == true))
-                    {
-                        Console.ForegroundColor = ConsoleColor.Magenta;
-                        Console.Write(GetSpeak.MultipleBuild);
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write(GetSpeak.SingleBuild);
 
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine(string.Format(": {0}->", 
-                                          string.Join(", ", table.BuildedCards
-                                                .Where(b => buildedCard.IsMultiple == true)
-                                                .Select((r) => new { Index = cardsOnTheTable++, buildedCard.BuildedCardsRank})
-                                                .FirstOrDefault())) +
-                                          string.Format(" {0}.", 
-                                          string.Join(", ", table.BuildedCards
-                                                .Where(b => b.BuildedCardsRank == buildedCard.BuildedCardsRank)
-                                                .SelectMany(a => buildedCard.BuildedCards, (a, b) => b.CardName))));   
-                    }
-                }              
-                #endregion  
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine(string.Format(" {0}->", 
+                                      string.Join(", ", table.BuildedCards                                                
+                                            .Select((r) => new { Index = cardsOnTheTable++, buildedCard.Owner })
+                                            .FirstOrDefault())) +
+                                      string.Format(" {0}->", 
+                                      string.Join(", ", table.BuildedCards                                                
+                                            .Select((r) => new { Build = buildedCard.IsMultiple == true ? GetSpeak.MultipleBuild : GetSpeak.SingleBuild})
+                                            .FirstOrDefault())) +
+                                      string.Format(" {0}->", 
+                                      string.Join(", ", table.BuildedCards                                                
+                                            .Select((r) => new { buildedCard.BuildedCardsRank})
+                                            .FirstOrDefault())) +
+                                      string.Format(" {0}.", 
+                                      string.Join(", ", table.BuildedCards
+                                            .Where(b => b.BuildedCardsRank == buildedCard.BuildedCardsRank)
+                                            .SelectMany(a => buildedCard.BuildedCards, (a, b) => b.CardName))));   
+                }                                 
             }
 
             Console.ResetColor();
