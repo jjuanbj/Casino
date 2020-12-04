@@ -12,7 +12,7 @@ namespace Casino
 
         public void CountPoints(List<Player> players)
         {
-            CountMostCards(players);
+            CountMostCards(players);            
             CountMostSpades(players);
         }
 
@@ -26,10 +26,9 @@ namespace Casino
                                    .FirstOrDefault().CapturedCards
                                    .Count;
 
-            CalculatePoints(players, Points.MostCards);
+            CalculatePoints(players, Points.MostCards);            
         }
 
-        // TODO: test this
         private void CountMostSpades(List<Player> players){
 
             if (players.Where(p => p.Name != Constants.Computer)
@@ -62,7 +61,7 @@ namespace Casino
                 players.Where(p => p.Name != Constants.Computer)
                        .FirstOrDefault().Score
                        .Add(points);
-
+                
                 if (players.Where(p => p.Name == Constants.Computer)
                            .FirstOrDefault().Score
                            .Contains(points))
