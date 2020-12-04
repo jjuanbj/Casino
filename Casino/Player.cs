@@ -555,8 +555,11 @@ namespace Casino
                   || (cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) / Convert.ToInt32(buildingRankCard) != 1
                   &&  cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank))
                   % Convert.ToInt32(buildingRankCard) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
-                  || (buildingRankCard == Rank.Ace 
+                  || (buildingRankCard == Rank.Ace && selectedCard.Rank != Rank.Ace
                   && cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank))
+                  % Constants.ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
+                  || (buildingRankCard == Rank.Ace && selectedCard.Rank == Rank.Ace
+                  && cardsSelectedFromTheTable.Cards.Where(c => c.Rank != Rank.Ace).Sum(c => Convert.ToInt32(c.Rank))
                   % Constants.ACE_MAX_VALUE != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER))
                 {
                     ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
