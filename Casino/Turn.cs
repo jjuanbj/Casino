@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+
+using Casino.Extension;
 
 namespace Casino
 {
@@ -25,8 +29,14 @@ namespace Casino
 
                         game.Counter.CountPoints(game.Players);
 
-                        //Console.WriteLine(game.Players.SelectMany(p => p.Score == Points.MostCards));
-                        // TODO: count Most Cards and Most Spades here
+                        foreach (var item in player.Score)
+                        {
+                            Console.WriteLine(player.Name + " score: " + item.GetType()
+                                                                             .GetMember(item.ToString())
+                                                                             .First()
+                                                                             .GetCustomAttribute<DisplayAttribute>()
+                                                                             .GetName());
+                        }                        
                     }
                 }            
                 
