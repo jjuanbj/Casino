@@ -96,5 +96,25 @@ namespace Casino
                 }
             }
         }
+
+        private void CalculateValuableCards(List<Player> players)
+        {
+            foreach (var player in players)
+            {
+                foreach (var card in player.CapturedCards)
+                {
+                    if (card.Rank == Rank.Ace)
+                    {
+                        // TODO: add points to corresponding player
+                        // switch (card.Suit)
+                        // {
+                        //     case Suit.Club:
+                        //         player.Score.Add(Points.AceOfClubs);
+                        //     default:
+                        // }
+                    }
+                }
+            }
+        }
     }
 }
