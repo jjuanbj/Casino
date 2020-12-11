@@ -14,6 +14,7 @@ namespace Casino
         {
             CountMostCards(players);            
             CountMostSpades(players);
+            CalculateValuableCards(players);
         }
 
         private void CountMostCards(List<Player> players){
@@ -104,14 +105,29 @@ namespace Casino
                 foreach (var card in player.CapturedCards)
                 {
                     if (card.Rank == Rank.Ace)
+                    {                        
+                        switch (card.Suit)
+                        {
+                            case Suit.Club:
+                                player.Score.Add(Points.AceOfClubs);
+                                break;
+                            case Suit.Diamond:
+                                player.Score.Add(Points.AceOfDiamonds);
+                                break;
+                            case Suit.Heart:
+                                player.Score.Add(Points.AceOfHearts);
+                                break;
+                            case Suit.Spade:
+                                player.Score.Add(Points.AceOfSpades);
+                                break;
+                        }
+                    } else if (card.Rank == Rank.Two && card.Suit == Suit.Spade)
                     {
-                        // TODO: add points to corresponding player
-                        // switch (card.Suit)
-                        // {
-                        //     case Suit.Club:
-                        //         player.Score.Add(Points.AceOfClubs);
-                        //     default:
-                        // }
+                        player.Score.Add(Points.TwoOfSpades);
+
+                    } else if(card.Rank == Rank.Ten && card.Suit == Suit.Diamond)
+                    {
+                        player.Score.Add(Points.TenOfDiamonds);
                     }
                 }
             }
