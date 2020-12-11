@@ -132,5 +132,27 @@ namespace Casino
                 }
             }
         }
+
+        public void CalculateSweep(List<Player> players, Player player, Table table) 
+        {
+            if (!table.Cards.Any())
+            {
+                if (players.Where(p => p.Name != player.Name)
+                           .Any(s => s.Score
+                           .Contains(Points.Sweep)))
+                {                   
+                    players.RemoveAll(p => p.Score
+                           .Contains(Points.Sweep));
+                } else
+                {
+                    player.Score.Add(Points.Sweep);   
+                }                
+            }            
+        }
+
+        public void CountScore(List<Player> players) 
+        {
+            // TODO: count total score at turn end
+        }
     }
 }

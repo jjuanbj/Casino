@@ -24,15 +24,6 @@ namespace Casino.Extension
                     }
                 }
             }
-        }
-
-        public static string GetEnumDisplayName(this Enum enumValue)
-        {
-            return enumValue.GetType()?
-                            .GetMember(enumValue.ToString())?
-                            .First()?
-                            .GetCustomAttribute<DisplayAttribute>()?
-                            .Name;        
-        }        
+        }            
     }
 }

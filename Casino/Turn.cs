@@ -28,14 +28,15 @@ namespace Casino
                         player.Play(game.Table);
 
                         game.Counter.CountPoints(game.Players);
+                        game.Counter.CalculateSweep(game.Players, player, game.Table);
 
                         foreach (var item in player.Score)
                         {
-                            Console.WriteLine(player.Name + " score: " + item.GetType()
-                                                                             .GetMember(item.ToString())
-                                                                             .First()
-                                                                             .GetCustomAttribute<DisplayAttribute>()
-                                                                             .GetName());
+                            Console.WriteLine(player.Name + " points: " + item.GetType()
+                                                                              .GetMember(item.ToString())
+                                                                              .First()
+                                                                              .GetCustomAttribute<DisplayAttribute>()
+                                                                              .GetName());
                         }                        
                     }
                 }            
