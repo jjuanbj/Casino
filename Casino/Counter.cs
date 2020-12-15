@@ -11,7 +11,7 @@ namespace Casino
         private int computerCards = 0;
 
         // Why I need instantiate ConsoleOutput here?
-        public ConsoleOutput ConsoleOutput { get; set; }
+        public ConsoleOutput ConsoleOutput;
 
         public void CountPoints(List<Player> players)
         {
@@ -155,7 +155,15 @@ namespace Casino
 
         public void CountScore(List<Player> players) 
         {
-            ConsoleOutput.CountScore(players);
+            // Move to ConsoleOutput
+            foreach (var player in players)
+            {
+                Console.WriteLine("Player: " + player.Name + ", score: " + player.Score.Count);
+            }
+
+            // Need to fix when tie
+            Console.WriteLine("Winner: " + players.OrderByDescending(p => p.Score.Count).First().Name);
+            //ConsoleOutput.CountScore(players);
         }
     }
 }

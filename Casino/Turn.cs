@@ -38,7 +38,10 @@ namespace Casino
                                                                               .GetCustomAttribute<DisplayAttribute>()
                                                                               .GetName());
                         }
+                        
+
                     }
+                    game.Counter.CountScore(game.Players); // test
                 }            
                 
                 game.Deck.DealCardsPlayer(game.Players);
