@@ -59,6 +59,12 @@ namespace Casino
 
         public string IfYouDontHaveMoreMoveYouMustCaptureYourBuildingCard { get; set; }
 
+        public string Player { get; set; }
+
+        public string Score { get; set; }
+
+        public string Winner { get; set; }
+
         public Spanish()
         {
             WelcomeToCasinoGame = "¡Bienvenido al juego de casino!";
@@ -88,6 +94,9 @@ namespace Casino
             MultipleBuild = "Cartas emparejadas";
             YouCannotThrowCardsWhenYouAreABuildingCardOwner = "No puedes lanzar cartas cuando eres dueño de cartas combinadas o emparejadas";
             IfYouDontHaveMoreMoveYouMustCaptureYourBuildingCard = "Si no tienes más jugadas, debes capturar tu carta combinada";
+            Player = "Jugador: ";
+            Score = ", puntaje: ";
+            Winner = "Ganador: ";
         }
     }
 }

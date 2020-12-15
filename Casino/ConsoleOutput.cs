@@ -11,8 +11,7 @@ namespace Casino
         public ConsoleOutput(Speak speak)
         {            
             GetSpeak = speak;            
-        }
-        
+        }      
 
         public void WelcomeToCasinoGame()
         {
@@ -341,6 +340,16 @@ namespace Casino
             Console.WriteLine(GetSpeak.IfYouDontHaveMoreMoveYouMustCaptureYourBuildingCard);
 
             Console.ResetColor();
+        }
+
+        public void CountScore(List<Player> players){
+
+            foreach (var player in players)
+            {
+                Console.WriteLine(GetSpeak.Player + player.Name + GetSpeak.Score + player.Score.Count);
+            }
+
+            Console.WriteLine(GetSpeak.Winner + players.OrderByDescending(p => p.Score).First().Name);
         }
     }
 }

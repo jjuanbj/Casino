@@ -59,5 +59,11 @@ namespace Casino
         public string YouCannotThrowCardsWhenYouAreABuildingCardOwner { get; set; }
 
         public string IfYouDontHaveMoreMoveYouMustCaptureYourBuildingCard { get; set; }
+
+        public string Player { get; set; }
+
+        public string Score { get; set; }
+
+        public string Winner { get; set; }
     }
 }

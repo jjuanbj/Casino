@@ -59,6 +59,12 @@ namespace Casino
 
         public string IfYouDontHaveMoreMoveYouMustCaptureYourBuildingCard { get; set; }
 
+        public string Player { get; set; }
+
+        public string Score { get; set; }
+
+        public string Winner { get; set; }
+
         public English()
         {
             WelcomeToCasinoGame = "Welcome to casino game!";
@@ -88,6 +94,9 @@ namespace Casino
             MultipleBuild = "Multiple build";
             YouCannotThrowCardsWhenYouAreABuildingCardOwner = "You cannot throw cards when you are a building card owner";
             IfYouDontHaveMoreMoveYouMustCaptureYourBuildingCard = "If you dont have more move, you must capture your building card";
+            Player = "Player: ";
+            Score = ", score: ";
+            Winner = "Winner: ";
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Casino
                 player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
                 
                 #region Test
-                   player.Cards.Add(new Card("Queen of Spade"));
+                //   player.Cards.Add(new Card("Queen of Spade"));
                 //  player.Cards.Add(new Card("Ace of Diamond"));
                 #endregion
 
@@ -60,17 +60,18 @@ namespace Casino
 
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
 
-                player.Score.Add(Points.Sweep);
+               // player.Score.Add(Points.Sweep);
             }
             #endregion
         }
 
         public void DealCardsTable(Table table)
         {
-            //table.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();            
-            table.Cards = DeckCards.Take(0).ToList();
+            table.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
 
             // #region Test
+
+            //table.Cards = DeckCards.Take(0).ToList();
 
             // List<Card> listCards = new List<Card>();
             // listCards.Add(new Card("Three of Club"));
@@ -109,7 +110,7 @@ namespace Casino
 
             //   table.BuildedCards = listBuildedCards;
 
-            table.Cards.Add(new Card("Queen of Club"));
+//            table.Cards.Add(new Card("Queen of Club"));
             // table.Cards.Add(new Card("Two of Spade"));
             // table.Cards.Add(new Card("Queen of Spade"));
             //   table.Cards.Add(new Card("Ace of Diamond"));

@@ -10,6 +10,9 @@ namespace Casino
 
         private int computerCards = 0;
 
+        // Why I need instantiate ConsoleOutput here?
+        public ConsoleOutput ConsoleOutput { get; set; }
+
         public void CountPoints(List<Player> players)
         {
             CountMostCards(players);            
@@ -152,7 +155,7 @@ namespace Casino
 
         public void CountScore(List<Player> players) 
         {
-            // TODO: count total score at turn end
+            ConsoleOutput.CountScore(players);
         }
     }
 }
