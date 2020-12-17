@@ -16,7 +16,7 @@ namespace Casino
         {
             game.Deck.DealCardsTable(game.Table);
             game.ConsoleOutput.ShowTableCards(game.Table);
-              
+            
             while (game.Deck.DeckCards.Any())
             {                
                 while (game.Players.SelectMany(p => p.Cards).Any())

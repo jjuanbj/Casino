@@ -342,14 +342,12 @@ namespace Casino
             Console.ResetColor();
         }
 
-        public void CountScore(List<Player> players){
+        public void CountScore(Player player){
+            
+            Console.WriteLine(GetSpeak.Player + player.Name + GetSpeak.Score + player.Score.Count);
+            
 
-            foreach (var player in players)
-            {
-                Console.WriteLine(GetSpeak.Player + player.Name + GetSpeak.Score + player.Score.Count);
-            }
-
-            Console.WriteLine(GetSpeak.Winner + players.OrderByDescending(p => p.Score).First().Name);
+            //Console.WriteLine(GetSpeak.Winner + players.OrderByDescending(p => p.Score).First().Name);
         }
     }
 }
