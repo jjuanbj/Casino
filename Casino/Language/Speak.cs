@@ -65,5 +65,7 @@ namespace Casino
         public string Score { get; set; }
 
         public string Winner { get; set; }
+
+        public string Points { get; set; }
     }
 }

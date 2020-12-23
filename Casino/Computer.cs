@@ -103,55 +103,43 @@ namespace Casino
             && (table.BuildedCards != null 
             &&  table.BuildedCards.Any(x => this.Cards.Any(y => y.Rank == x.BuildedCardsRank))))
             {
-                capturedCards = table.Cards.Where(c => c.Rank == selectedCard.Rank).ToList();    
+                capturedCards = table.Cards.Where(c => c.Rank == selectedCard.Rank).ToList();
 
-                foreach (Card card in capturedCards)
-                {
-                    table.Cards.RemoveAll(c => c.CardName == card.CardName);
-                }
+                capturedCards.ForEach(card => table.Cards
+                             .RemoveAll(c => c.CardName == card.CardName));
 
                 List<Card> capturedBuildedCards = new List<Card>();
                 capturedBuildedCards = table.BuildedCards.Where(c => c.BuildedCardsRank == selectedCard.Rank)
                                                          .SelectMany(b => b.BuildedCards)
                                                          .ToList();
 
-                foreach (Card card in capturedCards)
-                {   
-                    table.BuildedCards.Where(c => c.BuildedCardsRank == selectedCard.Rank)
-                                      .Select(b => b.BuildedCards
-                                      .RemoveAll(d => d.CardName == card.CardName));
-                }
+                capturedCards.ForEach(card => table.BuildedCards
+                             .Where(c => c.BuildedCardsRank == selectedCard.Rank)
+                             .Select(b => b.BuildedCards
+                             .RemoveAll(d => d.CardName == card.CardName)));
 
                 table.BuildedCards.Remove(table.BuildedCards
                                   .Where(c => c.BuildedCardsRank == selectedCard.Rank)
                                   .FirstOrDefault());
 
-                foreach (Card card in capturedBuildedCards)
-                {
-                    capturedCards.Add(card);
-                }
-                
+                capturedBuildedCards.ForEach(card => capturedCards.Add(card));
+
             } else if (table.Cards.Where(c => c.Rank == selectedCard.Rank).Any())
             {
-                capturedCards = table.Cards.Where(c => c.Rank == selectedCard.Rank).ToList();    
+                capturedCards = table.Cards.Where(c => c.Rank == selectedCard.Rank).ToList();
 
-                foreach (Card card in capturedCards)
-                {
-                    table.Cards.RemoveAll(c => c.CardName == card.CardName);
-                }
-
+                capturedCards.ForEach(card => table.Cards
+                             .RemoveAll(c => c.CardName == card.CardName));
             } else
             {
                 capturedCards = table.BuildedCards.Where(c => c.BuildedCardsRank == selectedCard.Rank)
                                                   .SelectMany(b => b.BuildedCards)
                                                   .ToList();
 
-                foreach (Card card in capturedCards)
-                {
-                    table.BuildedCards.Where(c => c.BuildedCardsRank == selectedCard.Rank)
-                                      .Select(b => b.BuildedCards
-                                      .RemoveAll(c => c.CardName == card.CardName));                                                                      
-                }
+                capturedCards.ForEach(card => table.BuildedCards
+                             .Where(c => c.BuildedCardsRank == selectedCard.Rank)
+                             .Select(b => b.BuildedCards
+                             .RemoveAll(c => c.CardName == card.CardName)));
 
                 table.BuildedCards.Remove(table.BuildedCards
                                   .Where(c => c.BuildedCardsRank == selectedCard.Rank)

@@ -31,8 +31,11 @@ namespace Casino
             for (int i = 0; i < (int)General.TotalCards; i++)
             {
                 Random random = new Random();
+             
                 int index = random.Next(DeckCards.Count);
+             
                 shuffledCards.Add(DeckCards[index]);
+             
                 DeckCards.RemoveAt(index);
             }
 

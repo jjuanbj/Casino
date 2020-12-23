@@ -30,23 +30,15 @@ namespace Casino
                         game.Counter.CountPoints(game.Players);
                         game.Counter.CalculateSweep(game.Players, player, game.Table);
 
-                        foreach (var item in player.Score)
-                        {
-                            Console.WriteLine(player.Name + " points: " + item.GetType()
-                                                                              .GetMember(item.ToString())
-                                                                              .First()
-                                                                              .GetCustomAttribute<DisplayAttribute>()
-                                                                              .GetName());
-                        }
+                        player.Score.ForEach(points => game.ConsoleOutput.ShowPlayerPoints(player, points));
                     }
-                    game.Counter.CountScore(game.Players); // test
-                    game.Counter.DeclareWinner(game);
+                    game.Counter.CountScore(game.Players);
                 }            
                 
                 game.Deck.DealCardsPlayer(game.Players);
             }
 
-            game.Counter.CountScore(game.Players);
+            game.Counter.DeclareWinner(game);
         }        
     }
 }

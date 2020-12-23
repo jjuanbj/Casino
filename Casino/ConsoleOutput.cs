@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace Casino
 {
@@ -350,6 +352,15 @@ namespace Casino
         public void DeclareWinner(List<Player> players)
         {
             Console.WriteLine(GetSpeak.Winner + players.OrderByDescending(p => p.Score.Count).First().Name);
+        }
+
+        public void ShowPlayerPoints(Player player, Points points)
+        {
+            Console.WriteLine(player.Name + GetSpeak.Points + points.GetType()
+                                                                    .GetMember(points.ToString())
+                                                                    .First()
+                                                                    .GetCustomAttribute<DisplayAttribute>()
+                                                                    .GetName());
         }
     }
 }

@@ -384,11 +384,8 @@ namespace Casino
             && cardsSelectedFromTheTable.BuildedCards.Sum(r => Convert.ToInt32(r.BuildedCardsRank))
             + Convert.ToInt32(selectedCard.Rank) == Convert.ToInt32(Constants.ACE_MAX_VALUE)))
             {
-                foreach (var item in cardsSelectedFromTheTable.BuildedCards)
-                {
-                    table.BuildedCards.RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank);
-                }
-                                                    
+                cardsSelectedFromTheTable.BuildedCards.ForEach(item => table.BuildedCards
+                                                      .RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank));                         
                 cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple = false;
                 cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank = buildingRankCard;                    
                 cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().Owner = this.Name;
@@ -421,11 +418,8 @@ namespace Casino
                 &&  selectedCard.Rank == buildingRankCard
                 &&  cardsSelectedFromTheTable.Cards == null)
                 {
-                    foreach (var item in cardsSelectedFromTheTable.BuildedCards)
-                    {
-                        table.BuildedCards.RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank);
-                    }
-                                                      
+                    cardsSelectedFromTheTable.BuildedCards.ForEach(item => table.BuildedCards
+                                                          .RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank));              
                     cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple = true;
                     cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCardsRank = buildingRankCard;                    
                     cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().Owner = this.Name;
@@ -443,22 +437,18 @@ namespace Casino
                         && cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) + Convert.ToInt32(selectedCard.Rank) == Convert.ToInt32(buildingRankCard))
                 {
                     table.BuildedCards.RemoveAll(b => cardsSelectedFromTheTable.BuildedCards.Contains(b));
-                    
-                    foreach (var item in cardsSelectedFromTheTable.BuildedCards)
-                    {
-                        table.BuildedCards.RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank);
-                    }
+
+                    cardsSelectedFromTheTable.BuildedCards.ForEach(item => table.BuildedCards
+                                                          .RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank));
                     
                     cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple = true;                                        
                     cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().Owner = this.Name;
                     cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCards
                                                           .Add(selectedCard);
 
-                    foreach (Card card in cardsSelectedFromTheTable.Cards)
-                    {
-                        cardsSelectedFromTheTable.BuildedCards.FirstOrDefault()
-                                                 .BuildedCards.Add(card);
-                    }
+                    cardsSelectedFromTheTable.Cards.ForEach(card => cardsSelectedFromTheTable.BuildedCards
+                                                   .FirstOrDefault().BuildedCards
+                                                   .Add(card));
 
                     table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
                     
@@ -471,11 +461,9 @@ namespace Casino
                  && cardsSelectedFromTheTable.Cards == null
                  && cardsSelectedFromTheTable.BuildedCards.All(b => b.BuildedCardsRank != Rank.Ace)
                  && buildingRankCard != Rank.Ace)
-                {                    
-                    foreach (var item in cardsSelectedFromTheTable.BuildedCards)
-                    {
-                        table.BuildedCards.RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank);    
-                    }
+                {
+                    cardsSelectedFromTheTable.BuildedCards.ForEach(item => table.BuildedCards
+                                                          .RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank));
                     
                     BuildedCard newBuildedCard = new BuildedCard();
                     newBuildedCard.BuildedCards = new List<Card>();
@@ -484,7 +472,7 @@ namespace Casino
                     {
                         newBuildedCard.BuildedCards.AddRange(card);
                     }
-
+                    
                     newBuildedCard.IsMultiple = true;
                     newBuildedCard.BuildedCardsRank = buildingRankCard;
                     newBuildedCard.BuildedCards.Add(selectedCard);
@@ -503,22 +491,17 @@ namespace Casino
                  && buildingRankCard == Rank.Ace)
                  {
                     table.BuildedCards.RemoveAll(b => cardsSelectedFromTheTable.BuildedCards.Contains(b));
-                    
-                    foreach (var item in cardsSelectedFromTheTable.BuildedCards)
-                    {
-                        table.BuildedCards.RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank);
-                    }
-                    
+
+                    cardsSelectedFromTheTable.BuildedCards.ForEach(item => table.BuildedCards
+                                                          .RemoveAll(b => b.BuildedCardsRank == item.BuildedCardsRank));
                     cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().IsMultiple = true;                                        
                     cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().Owner = this.Name;
                     cardsSelectedFromTheTable.BuildedCards.FirstOrDefault().BuildedCards
                                                           .Add(selectedCard);
-
-                    foreach (Card card in cardsSelectedFromTheTable.Cards)
-                    {
-                        cardsSelectedFromTheTable.BuildedCards.FirstOrDefault()
-                                                 .BuildedCards.Add(card);
-                    }
+                
+                    cardsSelectedFromTheTable.Cards.ForEach(card => cardsSelectedFromTheTable.BuildedCards
+                                                   .FirstOrDefault().BuildedCards
+                                                   .Add(card));
 
                     table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
                     
@@ -568,10 +551,8 @@ namespace Casino
                 {                    
                     Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
 
-                    foreach (var item in cardsSelectedFromTheTable.Cards)
-                    {
-                        table.Cards.RemoveAll(b => b.Rank == item.Rank);
-                    }
+                    cardsSelectedFromTheTable.Cards.ForEach(item => table.Cards
+                                                   .RemoveAll(b => b.Rank == item.Rank));
 
                     BuildedCard buildedCard = new BuildedCard();
                     buildedCard.BuildedCards = cardsSelectedFromTheTable.Cards;

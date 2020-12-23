@@ -65,6 +65,8 @@ namespace Casino
 
         public string Winner { get; set; }
 
+        public string Points { get; set; }
+
         public Spanish()
         {
             WelcomeToCasinoGame = "¡Bienvenido al juego de casino!";
@@ -97,6 +99,7 @@ namespace Casino
             Player = "Jugador: ";
             Score = ", puntaje: ";
             Winner = "Ganador: ";
+            Points = " puntos: ";
         }
     }
 }
