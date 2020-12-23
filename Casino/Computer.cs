@@ -56,11 +56,34 @@ namespace Casino
         }
 
         private Card SelectYourCard(String actionSelected, Table table)
-        {            
+        {
+            // Test this 
             Card selectedCard = null;            
 
             if (actionSelected == Keyboard.ONE)
-            {                
+            {
+                List<Card> computerCards = this.Cards.ToList();
+                List<Card> valuableComputerCards = new List<Card>();
+
+                foreach (var card in computerCards)
+                {
+                    switch (card.Rank)
+                    {
+                        case Rank.Ace:
+                            valuableComputerCards.AddRange(computerCards.Where(c => c.Rank == Rank.Ace));
+                            computerCards.RemoveAll(c => c.Rank == Rank.Ace);                            
+                            break;
+                        case Rank.Ten when card.Suit == Suit.Diamond:
+                            valuableComputerCards.Add(card);
+                            computerCards.RemoveAll(c => c.Rank == Rank.Ten && c.Suit == Suit.Diamond);
+                            break;
+                        case Rank.Two when card.Suit == Suit.Spade:
+                            valuableComputerCards.Add(card);
+                            computerCards.RemoveAll(c => c.Rank == Rank.Two && c.Suit == Suit.Spade);
+                            break;                        
+                    }
+                }
+                
                 selectedCard = this.Cards.OrderBy(c => c.Rank).FirstOrDefault();                
 
             } else if (actionSelected == Keyboard.TWO)
