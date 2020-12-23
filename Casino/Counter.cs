@@ -152,17 +152,15 @@ namespace Casino
 
         public void CountScore(List<Player> players) 
         {
-            // Move to ConsoleOutput
-            foreach (var player in players)
+            players.ForEach(p => p.GetConsoleOutput.CountScore(p));
+        }
+
+        public void DeclareWinner(Game game)
+        {
+            if (game.Players.Select(p => p.Score.Count).ToList().Distinct().Skip(1).Any())
             {
-                player.GetConsoleOutput.CountScore(player);
-
-                //Console.WriteLine("Player: " + player.Name + ", score: " + player.Score.Count);
+                game.ConsoleOutput.DeclareWinner(game.Players);
             }
-
-            // Need to fix when tie
-            Console.WriteLine("Winner: " + players.OrderByDescending(p => p.Score.Count).First().Name);
-            //ConsoleOutput.CountScore(players);
         }
     }
 }
