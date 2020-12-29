@@ -345,13 +345,13 @@ namespace Casino
         }
 
         public void CountScore(Player player){
-            
-            Console.WriteLine(GetSpeak.Player + player.Name + GetSpeak.Score + player.Score.Count);
+            // Maybe I dont need this player.Score.Sum(x => Convert.ToInt32(x))
+            Console.WriteLine(GetSpeak.Player + player.Name + GetSpeak.Score + player.Score.Sum(x => Convert.ToInt32(x)) + player.Points.Sum(x => Convert.ToInt32(x)));
         }
 
         public void DeclareWinner(List<Player> players)
         {
-            Console.WriteLine(GetSpeak.Winner + players.OrderByDescending(p => p.Score.Count).First().Name);
+            Console.WriteLine(GetSpeak.Winner + players.OrderByDescending(p => p.Points.Count).First().Name);
         }
 
         public void ShowPlayerPoints(Player player, Points points)
