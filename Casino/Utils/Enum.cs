@@ -6,6 +6,7 @@ namespace Casino
 {
     enum Suit
     {
+        // TODO: change displaying to: ♥, ♠, ♦, ♣
         Heart, Spade, Diamond, Club
     }
 

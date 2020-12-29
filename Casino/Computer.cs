@@ -56,16 +56,15 @@ namespace Casino
         }
 
         private Card SelectYourCard(String actionSelected, Table table)
-        {
-            // Test this 
+        { 
             Card selectedCard = null;            
 
             if (actionSelected == Keyboard.ONE)
             {
                 List<Card> computerCards = this.Cards.ToList();
                 List<Card> valuableComputerCards = new List<Card>();
-
-                foreach (var card in computerCards)
+                
+                foreach (var card in this.Cards)
                 {
                     switch (card.Rank)
                     {
@@ -83,8 +82,9 @@ namespace Casino
                             break;                        
                     }
                 }
-                
-                selectedCard = this.Cards.OrderBy(c => c.Rank).FirstOrDefault();                
+
+                selectedCard = computerCards.Any() ? computerCards.OrderBy(c => c.Rank).FirstOrDefault()
+                                                   : valuableComputerCards.OrderBy(c => c.Rank).FirstOrDefault();                
 
             } else if (actionSelected == Keyboard.TWO)
             {   

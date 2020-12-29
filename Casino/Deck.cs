@@ -63,7 +63,9 @@ namespace Casino
 
                 DeckCards.RemoveRange((int)General.Zero, (int)General.NumberCardsToDeal);
 
-               // player.Score.Add(Points.Sweep);
+                player.Cards.Add(new Card("Ace of Diamond"));
+                player.Cards.Add(new Card("Ten of Diamond"));
+                player.Cards.Add(new Card("Two of Spade"));
             }
             #endregion
         }

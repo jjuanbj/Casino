@@ -521,9 +521,10 @@ namespace Casino
             {
                 cardsSelectedFromTheTable.Cards.Add(selectedCard);
 
-                const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;                
+                const int THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER = 0;
 
                 // TODO: This if is too big
+                // Maybe I can create a class to validate this events 
                 if ( !cardsSelectedFromTheTable.Cards.Any()
                   || (cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) / Convert.ToInt32(buildingRankCard) == 1 
                   &&  cardsSelectedFromTheTable.Cards.All(c => c.Rank != buildingRankCard))
