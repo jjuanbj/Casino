@@ -30,7 +30,7 @@ namespace Casino
                         game.Counter.CountPoints(game.Players);
                         game.Counter.CalculateSweep(game.Players, player, game.Table);
 
-                        player.Points.ForEach(points => game.ConsoleOutput.ShowPlayerPoints(player, points));
+                        player.Score.ForEach(points => game.ConsoleOutput.ShowPlayerPoints(player, points));
                     }
                     game.Counter.CountScore(game.Players);
                 }            

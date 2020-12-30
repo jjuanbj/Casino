@@ -13,17 +13,14 @@ namespace Casino
 
         public virtual ConsoleOutput GetConsoleOutput => ConsoleOutput;
         
-        public List<Points> Points { get; set; }
-
-        public List<int> Score { get; set; }
+        public List<Points> Score { get; set; }
         
         public Player(string name, ConsoleOutput consoleOutput)
         {
             Name = name;
             ConsoleOutput = consoleOutput;
             CapturedCards = new List<Card>();
-            Points = new List<Points>();
-            Score = new List<int>();
+            Score = new List<Points>();            
         }
 
         public virtual void Play(Table table)

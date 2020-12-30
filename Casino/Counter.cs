@@ -58,63 +58,44 @@ namespace Casino
         private void CalculatePoints(List<Player> players, Points points){
 
             if (userCards > computerCards && !players.Where(p => p.Name != Constants.Computer)
-                                                     .FirstOrDefault().Points
+                                                     .FirstOrDefault().Score
                                                      .Contains(points))
             {
                 players.Where(p => p.Name != Constants.Computer)
-                       .FirstOrDefault().Points
+                       .FirstOrDefault().Score
                        .Add(points);
 
-                players.Where(p => p.Name != Constants.Computer)
-                       .FirstOrDefault().Score
-                       .Add((int)points);
-
                 if (players.Where(p => p.Name == Constants.Computer)
-                           .FirstOrDefault().Points
+                           .FirstOrDefault().Score
                            .Contains(points))
                 {
                     players.Where(p => p.Name == Constants.Computer)
-                           .FirstOrDefault().Points
-                           .Remove(points);
-
-                    players.Where(p => p.Name == Constants.Computer)
                            .FirstOrDefault().Score
-                           .Remove((int)points);
+                           .Remove(points);
                 }
             }
             else if (userCards < computerCards && !players.Where(p => p.Name == Constants.Computer)
-                                                          .FirstOrDefault().Points
+                                                          .FirstOrDefault().Score
                                                           .Contains(points))
             {
                 players.Where(p => p.Name == Constants.Computer)
-                       .FirstOrDefault().Points
+                       .FirstOrDefault().Score
                        .Add(points);
 
-                players.Where(p => p.Name == Constants.Computer)
-                       .FirstOrDefault().Score
-                       .Add((int)points);
-
                 if (players.Where(p => p.Name != Constants.Computer)
-                           .FirstOrDefault().Points
+                           .FirstOrDefault().Score
                            .Contains(points))
                 {
                     players.Where(p => p.Name != Constants.Computer)
-                           .FirstOrDefault().Points
-                           .Remove(points);
-
-                    players.Where(p => p.Name != Constants.Computer)
                            .FirstOrDefault().Score
-                           .Remove((int)points);
+                           .Remove(points);
                 }
             }
-            else if (userCards == computerCards && players.SelectMany(p => p.Points)
+            else if (userCards == computerCards && players.SelectMany(p => p.Score)
                                                           .Contains(points))
             {
-                players.FirstOrDefault().Points
-                       .Remove(points);
-
                 players.FirstOrDefault().Score
-                       .Remove((int)points);             
+                       .Remove(points);
             }
         }
 
@@ -129,33 +110,34 @@ namespace Casino
                         switch (card.Suit)
                         {
                             case Suit.Club:
-                                if (!player.Points.Contains(Points.AceOfClubs))                                
-                                     player.Points.Add(Points.AceOfClubs);                                                                    
+                                if (!player.Score.Contains(Points.AceOfClubs))                                
+                                     player.Score.Add(Points.AceOfClubs);                                                                    
                                 break;
                             case Suit.Diamond:
-                                if (!player.Points.Contains(Points.AceOfDiamonds))
-                                     player.Points.Add(Points.AceOfDiamonds);
+                                if (!player.Score.Contains(Points.AceOfDiamonds))
+                                     player.Score.Add(Points.AceOfDiamonds);
                                 break;
                             case Suit.Heart:
-                                if (!player.Points.Contains(Points.AceOfHearts))
-                                     player.Points.Add(Points.AceOfHearts);
+                                if (!player.Score.Contains(Points.AceOfHearts))
+                                     player.Score.Add(Points.AceOfHearts);
                                 break;
                             case Suit.Spade:
-                                if (!player.Points.Contains(Points.AceOfSpades))
-                                     player.Points.Add(Points.AceOfSpades);
+                                if (!player.Score.Contains(Points.AceOfSpades))
+                                     player.Score.Add(Points.AceOfSpades);
                                 break;
                         }
                     } else if (card.Rank == Rank.Two
-                            && card.Suit == Suit.Spade
-                            && !player.Points.Contains(Points.TwoOfSpades)) 
+                            && card.Suit == Suit.Spade)
                     {
-                        player.Points.Add(Points.TwoOfSpades);
+                        Console.WriteLine("Test");
+                        if (!player.Score.Contains(Points.TwoOfSpades))                        
+                             player.Score.Add(Points.TwoOfSpades);                            
 
                     } else if(card.Rank == Rank.Ten
-                           && card.Suit == Suit.Diamond
-                           && !player.Points.Contains(Points.TenOfDiamonds))
+                           && card.Suit == Suit.Diamond)
                     {
-                        player.Points.Add(Points.TenOfDiamonds);
+                        if (!player.Score.Contains(Points.TenOfDiamonds))                        
+                             player.Score.Add(Points.TenOfDiamonds);                                                    
                     }
                 }
             }
@@ -166,14 +148,14 @@ namespace Casino
             if (!table.Cards.Any())
             {
                 if (players.Where(p => p.Name != player.Name)
-                           .Any(s => s.Points
+                           .Any(s => s.Score
                            .Contains(Points.Sweep)))
                 {                   
-                    players.RemoveAll(p => p.Points
+                    players.RemoveAll(p => p.Score
                            .Contains(Points.Sweep));
                 } else
                 {
-                    player.Points.Add(Points.Sweep);   
+                    player.Score.Add(Points.Sweep);   
                 }                
             }            
         }
@@ -185,7 +167,7 @@ namespace Casino
 
         public void DeclareWinner(Game game)
         {
-            if (game.Players.Select(p => p.Points.Count).ToList().Distinct().Skip(1).Any())
+            if (game.Players.Select(p => p.Score.Count).ToList().Distinct().Skip(1).Any())
             {
                 game.ConsoleOutput.DeclareWinner(game.Players);
             }

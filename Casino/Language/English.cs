@@ -67,6 +67,24 @@ namespace Casino
 
         public string Points { get; set; }
 
+        public string MostCards { get; set; }
+
+        public string MostSpades { get; set; }
+
+        public string TenDiamonds { get; set; }
+
+        public string TwoSpades { get; set; }
+
+        public string AceDiamonds { get; set; }
+
+        public string AceSpades { get; set; }
+
+        public string AceHearts { get; set; }
+
+        public string AceClub { get; set; }
+
+        public string Sweep { get; set; }
+
         public English()
         {
             WelcomeToCasinoGame = "Welcome to casino game!";
@@ -100,6 +118,15 @@ namespace Casino
             Score = ", score: ";
             Winner = "Winner: ";
             Points = " points: ";
+            MostCards = "Most cards";
+            MostSpades = "Most spades";
+            TenDiamonds = "Ten of diamonds";
+            TwoSpades = "Two of spades";
+            AceDiamonds = "Ace of diamonds";
+            AceSpades = "Ace of spades";
+            AceHearts = "Ace of hearts";
+            AceClub = "Ace of clubs";
+            Sweep = "Sweep";
         }
     }
 }
