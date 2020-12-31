@@ -357,13 +357,27 @@ namespace Casino
             Console.WriteLine(GetSpeak.Winner + players.OrderByDescending(p => p.Score.Count).First().Name);
         }
 
-        public void ShowPlayerPoints(Player player, Points points)
+        public void ShowPlayerPoints(Player player)
         {
-            Console.WriteLine(player.Name + GetSpeak.Points + points.GetType()
-                                                                    .GetMember(points.ToString())
-                                                                    .First()
-                                                                    .GetCustomAttribute<DisplayAttribute>()
-                                                                    .GetName());
+            foreach (var item in player.Score)
+            {
+                string test = item.ToString();
+                Console.WriteLine("Test name: " + test);
+
+                foreach (var item2 in GetSpeak.GetType().GetProperties().Select(p => p.Name).ToList())
+                {
+                    //Console.WriteLine("item name: " + item);
+                    //Console.WriteLine("item2 name: " + item2);
+
+                    if (test.Equals(item2))
+                    {
+                        Console.WriteLine("Test!");
+                        Console.WriteLine(player.Name + GetSpeak.Points + GetSpeak.GetType().GetProperty(item2).GetValue(GetSpeak));
+                    }
+                }
+            }
+
+            
         }
     }
 }

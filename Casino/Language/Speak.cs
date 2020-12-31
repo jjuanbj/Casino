@@ -67,5 +67,23 @@ namespace Casino
         public string Winner { get; set; }
 
         public string Points { get; set; }
+
+        public string MostCards { get; set; }
+
+        public string MostSpades { get; set; }
+
+        public string TenOfDiamonds { get; set; }
+
+        public string TwoOfSpades { get; set; }
+
+        public string AceOfDiamonds { get; set; }
+
+        public string AceOfSpades { get; set; }
+
+        public string AceOfHearts { get; set; }
+
+        public string AceOfClub { get; set; }
+
+        public string Sweep { get; set; }
     }
 }

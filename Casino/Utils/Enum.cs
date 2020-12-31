@@ -23,32 +23,11 @@ namespace Casino
     }
 
     enum Points
-    {
-        [Display(Name = "Most cards")]
-        MostCards = 3,
-   
-        [Display(Name = "Most spades")]
-        MostSpades = 1,
+    {        
+        MostCards = 3, MostSpades = 1, TenOfDiamonds = 2, TwoOfSpades = 1,
 
-        [Display(Name = "Ten of diamonds")]
-        TenOfDiamonds = 2, 
+        AceOfDiamonds = 1, AceOfSpades = 1, AceOfHearts = 1, AceOfClubs = 1,
 
-        [Display(Name = "Two of spades")]
-        TwoOfSpades = 1,
-
-        [Display(Name = "Ace of diamonds")] 
-        AceOfDiamonds = 1,
-
-        [Display(Name = "Ace of spades")]
-        AceOfSpades = 1,
-
-        [Display(Name = "Ace of hearts")]
-        AceOfHearts = 1,
-
-        [Display(Name = "Ace of clubs")]
-        AceOfClubs = 1,
-
-        [Display(Name = "Sweep")]
         Sweep = 1
     }
 }
