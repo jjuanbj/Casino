@@ -129,7 +129,6 @@ namespace Casino
                     } else if (card.Rank == Rank.Two
                             && card.Suit == Suit.Spade)
                     {
-                        Console.WriteLine("Test");
                         if (!player.Score.Contains(Points.TwoOfSpades))                        
                              player.Score.Add(Points.TwoOfSpades);                            
 

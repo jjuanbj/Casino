@@ -359,25 +359,22 @@ namespace Casino
 
         public void ShowPlayerPoints(Player player)
         {
-            foreach (var item in player.Score)
+            // TODO: avoid nested foreach
+            foreach (var points in player.Score)
             {
-                string test = item.ToString();
-                Console.WriteLine("Test name: " + test);
-
-                foreach (var item2 in GetSpeak.GetType().GetProperties().Select(p => p.Name).ToList())
-                {
-                    //Console.WriteLine("item name: " + item);
-                    //Console.WriteLine("item2 name: " + item2);
-
-                    if (test.Equals(item2))
+                foreach (var property in GetSpeak.GetType()
+                                                 .GetProperties()
+                                                 .Select(p => p.Name)
+                                                 .ToList())
+                {             
+                    if (points.ToString().Equals(property))
                     {
-                        Console.WriteLine("Test!");
-                        Console.WriteLine(player.Name + GetSpeak.Points + GetSpeak.GetType().GetProperty(item2).GetValue(GetSpeak));
+                        Console.WriteLine(player.Name + GetSpeak.Points + GetSpeak.GetType()
+                                                                                  .GetProperty(property)
+                                                                                  .GetValue(GetSpeak));
                     }
                 }
             }
-
-            
         }
     }
 }
