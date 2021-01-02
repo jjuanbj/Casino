@@ -6,7 +6,7 @@ namespace Casino
 {
     class Computer : Player {
 
-        public Computer() : base(Constants.Computer, ConsoleOutput) { }   
+        public Computer() : base(Constants.COMPUTER, ConsoleOutput) { }   
 
         public override void Play(Table table)
         {            

@@ -44,7 +44,7 @@ namespace Casino
 
         public void DealCardsPlayer(List<Player> Players)
         {
-            foreach (var player in Players.Where(p => p.Name != Constants.Computer))
+            foreach (var player in Players.Where(p => p.Name != Constants.COMPUTER))
             {
                 player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
                 
@@ -57,7 +57,7 @@ namespace Casino
             }
 
             #region Test
-            foreach (var player in Players.Where(p => p.Name == Constants.Computer))
+            foreach (var player in Players.Where(p => p.Name == Constants.COMPUTER))
             {
                 player.Cards = DeckCards.Take((int)General.NumberCardsToDeal).ToList();
 

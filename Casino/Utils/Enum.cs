@@ -21,13 +21,4 @@ namespace Casino
         NumberCardsToDeal = 4,
         Zero = 0
     }
-
-    enum Points
-    {        
-        MostCards = 3, MostSpades = 1, TenOfDiamonds = 2, TwoOfSpades = 1,
-
-        AceOfDiamonds = 1, AceOfSpades = 1, AceOfHearts = 1, AceOfClubs = 1,
-
-        Sweep = 1
-    }
 }

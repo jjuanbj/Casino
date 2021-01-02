@@ -10,93 +10,101 @@ namespace Casino
 
         private int computerCards = 0;
 
+        private Points points = new Points();
+
         public void CountPoints(List<Player> players)
         {
-            CountMostCards(players);            
+            CountMostCards(players);
             CountMostSpades(players);
             CalculateValuableCards(players);
         }
 
-        private void CountMostCards(List<Player> players){
+        private void CountMostCards(List<Player> players)
+        {
 
-            userCards = players.Where(p => p.Name != Constants.Computer)
+            userCards = players.Where(p => p.Name != Constants.COMPUTER)
                                .FirstOrDefault().CapturedCards
                                .Count;
 
-            computerCards = players.Where(p => p.Name == Constants.Computer)
+            computerCards = players.Where(p => p.Name == Constants.COMPUTER)
                                    .FirstOrDefault().CapturedCards
                                    .Count;
 
-            CalculatePoints(players, Points.MostCards);            
+            CalculatePoints(players, points.Score.Where(p => p.PointName == Constants.MOST_CARDS).FirstOrDefault());
         }
 
-        private void CountMostSpades(List<Player> players){
+        private void CountMostSpades(List<Player> players)
+        {
 
-            if (players.Where(p => p.Name != Constants.Computer)
+            if (players.Where(p => p.Name != Constants.COMPUTER)
                        .FirstOrDefault().CapturedCards
                        .Any(c => c.Suit == Suit.Spade))
             {
-                userCards = players.Where(p => p.Name != Constants.Computer)
+                userCards = players.Where(p => p.Name != Constants.COMPUTER)
                                    .FirstOrDefault().CapturedCards
                                    .Where(c => c.Suit == Suit.Spade)
-                                   .Count();    
+                                   .Count();
             }
-            
-            if (players.Where(p => p.Name == Constants.Computer)
+
+            if (players.Where(p => p.Name == Constants.COMPUTER)
                        .FirstOrDefault().CapturedCards
                        .Any(c => c.Suit == Suit.Spade))
             {
-                computerCards = players.Where(p => p.Name == Constants.Computer)
+                computerCards = players.Where(p => p.Name == Constants.COMPUTER)
                                        .FirstOrDefault().CapturedCards
                                        .Where(c => c.Suit == Suit.Spade)
                                        .Count();
             }
 
-            CalculatePoints(players, Points.MostSpades);
+            if (userCards != 0 || computerCards != 0)            
+                CalculatePoints(players, points.Score.Where(p => p.PointName == Constants.MOST_SPADES).FirstOrDefault());                            
         }
 
-        private void CalculatePoints(List<Player> players, Points points){
+        private void CalculatePoints(List<Player> players, Points.Point point)
+        {
 
-            if (userCards > computerCards && !players.Where(p => p.Name != Constants.Computer)
-                                                     .FirstOrDefault().Score
-                                                     .Contains(points))
+            if (userCards > computerCards && !players.Any(p => p.Hit.Score
+                                                     .Any(h => h.PointName == point.PointName)))
             {
-                players.Where(p => p.Name != Constants.Computer)
-                       .FirstOrDefault().Score
-                       .Add(points);
+                players.Where(p => p.Name != Constants.COMPUTER)
+                       .FirstOrDefault().Hit.Score
+                       .Add(point);
 
-                if (players.Where(p => p.Name == Constants.Computer)
-                           .FirstOrDefault().Score
-                           .Contains(points))
+                if (players.Where(p => p.Name == Constants.COMPUTER)
+                           .FirstOrDefault().Hit.Score
+                           .Contains(point))
                 {
-                    players.Where(p => p.Name == Constants.Computer)
-                           .FirstOrDefault().Score
-                           .Remove(points);
+                    players.Where(p => p.Name == Constants.COMPUTER)
+                           .FirstOrDefault().Hit.Score
+                           .Remove(point);
                 }
             }
-            else if (userCards < computerCards && !players.Where(p => p.Name == Constants.Computer)
-                                                          .FirstOrDefault().Score
-                                                          .Contains(points))
+            else if (userCards < computerCards && !players.Where(p => p.Name == Constants.COMPUTER)
+                                                          .FirstOrDefault().Hit.Score
+                                                          .Contains(point))
             {
-                players.Where(p => p.Name == Constants.Computer)
-                       .FirstOrDefault().Score
-                       .Add(points);
+                players.Where(p => p.Name == Constants.COMPUTER)
+                       .FirstOrDefault().Hit.Score
+                       .Add(point);
 
-                if (players.Where(p => p.Name != Constants.Computer)
-                           .FirstOrDefault().Score
-                           .Contains(points))
+                if (players.Where(p => p.Name != Constants.COMPUTER)
+                           .FirstOrDefault().Hit.Score
+                           .Contains(point))
                 {
-                    players.Where(p => p.Name != Constants.Computer)
-                           .FirstOrDefault().Score
-                           .Remove(points);
+                    players.Where(p => p.Name != Constants.COMPUTER)
+                           .FirstOrDefault().Hit.Score
+                           .Remove(point);
                 }
             }
-            else if (userCards == computerCards && players.SelectMany(p => p.Score)
-                                                          .Contains(points))
+            else if (userCards == computerCards && players.Any(p => p.Hit.Score
+                                                          .Any(h => h.PointName == point.PointName)))
             {
-                players.FirstOrDefault().Score
-                       .Remove(points);
+                players.FirstOrDefault().Hit.Score
+                       .Remove(point);
             }
+
+            userCards =
+            computerCards = 0;
         }
 
         private void CalculateValuableCards(List<Player> players)
@@ -106,67 +114,71 @@ namespace Casino
                 foreach (var card in player.CapturedCards)
                 {
                     if (card.Rank == Rank.Ace)
-                    {                        
+                    {
                         switch (card.Suit)
                         {
                             case Suit.Club:
-                                if (!player.Score.Contains(Points.AceOfClubs))                                
-                                     player.Score.Add(Points.AceOfClubs);                                                                    
+                                if (!player.Hit.Score.Any(p => p.PointName.Equals(Constants.ACE_OF_CLUBS)))
+                                    player.Hit.Score.Add(new Points.Point(Constants.ACE_OF_CLUBS));
                                 break;
                             case Suit.Diamond:
-                                if (!player.Score.Contains(Points.AceOfDiamonds))
-                                     player.Score.Add(Points.AceOfDiamonds);
+                                if (!player.Hit.Score.Any(p => p.PointName.Equals(Constants.ACE_OF_DIAMONDS)))
+                                    player.Hit.Score.Add(new Points.Point(Constants.ACE_OF_DIAMONDS));
                                 break;
                             case Suit.Heart:
-                                if (!player.Score.Contains(Points.AceOfHearts))
-                                     player.Score.Add(Points.AceOfHearts);
+                                if (!player.Hit.Score.Any(p => p.PointName.Equals(Constants.ACE_OF_HEARTS)))
+                                    player.Hit.Score.Add(new Points.Point(Constants.ACE_OF_HEARTS));
                                 break;
                             case Suit.Spade:
-                                if (!player.Score.Contains(Points.AceOfSpades))
-                                     player.Score.Add(Points.AceOfSpades);
+                                if (!player.Hit.Score.Any(p => p.PointName.Equals(Constants.ACE_OF_SPADES)))
+                                    player.Hit.Score.Add(new Points.Point(Constants.ACE_OF_SPADES));
                                 break;
                         }
-                    } else if (card.Rank == Rank.Two
-                            && card.Suit == Suit.Spade)
+                    }
+                    else if (card.Rank == Rank.Two
+                          && card.Suit == Suit.Spade)
                     {
-                        if (!player.Score.Contains(Points.TwoOfSpades))                        
-                             player.Score.Add(Points.TwoOfSpades);                            
+                        if (!player.Hit.Score.Any(p => p.PointName.Equals(Constants.TWO_OF_SPADES)))
+                            player.Hit.Score.Add(new Points.Point(Constants.TWO_OF_SPADES));
 
-                    } else if(card.Rank == Rank.Ten
-                           && card.Suit == Suit.Diamond)
+                    }
+                    else if (card.Rank == Rank.Ten
+                         && card.Suit == Suit.Diamond)
                     {
-                        if (!player.Score.Contains(Points.TenOfDiamonds))                        
-                             player.Score.Add(Points.TenOfDiamonds);                                                    
+                        if (!player.Hit.Score.Any(p => p.PointName.Equals(Constants.TEN_OF_DIAMONDS)))
+                            player.Hit.Score.Add(new Points.Point(Constants.TEN_OF_DIAMONDS));
                     }
                 }
             }
         }
 
-        public void CalculateSweep(List<Player> players, Player player, Table table) 
+        public void CalculateSweep(List<Player> players, Player player, Table table)
         {
             if (!table.Cards.Any())
             {
                 if (players.Where(p => p.Name != player.Name)
-                           .Any(s => s.Score
-                           .Contains(Points.Sweep)))
-                {                   
-                    players.RemoveAll(p => p.Score
-                           .Contains(Points.Sweep));
-                } else
+                           .Any(s => s.Hit.Score
+                           .Any(h => h.PointName == Constants.SWEEP)))
                 {
-                    player.Score.Add(Points.Sweep);   
-                }                
-            }            
+                    players.RemoveAll(p => p.Hit.Score
+                           .Select(h => h.PointName)
+                           .Equals(Constants.SWEEP));
+                }
+                else
+                {
+                    player.Hit.Score.Add(new Points.Point(Constants.SWEEP));
+                }
+            }
         }
 
-        public void CountScore(List<Player> players) 
+        public void CountScore(List<Player> players)
         {
             players.ForEach(p => p.GetConsoleOutput.CountScore(p));
         }
 
         public void DeclareWinner(Game game)
         {
-            if (game.Players.Select(p => p.Score.Count).ToList().Distinct().Skip(1).Any())
+            if (game.Players.Select(p => p.Hit.Score.Count).ToList().Distinct().Skip(1).Any())
             {
                 game.ConsoleOutput.DeclareWinner(game.Players);
             }

@@ -31,7 +31,7 @@ namespace Casino
 
                 if (username != Keyboard.UPPERCASE_F && username != Keyboard.LOWERCASE_F)
                 {                    
-                    if (username == Constants.Computer || String.IsNullOrEmpty(username))
+                    if (username == Constants.COMPUTER || String.IsNullOrEmpty(username))
                     {
                         game.ConsoleOutput.ThisNameIsNotAllowed();
                     }
