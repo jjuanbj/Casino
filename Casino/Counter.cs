@@ -175,7 +175,7 @@ namespace Casino
 
         public void DeclareWinner(Game game)
         {
-            //TODO: use a most readable code to check if there is a draw
+            //TODO: use a more readable code to check if there is a draw
             if (game.Players.Select(p => p.Points
                             .Sum(points => points.PointValue))
                             .ToList()

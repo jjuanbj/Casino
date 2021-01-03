@@ -100,16 +100,15 @@ namespace Casino
                     foreach (var buildedCard in table.BuildedCards)
                     {
                         Console.ForegroundColor = ConsoleColor.Magenta;
-                        Console.Write(GetSpeak.SingleBuild);
-
+                        if (buildedCard.IsMultiple == true)
+                            Console.Write(GetSpeak.MultipleBuild);
+                        else
+                            Console.Write(GetSpeak.SingleBuild);
+                        
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine(string.Format(" {0}->",
                                           string.Join(", ", table.BuildedCards
                                                 .Select((r) => new { buildedCard.Owner })
-                                                .FirstOrDefault())) +
-                                          string.Format(" {0}->",
-                                          string.Join(", ", table.BuildedCards
-                                                .Select((r) => new { Build = buildedCard.IsMultiple == true ? GetSpeak.MultipleBuild : GetSpeak.SingleBuild })
                                                 .FirstOrDefault())) +
                                           string.Format(" {0}->",
                                           string.Join(", ", table.BuildedCards
@@ -251,16 +250,15 @@ namespace Casino
                 foreach (var buildedCard in table.BuildedCards)
                 {
                     Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write(GetSpeak.SingleBuild);
+                    if (buildedCard.IsMultiple == true)
+                        Console.Write(GetSpeak.MultipleBuild);
+                    else
+                        Console.Write(GetSpeak.SingleBuild);
 
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine(string.Format(" {0}->",
                                       string.Join(", ", table.BuildedCards
                                             .Select((r) => new { Index = cardsOnTheTable++, buildedCard.Owner })
-                                            .FirstOrDefault())) +
-                                      string.Format(" {0}->",
-                                      string.Join(", ", table.BuildedCards
-                                            .Select((r) => new { Build = buildedCard.IsMultiple == true ? GetSpeak.MultipleBuild : GetSpeak.SingleBuild })
                                             .FirstOrDefault())) +
                                       string.Format(" {0}->",
                                       string.Join(", ", table.BuildedCards

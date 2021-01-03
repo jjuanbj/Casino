@@ -195,6 +195,8 @@ namespace Casino
 
             Table cardsSelectedFromTheTable = SelectCardsFromTheTable(table);
 
+            // TODO: when I have a builded card on the table, I cant create another builded card if 
+            // I do not have any card to take the first builded card
             if (!ValidateTakenCards(cardsSelectedFromTheTable, selectedCard) 
                         && table.BuildedCards != null
                         && table.BuildedCards.Any(b => b.Owner == this.Name))
@@ -403,10 +405,9 @@ namespace Casino
             }
         }
 
-        // TODO: refactor this method because it's getting big and complex        
-        // TODO: check why it says Single build when is multiple build
-        // TODO: when there is a builded card on the table, if a create another builded card, 
-        // the first buulded card disappears 
+        // TODO: refactor this method because it's getting big and complex                
+        // TODO: when there is a builded card on the table, if I create another builded card, 
+        // the first builded card disappears 
         public virtual void CreateMultipleBuildCards(Card selectedCard, Table table)
         {            
             Rank buildingRankCard = SelectBuildingRank(selectedCard);
