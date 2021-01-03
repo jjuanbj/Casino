@@ -21,4 +21,11 @@ namespace Casino
         NumberCardsToDeal = 4,
         Zero = 0
     }
+
+    enum PointName
+    {
+        MostCards, MostSpades, TwoOfSpades, TenOfDiamonds,
+        AceOfClub, AceOfDiamonds, AceOfHearts, AceOfSpades,
+        Sweep
+    }
 }

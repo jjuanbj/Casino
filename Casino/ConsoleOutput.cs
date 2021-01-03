@@ -354,12 +354,12 @@ namespace Casino
             Console.WriteLine(GetSpeak.Player
                             + player.Name
                             + GetSpeak.Score
-                            + player.Hit.Score.Sum(points => points.PointValue));
+                            + player.Points.Sum(points => points.PointValue));
         }
 
         public void DeclareWinner(List<Player> players)
         {
-            Console.WriteLine(GetSpeak.Winner + players.OrderByDescending(p => p.Hit.Score
+            Console.WriteLine(GetSpeak.Winner + players.OrderByDescending(p => p.Points
                                                        .Select(h => h.PointValue)
                                                        .First())
                                                        .Select(w => w.Name));
@@ -368,7 +368,7 @@ namespace Casino
         public void ShowPlayerPoints(Player player)
         {
             // TODO: avoid nested foreach
-            foreach (var points in player.Hit.Score)
+            foreach (var points in player.Points)
             {
                 foreach (var property in GetSpeak.GetType()
                                                  .GetProperties()

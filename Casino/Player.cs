@@ -9,21 +9,16 @@ namespace Casino
         public string Name { get; set; }
         public List<Card> Cards { get; set; }
         public static ConsoleOutput ConsoleOutput { get; set; }
-        public List<Card> CapturedCards { get; set; }
-
         public virtual ConsoleOutput GetConsoleOutput => ConsoleOutput;
-        
-        public Points Hit { get; set; }
+        public List<Card> CapturedCards { get; set; }
+        public List<Point> Points { get; set; }
         
         public Player(string name, ConsoleOutput consoleOutput)
         {
             Name = name;
             ConsoleOutput = consoleOutput;
             CapturedCards = new List<Card>();
-
-            Points points = new Points();
-            points.Score.Clear();
-            Hit = points;            
+            Points = new List<Point>();
         }
 
         public virtual void Play(Table table)
@@ -409,6 +404,9 @@ namespace Casino
         }
 
         // TODO: refactor this method because it's getting big and complex        
+        // TODO: check why it says Single build when is multiple build
+        // TODO: when there is a builded card on the table, if a create another builded card, 
+        // the first buulded card disappears 
         public virtual void CreateMultipleBuildCards(Card selectedCard, Table table)
         {            
             Rank buildingRankCard = SelectBuildingRank(selectedCard);
