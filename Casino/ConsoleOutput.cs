@@ -92,35 +92,33 @@ namespace Casino
             Console.WriteLine(string.Format(": {0}.",
                               string.Join(", ", table.Cards
                                     .Select(c => c.CardName))));
-
+            
             if (table.BuildedCards != null)
             {
-                if (table.BuildedCards != null)
+                foreach (var buildedCard in table.BuildedCards)
                 {
-                    foreach (var buildedCard in table.BuildedCards)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Magenta;
-                        if (buildedCard.IsMultiple == true)
-                            Console.Write(GetSpeak.MultipleBuild);
-                        else
-                            Console.Write(GetSpeak.SingleBuild);
-                        
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine(string.Format(" {0}->",
-                                          string.Join(", ", table.BuildedCards
-                                                .Select((r) => new { buildedCard.Owner })
-                                                .FirstOrDefault())) +
-                                          string.Format(" {0}->",
-                                          string.Join(", ", table.BuildedCards
-                                                .Select((r) => new { buildedCard.BuildedCardsRank })
-                                                .FirstOrDefault())) +
-                                          string.Format(" {0}.",
-                                          string.Join(", ", table.BuildedCards
-                                                .Where(b => b.BuildedCardsRank == buildedCard.BuildedCardsRank)
-                                                .SelectMany(a => buildedCard.BuildedCards, (a, b) => b.CardName))));
-                    }
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    if (buildedCard.IsMultiple == true)
+                        Console.Write(GetSpeak.MultipleBuild);
+                    else
+                        Console.Write(GetSpeak.SingleBuild);
+                    
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine(string.Format(" {0}->",
+                                        string.Join(", ", table.BuildedCards
+                                            .Select((r) => new { buildedCard.Owner })
+                                            .FirstOrDefault())) +
+                                        string.Format(" {0}->",
+                                        string.Join(", ", table.BuildedCards
+                                            .Select((r) => new { buildedCard.BuildedCardsRank })
+                                            .FirstOrDefault())) +
+                                        string.Format(" {0}.",
+                                        string.Join(", ", table.BuildedCards
+                                            .Where(b => b.BuildedCardsRank == buildedCard.BuildedCardsRank)
+                                            .SelectMany(a => buildedCard.BuildedCards, (a, b) => b.CardName))));
                 }
             }
+        
             Console.ResetColor();
         }
 
@@ -330,7 +328,6 @@ namespace Casino
 
         public void YouCannotThrowCardsWhenYouAreABuildingCardOwner()
         {
-
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(GetSpeak.YouCannotThrowCardsWhenYouAreABuildingCardOwner);
 
@@ -339,7 +336,6 @@ namespace Casino
 
         public void IfYouDontHaveMoreMoveYouMustCaptureYourBuildingCard()
         {
-
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(GetSpeak.IfYouDontHaveMoreMoveYouMustCaptureYourBuildingCard);
 
@@ -348,7 +344,6 @@ namespace Casino
 
         public void CountScore(Player player)
         {
-
             Console.WriteLine(GetSpeak.Player
                             + player.Name
                             + GetSpeak.Score
@@ -359,7 +354,8 @@ namespace Casino
         {
             Console.WriteLine(GetSpeak.Winner + players.OrderByDescending(p => p.Points
                                                        .Sum(h => h.PointValue))
-                                                       .Select(w => w.Name).First());
+                                                       .Select(w => w.Name)
+                                                       .First());
         }
 
         public void ShowPlayerPoints(Player player)

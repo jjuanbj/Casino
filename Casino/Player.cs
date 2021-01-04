@@ -368,10 +368,14 @@ namespace Casino
                                       .FirstOrDefault().IsMultiple = true;
                 }
 
-                List<BuildedCard> buildedCards = new List<BuildedCard>();
-                buildedCards.Add(buildedCard);
-
-                table.BuildedCards = buildedCards;
+                if (table.BuildedCards == null)
+                {
+                    table.BuildedCards = new List<BuildedCard>();
+                    table.BuildedCards.Add(buildedCard);
+                } else
+                {
+                    table.BuildedCards.Add(buildedCard);
+                }                
 
                 ConsoleOutput.ShowTableCards(table);                
 
@@ -563,10 +567,15 @@ namespace Casino
                     buildedCard.IsMultiple = true;
                     buildedCard.Owner = this.Name;
 
-                    List<BuildedCard> buildedCards = new List<BuildedCard>();
-                    buildedCards.Add(buildedCard);
-
-                    table.BuildedCards = buildedCards;
+                    if (table.BuildedCards == null)
+                    {
+                        table.BuildedCards = new List<BuildedCard>();
+                        table.BuildedCards.Add(buildedCard);
+                    }
+                    else
+                    {
+                        table.BuildedCards.Add(buildedCard);
+                    }
                     
                     this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
 
