@@ -409,9 +409,7 @@ namespace Casino
             }
         }
 
-        // TODO: refactor this method because it's getting big and complex                
-        // TODO: when there is a builded card on the table, if I create another builded card, 
-        // the first builded card disappears 
+        // TODO: refactor this method because it's getting big and complex                         
         public virtual void CreateMultipleBuildCards(Card selectedCard, Table table)
         {            
             Rank buildingRankCard = SelectBuildingRank(selectedCard);
