@@ -358,9 +358,8 @@ namespace Casino
         public void DeclareWinner(List<Player> players)
         {
             Console.WriteLine(GetSpeak.Winner + players.OrderByDescending(p => p.Points
-                                                       .Select(h => h.PointValue)
-                                                       .First())
-                                                       .Select(w => w.Name));
+                                                       .Sum(h => h.PointValue))
+                                                       .Select(w => w.Name).First());
         }
 
         public void ShowPlayerPoints(Player player)

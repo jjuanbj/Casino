@@ -8,7 +8,6 @@ namespace Casino
     {
         private int userCards = 0;
         private int computerCards = 0;
-        //private Points points = new Points();
 
         public void CountPoints(List<Player> players)
         {
@@ -182,8 +181,7 @@ namespace Casino
                             .Distinct()
                             .Skip(1)
                             .Any())
-            {
-                //System.Linq.Enumerable+SelectIPartitionIterator`2[Casino.Player,System.String]
+            {                
                 game.ConsoleOutput.DeclareWinner(game.Players);
             }
         }

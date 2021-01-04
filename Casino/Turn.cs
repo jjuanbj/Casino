@@ -33,6 +33,7 @@ namespace Casino
                         game.ConsoleOutput.ShowPlayerPoints(player);
                     }
                     game.Counter.CountScore(game.Players);
+                    game.Counter.DeclareWinner(game); //Test
                 }            
                 
                 game.Deck.DealCardsPlayer(game.Players);
