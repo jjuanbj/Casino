@@ -91,7 +91,7 @@ namespace Casino
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(string.Format(": {0}.",
                               string.Join(", ", table.Cards
-                                    .Select(c => c.CardName))));
+                                    .Select(c => c.DisplayName))));
             
             if (table.BuildedCards != null)
             {
@@ -115,7 +115,7 @@ namespace Casino
                                         string.Format(" {0}.",
                                         string.Join(", ", table.BuildedCards
                                             .Where(b => b.BuildedCardsRank == buildedCard.BuildedCardsRank)
-                                            .SelectMany(a => buildedCard.BuildedCards, (a, b) => b.CardName))));
+                                            .SelectMany(a => buildedCard.BuildedCards, (a, b) => b.DisplayName))));
                 }
             }
         
@@ -132,7 +132,7 @@ namespace Casino
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(string.Format(": {0}.",
                                   string.Join(", ", player.Cards
-                                        .Select(c => c.CardName))));
+                                        .Select(c => c.DisplayName))));
             }
 
             Console.ResetColor();
@@ -146,7 +146,7 @@ namespace Casino
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(string.Format(": {0}.",
                               string.Join(", ", player.Cards
-                                    .Select(c => c.CardName))));
+                                    .Select(c => c.DisplayName))));
 
             Console.ResetColor();
         }
@@ -159,7 +159,7 @@ namespace Casino
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(string.Format("{0}.",
                               string.Join(", ", player.Cards
-                                    .Select((c, count) => new { Index = count, c.CardName }))));
+                                    .Select((c, count) => new { Index = count, c.DisplayName }))));
 
             Console.ResetColor();
         }
@@ -170,7 +170,7 @@ namespace Casino
             Console.Write(GetSpeak.YouSelected);
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(cards.ElementAt(Int32.Parse(cardNumber)).CardName);
+            Console.WriteLine(cards.ElementAt(Int32.Parse(cardNumber)).DisplayName);
 
             Console.ResetColor();
         }
@@ -185,7 +185,7 @@ namespace Casino
             Console.ForegroundColor = ConsoleColor.Green;
             if (table.Cards.Count > Int32.Parse(cardRank))
             {
-                Console.WriteLine(table.Cards.ElementAt(Int32.Parse(cardRank)).CardName);
+                Console.WriteLine(table.Cards.ElementAt(Int32.Parse(cardRank)).DisplayName);
             }
             else
             {
@@ -199,7 +199,7 @@ namespace Casino
                 Console.WriteLine(string.Format(" {0}.",
                                   string.Join(", ", table.BuildedCards
                                         .Where(b => b.BuildedCardsRank == buildedCardsRank)
-                                        .SelectMany(a => a.BuildedCards, (a, b) => b.CardName))));
+                                        .SelectMany(a => a.BuildedCards, (a, b) => b.DisplayName))));
             }
 
             Console.ResetColor();
@@ -241,7 +241,7 @@ namespace Casino
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(string.Format("{0}.",
                               string.Join(", ", table.Cards
-                                    .Select((c) => new { Index = cardsOnTheTable++, c.CardName }))));
+                                    .Select((c) => new { Index = cardsOnTheTable++, c.DisplayName }))));
 
             if (table.BuildedCards != null)
             {
@@ -265,7 +265,7 @@ namespace Casino
                                       string.Format(" {0}.",
                                       string.Join(", ", table.BuildedCards
                                             .Where(b => b.BuildedCardsRank == buildedCard.BuildedCardsRank)
-                                            .SelectMany(a => buildedCard.BuildedCards, (a, b) => b.CardName))));
+                                            .SelectMany(a => buildedCard.BuildedCards, (a, b) => b.DisplayName))));
                 }
             }
 
@@ -293,7 +293,7 @@ namespace Casino
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(string.Format(": {0}.",
                               string.Join(", ", player.CapturedCards
-                                    .Select(c => c.CardName))));
+                                    .Select(c => c.DisplayName))));
 
             Console.ResetColor();
         }
@@ -320,8 +320,8 @@ namespace Casino
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(string.Format("{0}.",
                               string.Join(", ", player.Cards
-                                    .Where(c => c.CardName != selectCard.CardName)
-                                    .Select((c, count) => new { Index = count, c.CardName }))));
+                                    .Where(c => c.DisplayName != selectCard.DisplayName)
+                                    .Select((c, count) => new { Index = count, c.DisplayName }))));
 
             Console.ResetColor();
         }

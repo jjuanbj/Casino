@@ -7,7 +7,7 @@ namespace Casino
     class Card
     {
         public string CardName { get; set; }
-        public Tuple<string, string> DisplayName { get; set; }        
+        public string DisplayName { get; set; }        
         public Rank Rank { get; set; }
         public Suit Suit { get; set; }
 
@@ -18,6 +18,8 @@ namespace Casino
             Rank = rank;
 
             Suit = suit;
+
+            CreateDisplayName(rank, suit);
         }
 
         public Card(string cardName)
@@ -27,73 +29,70 @@ namespace Casino
             Rank = (Rank)Enum.Parse(typeof(Rank), cardName.Split(' ').First(), true);
 
             Suit = (Suit)Enum.Parse(typeof(Suit), cardName.Split(' ').Last(), true);
+
+            CreateDisplayName(Rank, Suit);
         }
 
         private void CreateDisplayName(Rank rank, Suit suit)
         {
-            string displayRank = "";
-            string displaySuit = "";
+            switch (suit)
+            {
+                case Suit.Club:
+                    DisplayName = "♣";
+                    break;
+                case Suit.Diamond:
+                    DisplayName = "♦";
+                    break;
+                case Suit.Heart:
+                    DisplayName = "♥";
+                    break;
+                case Suit.Spade:
+                    DisplayName = "♠";
+                    break;
+            }
 
             switch (rank)
             {
                 case Rank.Ace:
-                    displayRank = "A";
+                    DisplayName = String.Concat(DisplayName, "A");
                     break;
                 case Rank.Two:
-                    displayRank = "2";
+                    DisplayName = String.Concat(DisplayName, "2");
                     break;
                 case Rank.Three:
-                    displayRank = "3";
+                    DisplayName = String.Concat(DisplayName, "3");
                     break;
                 case Rank.Four:
-                    displayRank = "4";
+                    DisplayName = String.Concat(DisplayName, "4");
                     break;
                 case Rank.Five:
-                    displayRank = "5";
+                    DisplayName = String.Concat(DisplayName, "5");
                     break;
                 case Rank.Six:
-                    displayRank = "6";
+                    DisplayName = String.Concat(DisplayName, "6");
                     break;
                 case Rank.Seven:
-                    displayRank = "7";
+                    DisplayName = String.Concat(DisplayName, "7");
                     break;
                 case Rank.Eight:
-                    displayRank = "8";
+                    DisplayName = String.Concat(DisplayName, "8");
                     break;
                 case Rank.Nine:
-                    displayRank = "9";
+                    DisplayName = String.Concat(DisplayName, "9");
                     break;
                 case Rank.Ten:
-                    displayRank = "10";
+                    DisplayName = String.Concat(DisplayName, "10");
                     break;
                 case Rank.Jack:
-                    displayRank = "J";
+                    DisplayName = String.Concat(DisplayName, "J");
                     break;
                 case Rank.Queen:
-                    displayRank = "Q";
+                    DisplayName = String.Concat(DisplayName, "Q");
                     break;
                 case Rank.King:
-                    displayRank = "K";
+                    DisplayName = String.Concat(DisplayName, "K");
                     break;
-            }
-
-            switch (suit)
-            {
-                case Suit.Club:
-                    displaySuit = "♣";
-                    break;
-                case Suit.Diamond:
-                    displaySuit = "♦";
-                    break;
-                case Suit.Heart:
-                    displaySuit = "♥";
-                    break;
-                case Suit.Spade:
-                    displaySuit = "♠";
-                    break;
-            }
-
-            DisplayName = new Tuple<string, string>(displayRank, displaySuit);            
+            }            
         }
     }
 }
