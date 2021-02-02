@@ -7,7 +7,7 @@ namespace Casino
     class Card
     {
         public string CardName { get; set; }
-        public string DisplayName { get; set; }        
+        public string Name { get; set; }        
         public Rank Rank { get; set; }
         public Suit Suit { get; set; }
 
@@ -35,62 +35,62 @@ namespace Casino
 
         private void CreateDisplayName(Rank rank, Suit suit)
         {
-            switch (suit)
-            {
-                case Suit.Club:
-                    DisplayName = "♣";
-                    break;
-                case Suit.Diamond:
-                    DisplayName = "♦";
-                    break;
-                case Suit.Heart:
-                    DisplayName = "♥";
-                    break;
-                case Suit.Spade:
-                    DisplayName = "♠";
-                    break;
-            }
-
             switch (rank)
             {
                 case Rank.Ace:
-                    DisplayName = String.Concat(DisplayName, "A");
+                    Name = "A";
                     break;
                 case Rank.Two:
-                    DisplayName = String.Concat(DisplayName, "2");
+                    Name = "2";
                     break;
                 case Rank.Three:
-                    DisplayName = String.Concat(DisplayName, "3");
+                    Name = "3";
                     break;
                 case Rank.Four:
-                    DisplayName = String.Concat(DisplayName, "4");
+                    Name = "4";
                     break;
                 case Rank.Five:
-                    DisplayName = String.Concat(DisplayName, "5");
+                    Name = "5";
                     break;
                 case Rank.Six:
-                    DisplayName = String.Concat(DisplayName, "6");
+                    Name = "6";
                     break;
                 case Rank.Seven:
-                    DisplayName = String.Concat(DisplayName, "7");
+                    Name = "7";
                     break;
                 case Rank.Eight:
-                    DisplayName = String.Concat(DisplayName, "8");
+                    Name = "8";
                     break;
                 case Rank.Nine:
-                    DisplayName = String.Concat(DisplayName, "9");
+                    Name = "9";
                     break;
                 case Rank.Ten:
-                    DisplayName = String.Concat(DisplayName, "10");
+                    Name = "10";
                     break;
                 case Rank.Jack:
-                    DisplayName = String.Concat(DisplayName, "J");
+                    Name = "J";
                     break;
                 case Rank.Queen:
-                    DisplayName = String.Concat(DisplayName, "Q");
+                    Name = "Q";
                     break;
                 case Rank.King:
-                    DisplayName = String.Concat(DisplayName, "K");
+                    Name = "K";
+                    break;
+            }
+
+            switch (suit)
+            {
+                case Suit.Club:
+                    Name = string.Concat(Name, "♣");
+                    break;
+                case Suit.Diamond:
+                    Name = string.Concat(Name, "♦");
+                    break;
+                case Suit.Heart:
+                    Name = string.Concat(Name, "♥");
+                    break;
+                case Suit.Spade:
+                    Name = string.Concat(Name, "♠");
                     break;
             }            
         }
