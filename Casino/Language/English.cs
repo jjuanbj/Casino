@@ -71,18 +71,6 @@ namespace Casino
 
         public string MostSpades { get; set; }
 
-        public string TenOfDiamonds { get; set; }
-
-        public string TwoOfSpades { get; set; }
-
-        public string AceOfDiamonds { get; set; }
-
-        public string AceOfSpades { get; set; }
-
-        public string AceOfHearts { get; set; }
-
-        public string AceOfClub { get; set; }
-
         public string Sweep { get; set; }
 
         public English()
@@ -119,13 +107,7 @@ namespace Casino
             Winner = "Winner: ";
             Points = " points: ";
             MostCards = "Most cards";
-            MostSpades = "Most spades";
-            TenOfDiamonds = "Ten of diamonds";
-            TwoOfSpades = "Two of spades";
-            AceOfDiamonds = "Ace of diamonds";
-            AceOfSpades = "Ace of spades";
-            AceOfHearts = "Ace of hearts";
-            AceOfClub = "Ace of clubs";
+            MostSpades = "Most ♠";            
             Sweep = "Sweep";
         }
     }

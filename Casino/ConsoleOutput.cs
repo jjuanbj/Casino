@@ -110,7 +110,7 @@ namespace Casino
                                             .FirstOrDefault())) +
                                         string.Format(" {0}->",
                                         string.Join(", ", table.BuildedCards
-                                            .Select((r) => new { buildedCard.BuildedCardsRank })
+                                            .Select((r) => new { buildedCard.Name })
                                             .FirstOrDefault())) +
                                         string.Format(" {0}.",
                                         string.Join(", ", table.BuildedCards
@@ -260,7 +260,7 @@ namespace Casino
                                             .FirstOrDefault())) +
                                       string.Format(" {0}->",
                                       string.Join(", ", table.BuildedCards
-                                            .Select((r) => new { buildedCard.BuildedCardsRank })
+                                            .Select((r) => new { buildedCard.Name })
                                             .FirstOrDefault())) +
                                       string.Format(" {0}.",
                                       string.Join(", ", table.BuildedCards
@@ -291,7 +291,7 @@ namespace Casino
             Console.Write(GetSpeak.CapturedCards);
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(string.Format(": {0}.",
+            Console.WriteLine(string.Format(" {0}.",
                               string.Join(", ", player.CapturedCards
                                     .Select(c => c.Name))));
 

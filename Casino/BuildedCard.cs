@@ -5,6 +5,8 @@ namespace Casino {
 
     class BuildedCard {
 
+        public string Name { get; set; }
+
         public List<Card> BuildedCards { get; set; }
 
         public Rank BuildedCardsRank { get; set; }

@@ -15,7 +15,7 @@ namespace Casino
 
             Card selectedCard = SelectYourCard(actionSelected, table);            
         
-            Console.WriteLine("Selected card: " + selectedCard.CardName); // Test
+            Console.WriteLine("Selected card: " + selectedCard.Name); // Test
 
             switch (actionSelected)
             {
@@ -105,7 +105,7 @@ namespace Casino
                                              .FirstOrDefault();
                 }                    
                 
-                Console.WriteLine(selectedCard.CardName);             
+                Console.WriteLine(selectedCard.Name);             
             }
 
             return selectedCard;
@@ -115,7 +115,7 @@ namespace Casino
         {
             table.Cards.Add(selectedCard);
             
-            Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+            Cards.RemoveAll(c => c.Name == selectedCard.Name);
         }
 
         public override bool TakeCardFromTheTable(Card selectedCard, Table table) 
@@ -129,7 +129,7 @@ namespace Casino
                 capturedCards = table.Cards.Where(c => c.Rank == selectedCard.Rank).ToList();
 
                 capturedCards.ForEach(card => table.Cards
-                             .RemoveAll(c => c.CardName == card.CardName));
+                             .RemoveAll(c => c.Name == card.Name));
 
                 List<Card> capturedBuildedCards = new List<Card>();
                 capturedBuildedCards = table.BuildedCards.Where(c => c.BuildedCardsRank == selectedCard.Rank)
@@ -139,7 +139,7 @@ namespace Casino
                 capturedCards.ForEach(card => table.BuildedCards
                              .Where(c => c.BuildedCardsRank == selectedCard.Rank)
                              .Select(b => b.BuildedCards
-                             .RemoveAll(d => d.CardName == card.CardName)));
+                             .RemoveAll(d => d.Name == card.Name)));
 
                 table.BuildedCards.Remove(table.BuildedCards
                                   .Where(c => c.BuildedCardsRank == selectedCard.Rank)
@@ -152,7 +152,7 @@ namespace Casino
                 capturedCards = table.Cards.Where(c => c.Rank == selectedCard.Rank).ToList();
 
                 capturedCards.ForEach(card => table.Cards
-                             .RemoveAll(c => c.CardName == card.CardName));
+                             .RemoveAll(c => c.Name == card.Name));
             } else
             {
                 capturedCards = table.BuildedCards.Where(c => c.BuildedCardsRank == selectedCard.Rank)
@@ -162,14 +162,14 @@ namespace Casino
                 capturedCards.ForEach(card => table.BuildedCards
                              .Where(c => c.BuildedCardsRank == selectedCard.Rank)
                              .Select(b => b.BuildedCards
-                             .RemoveAll(c => c.CardName == card.CardName)));
+                             .RemoveAll(c => c.Name == card.Name)));
 
                 table.BuildedCards.Remove(table.BuildedCards
                                   .Where(c => c.BuildedCardsRank == selectedCard.Rank)
                                   .FirstOrDefault());
             }
             
-            Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+            Cards.RemoveAll(c => c.Name == selectedCard.Name);
             
             CapturedCards.Add(selectedCard);
 

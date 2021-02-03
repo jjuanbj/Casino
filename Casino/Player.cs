@@ -98,7 +98,7 @@ namespace Casino
                 {
                     ConsoleOutput.YouSelected(this.Cards, cardNumber);
 
-                    card = new Card(Cards.ElementAt(Int32.Parse(cardNumber)).CardName);
+                    card = new Card(Cards.ElementAt(Int32.Parse(cardNumber)).Rank, Cards.ElementAt(Int32.Parse(cardNumber)).Suit);
                 }
                 else
                 {
@@ -116,7 +116,7 @@ namespace Casino
         {
             table.Cards.Add(selectedCard);
             
-            Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+            Cards.RemoveAll(c => c.Name == selectedCard.Name);
 
             ConsoleOutput.ShowTableCards(table);
 
@@ -229,7 +229,7 @@ namespace Casino
                                  .Distinct());
                 }                    
                 
-                Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                Cards.RemoveAll(c => c.Name == selectedCard.Name);
 
                 CapturedCards.Add(selectedCard);
 
@@ -309,11 +309,12 @@ namespace Casino
                 && cardNumber.All(char.IsDigit)
                 && Enumerable.Range((int)General.Zero, cardsCount).Contains(Int32.Parse(cardNumber)))
                 {
-                    List<Card> playerCardsWithoutSelectedCard = new List<Card>(Cards.Where(c => c.CardName != selectedCard.CardName));
+                    List<Card> playerCardsWithoutSelectedCard = new List<Card>(Cards.Where(c => c.Name != selectedCard.Name));
 
-                    buildingRankCard = new Card(playerCardsWithoutSelectedCard.ElementAt(Int32.Parse(cardNumber)).CardName);
+                    buildingRankCard = new Card(playerCardsWithoutSelectedCard.ElementAt(Int32.Parse(cardNumber)).Rank, 
+                                                playerCardsWithoutSelectedCard.ElementAt(Int32.Parse(cardNumber)).Suit);
 
-                    if (Cards.Any(c => c.CardName == buildingRankCard.CardName))
+                    if (Cards.Any(c => c.Name == buildingRankCard.Name))
                     {
                         ConsoleOutput.YouSelected(playerCardsWithoutSelectedCard.ToList(), cardNumber);
                     }
@@ -345,7 +346,7 @@ namespace Casino
             && cardsSelectedFromTheTable.Cards.Sum(r => Convert.ToInt32(r.Rank)) 
             +  Convert.ToInt32(selectedCard.Rank) == Constants.ACE_MAX_VALUE)))
             {
-                Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                Cards.RemoveAll(c => c.Name == selectedCard.Name);
 
                 table.Cards.RemoveAll(c => cardsSelectedFromTheTable.Cards.Contains(c));
 
@@ -355,6 +356,7 @@ namespace Casino
                 buildedCard.BuildedCards = cardsSelectedFromTheTable.Cards;
                 buildedCard.BuildedCardsRank = buildingRankCard;
                 buildedCard.Owner = this.Name;
+                buildedCard.Name = CardUtils.CreateRankName(buildingRankCard);
 
                 if (table.BuildedCards == null)
                 {
@@ -398,7 +400,7 @@ namespace Casino
 
                 table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
                 
-                this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                this.Cards.RemoveAll(c => c.Name == selectedCard.Name);
                                     
                 ConsoleOutput.ShowTableCards(table);
             }
@@ -432,7 +434,7 @@ namespace Casino
 
                     table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
                     
-                    this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                    this.Cards.RemoveAll(c => c.Name == selectedCard.Name);
                                         
                     ConsoleOutput.ShowTableCards(table);
 
@@ -456,7 +458,7 @@ namespace Casino
 
                     table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
                     
-                    this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                    this.Cards.RemoveAll(c => c.Name == selectedCard.Name);
                                         
                     ConsoleOutput.ShowTableCards(table);
                     
@@ -481,10 +483,11 @@ namespace Casino
                     newBuildedCard.BuildedCardsRank = buildingRankCard;
                     newBuildedCard.BuildedCards.Add(selectedCard);
                     newBuildedCard.Owner = this.Name;
+                    newBuildedCard.Name = CardUtils.CreateRankName(buildingRankCard);
 
                     table.BuildedCards.Add(newBuildedCard);
 
-                    this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                    this.Cards.RemoveAll(c => c.Name == selectedCard.Name);
 
                     ConsoleOutput.ShowTableCards(table);
 
@@ -509,7 +512,7 @@ namespace Casino
 
                     table.BuildedCards.Add(cardsSelectedFromTheTable.BuildedCards.FirstOrDefault());
                     
-                    this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                    this.Cards.RemoveAll(c => c.Name == selectedCard.Name);
                                         
                     ConsoleOutput.ShowTableCards(table);
                  }
@@ -517,7 +520,7 @@ namespace Casino
                 {
                     ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
 
-                    this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                    this.Cards.RemoveAll(c => c.Name == selectedCard.Name);
 
                     ThrowTheCardToTheTable(selectedCard, table);                    
                 }                
@@ -533,7 +536,7 @@ namespace Casino
                   || (cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) / Convert.ToInt32(buildingRankCard) == 1 
                   &&  cardsSelectedFromTheTable.Cards.All(c => c.Rank != buildingRankCard))
                   || (cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) / Convert.ToInt32(buildingRankCard) == 1
-                  &&  cardsSelectedFromTheTable.Cards.Where(c => c.CardName != selectedCard.CardName)
+                  &&  cardsSelectedFromTheTable.Cards.Where(c => c.Name != selectedCard.Name)
                                                      .Sum(c => Convert.ToInt32(c.Rank))
                   % Convert.ToInt32(buildingRankCard) != THESE_NUMBERS_ARE_MULTIPLES_OF_EACH_OTHER)
                   || (cardsSelectedFromTheTable.Cards.Sum(c => Convert.ToInt32(c.Rank)) / Convert.ToInt32(buildingRankCard) != 1
@@ -548,13 +551,13 @@ namespace Casino
                 {
                     ConsoleOutput.YouJustLostYourCardBecauseItIsInvalid();
 
-                    this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                    this.Cards.RemoveAll(c => c.Name == selectedCard.Name);
                     
                     ThrowTheCardToTheTable(selectedCard, table);
                 }
                 else
                 {                    
-                    Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                    Cards.RemoveAll(c => c.Name == selectedCard.Name);
 
                     cardsSelectedFromTheTable.Cards.ForEach(item => table.Cards
                                                    .RemoveAll(b => b.Rank == item.Rank));
@@ -564,6 +567,7 @@ namespace Casino
                     buildedCard.BuildedCardsRank = buildingRankCard;
                     buildedCard.IsMultiple = true;
                     buildedCard.Owner = this.Name;
+                    buildedCard.Name = CardUtils.CreateRankName(buildingRankCard);
 
                     if (table.BuildedCards == null)
                     {
@@ -575,7 +579,7 @@ namespace Casino
                         table.BuildedCards.Add(buildedCard);
                     }
                     
-                    this.Cards.RemoveAll(c => c.CardName == selectedCard.CardName);
+                    this.Cards.RemoveAll(c => c.Name == selectedCard.Name);
 
                     ConsoleOutput.ShowTableCards(table);
                 }   

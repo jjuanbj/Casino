@@ -85,5 +85,14 @@ namespace Casino
         public string AceOfClub { get; set; }
 
         public string Sweep { get; set; }
+
+        public Speak(){
+            TenOfDiamonds = "10♦";
+            TwoOfSpades = "2♠";
+            AceOfDiamonds = "A♦";
+            AceOfSpades = "A♠";
+            AceOfHearts = "A♥";
+            AceOfClub = "A♣";
+        }
     }
 }
